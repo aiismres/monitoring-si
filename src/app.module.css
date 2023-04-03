@@ -1,0 +1,245 @@
+.App {
+  text-align: center;
+}
+/* 
+.App-logo {
+  height: 20px;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+} 
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+*/
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+table {
+margin-bottom: 60px;
+border-bottom: 1px solid rgb(225, 225, 225);
+}
+
+table,
+td {
+  border-left: 1px solid rgb(225, 225, 225);
+  /* border-right: 1px solid rgb(196, 184, 184); */
+  border-collapse: collapse;
+  padding: 5px 7px;
+  text-align: left;
+}
+
+table thead {
+  position: sticky; 
+  top: 0;
+  box-shadow: 0px 1px 5px 0px #a2a2a2;
+}
+
+th {
+  /* position: relative; */
+  padding: 2px 7px;
+  color: #fff;
+  text-align: center;
+  border: 1px solid rgb(196, 184, 184);
+  background-color: #1976D2;
+  /* font-size: medium; */
+  font-weight: 500;
+}
+
+.resize {
+  height: 40px;
+  padding: 2px 7px;
+  resize: horizontal;
+  overflow:hidden;
+  line-height: 40px;
+ }
+
+ /* .noresize {
+  height: 40px;
+  padding: 2px 7px;
+  line-height: 40px;
+ } */
+
+table tr:nth-child(2n){
+  background: rgba(16, 16, 16, 0.05);
+}
+
+.warning {
+  /* color: orange; */
+  background-color: #fdcb8e;
+}
+
+.correct {
+  color: rgb(0, 192, 0);
+}
+
+.incorrect {
+  color: red;
+}
+
+.changed {
+  outline: 2px solid red;
+}
+
+.selected {
+  outline: 2px solid orange;
+}
+#input-sv1xlsx {
+  width: 115px;
+  margin-right: 5px;
+}
+
+#input-sv1xlsx::before {
+  content: 'Импорт Св-1.xlsx';
+  padding: 3px 5px 1px 3px;
+  position: absolute;
+  border: 1px solid black;
+  border-radius: 4px;
+  background-color: rgb(236, 236, 236);
+}
+
+#input-dbxlsx-1 {
+  width: 105px;
+  margin-right: 5px;
+}
+
+#input-dbxlsx-1::before {
+  content: 'Импорт БД.xlsx';
+  padding: 3px 5px 1px 3px;
+  position: absolute;
+  border: 1px solid black;
+  border-radius: 4px;
+  background-color: rgb(236, 236, 236);
+}
+
+#input-60xml {
+  width: 100px;
+  margin-right: 15px;
+}
+
+#input-60xml::before {
+  content: 'Импорт 60.xml';
+  padding: 3px 5px 1px 3px;
+  position: absolute;
+  border: 1px solid black;
+  border-radius: 4px;
+  background-color: rgb(236, 236, 236);
+}
+
+.red {
+  color: rgb(30, 32, 30);
+}
+
+.controlPanel {
+  position: fixed;
+  padding: 5px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0 auto;
+  background-color: rgb(182, 206, 166);
+  outline: 1px solid rgb(230, 80, 26);
+  border-radius: 7px;
+}
+
+table {
+  height: 100%;
+}
+
+/* input {
+  height:100%;
+  border: solid 0px;
+} */
+
+input[name='numTiSop'], input[name='kttSop']{
+  width: 40px;
+}
+
+ input[name='ktnSop'] {
+  width: 60px;
+}
+
+textarea {
+  /* height:90%; */
+  /* align-items:baseline; */
+  font-size: x-large;
+  border: solid 0px ;
+  resize: none;
+}
+
+.attention {
+  color: #fff;
+  background-color: #ff8c00;
+}
+
+.radio-div {
+  display: inline-block;
+  padding-left: 5px;
+  /* outline: solid 1px coral; */
+}
+
+.naimTi60, .naimTi80, .naimTiSop {
+  min-width: 200px;
+}
+
+.numSchSch, .numSchSop {
+  min-width: 50px;
+}
+
+.numSchDB {
+  min-width: 50px;
+}
+
+.naimTi82 {
+  min-width: 100px;
+}
+
+.tipSchSop, .tipSch80, .tipSchSch {
+  min-width: 110px;
+}
+
+.numTiSop, .numTiShem60 {
+  text-align: center;
+}
+
+.dpnone {
+  display: none;
+}
+
+ 

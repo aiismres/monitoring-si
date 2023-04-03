@@ -1,0 +1,104 @@
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #387e97;
+  color: #dedede;
+}
+/*
+tr:hover {
+  background-color: #d6eeee;
+}
+*/
+input,
+textarea {
+  outline: none;
+  border: none;
+}
+.textRed {
+  color: #8b0000;
+}
+.textGreen {
+  color: #006400;
+}
+.textOrange {
+  color: #f89e02;
+}
+
+.active {
+  background-color: #84bfd4;
+}
+.noactive {
+  background-color: #ffffff;
+}
+.futer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  background-color: #387e97;
+  color: #dedede;
+  width: 300px;
+}
+.hint {
+  display: none;
+  /*position: absolute;
+  top: 200px;
+  left: 10px;*/
+  z-index: 4;
+  overflow: auto;
+  /*border: 2px solid #045acf;*/
+  border-radius: 6px;
+  background-color: rgb(216, 245, 240);
+  width: 3300px;
+  height: 500px;
+  -webkit-box-shadow: 7px 8px 44px 9px rgba(34, 60, 80, 0.53);
+  -moz-box-shadow: 7px 8px 44px 9px rgba(34, 60, 80, 0.53);
+  box-shadow: 7px 8px 44px 9px rgba(34, 60, 80, 0.53);
+}
+tbody tr td:nth-child(1) {
+  position: sticky;
+  left: 0;
+  /*background-color: #ffffff;*/
+  border: 1px solid black;
+}
+thead tr th:nth-child(1) {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+
+  background-color: #387e97;
+  border: 1px solid black;
+}
+.shadow {
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+.button1 {
+  background-color: #1ca7b1;
+  color: white;
+  /*border: 2px solid #4caf50; /* Green */
+  border-radius: 6px;
+  padding: 2px 2px;
+  margin-left: 15px;
+  font-size: 14px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.button1:hover {
+  background-color: white; /* Green */
+  color: black;
+}
+.metrologyKomm {
+  width: 350px;
+}

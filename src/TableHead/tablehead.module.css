@@ -1,0 +1,20 @@
+.attention {
+  color: #fff;
+  background-color: #ff8c00;
+}
+
+th {
+  position: relative;
+}
+
+.resizer {
+  /* Displayed at the right side of column */
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  height: 40px;
+  cursor: col-resize;
+  user-select: none;
+  color: grey;
+}

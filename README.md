@@ -1,3 +1,5 @@
+yo react-ts-component-dir [dir-name]
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

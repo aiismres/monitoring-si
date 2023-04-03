@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <title>План работ!</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="readSech.css" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    
+  </head>
+  <body>
+<!--     <table id="table1" ; style="width: 3500px" ; class="table"> -->
+    <table id="table1" ; class="table">
+      <thead>
+        <tr>
+          <!--
+            <th>код гтп</th>
+            <th>код сечения</th>
+            -->
+          <th id="naimSechShort" style="width: 200px" ; class="naimSechShort">
+            Наим. сеч-я сокр<input
+              id="myInput"
+              type="text"
+              placeholder="Search.."
+              style="width: 190px"
+            />
+          </th>
+          <th style="width: 90px" ; class="vidRabot">вид работ</th>
+          <th style="width: 80px" ; class="soglGtp">Согл. ГТП</th>
+          <th style="width: 80px" ; class="dopusk">Допуск</th>
+          <th style="width: 70px" ; class="sdAs">СДАС</th>
+          <th style="width: 90px" ; class="krSrokPodachi">
+            _крайний_ срок подачи
+          </th>
+          <th style="width: 90px" ; class="planPodachi">план. дата __подачи__</th>
+          <th style="width: 90px" ; class="metrologyKomm">_Метрология_комментарии_</th>
+          <th style="width: 90px" ; class="gr">___ГР___</th>
+          <th style="width: 150px" ; class="naimAiis2">Наименован_ОТ</th>
+          <th style="width: 90px" ; class="sdSop">СД __СОП___</th>
+          <th style="width: 40px" ; class="izmAiis">Изм. АИИС</th>
+          <th style="width: 40px" ; class="tipIzmOt">Тип изм. АИИС</th>
+          <th style="width: 90px" ; class="neobhRab">Необходимые работы</th>
+          <th style="width: 30px" ; class="rabZaplan">раб. запл- ованы</th>
+          <th style="width: 70px" ; class="dogPlan">_Договор_</th>
+          <th style="width: 70px" ; class="smrPlan">___СМР___</th>
+          <th style="width: 70px" ; class="vyezdPlan">__выезд___</th>
+          <th style="width: 70px" ; class="vniimsPlan">_вниимс__</th>
+          <th style="width: 70px" ; class="rstPlan">___РСТ___</th>
+          <th style="width: 70px" ; class="prikazPlan">__приказ__</th>
+          <th style="width: 70px" ; class="oforSopPlan">офор_СОП</th>
+          <th style="width: 70px" ; class="kommOt">комм. ОТ</th>
+          <!--
+          <th style="width: 200px" ; class="naimSechShort2">
+            Наим. сеч-я скокр
+          </th>  -->
+          <th style="width: 100px" ; class="codirovkaActual">
+            Кодировка актуал.
+          </th>
+          <th style="width: 100px" ; class="tipIzmCodirovki">Вид изм код-ки</th>
+          <th style="width: 200px" ; class="sverkiKomm">Сверки комм.</th>
+          <th style="width: 40px" ; class="sv1">св-1</th>
+          <th style="width: 40px" ; class="sv2">св-2</th>
+          <th style="width: 40px" ; class="sv3">св-3</th>
+          <th style="width: 40px" ; class="pi">ПИ</th>
+          <th style="width: 40px" ; class="textOt">текст ОТ</th>
+          <th style="width: 100px" ; class="gotovnostUs">Готовность УС</th>
+          <th style="width: 300px" ; class="zakluchenie">Заключение</th>
+          <th style="width: 200px" ; class="osobenAiis">Особенность АИИС</th>
+          <th style="width: 40px" ; class="kolTi">кол-во ИК</th>
+          <th style="width: 90px" ; class="sobstvAiis">Сосбств. аиис</th>
+          <th style="width: 90px" ; class="_id">_id sech</th>
+        </tr>
+      </thead>
+    </table>
+
+    <br/>
+    <div class="futer">
+      <div id="futer1">#</div>
+      
+      
+   <!--div class="dropdown">
+  <button class="button1">Сечение...</button>
+  <div class="dropdown-content">
+    <input type="button" value="Удалить сеч.      "  onClick="delSech();"/>
+    <input type="button" value="Добавить сеч.     "  onclick="location.href='addsech.html';"/>
+    <input type="button" value="Редактировать сеч."  onClick="openEditSech();"/>
+  </div>
+</div-->
+      
+      <input type="button" value=" скрыть ст. " class="button1"  onClick="hideSt();" />
+      <input type="button" value=" СИ " class="button1"  onClick="openSi();" />
+      <!--input type="button" value=" красный " class="button1" onClick="makeRed();">
+      <input type="button" value=" оранжевый " class="button1" onClick="makeOrange();">
+      <input type="button" value=" зеленый " class="button1" onClick="makeGreen();">
+      <input type="button" value=" серый " class="button1" onClick="makeGray();">
+      <input type="button" value=" черный " class="button1" onClick="makeBlack();"-->
+      
+            
+          
+    </div>
+    
+    <div class="hint">
+      <form name="Sel2" id="form3">
+        <table id="table2">
+          <thead>
+            <tr>
+              <th>Наим. сеч-я сокр.</th>
+              <th>вид работ</th>
+              <th> Согл. ГТП </th>
+              <th> Допуск </th>
+              <th>СДАС</th>
+              <th>CД ПАС</th>
+              <th>Кр. срок подачи</th>
+              <th>план. дата подачи</th>
+              <th style="width: 90px">Метрология комм.</th>
+              <th>Кодировка актуал.</th>
+              <th>Тип изм-й кодировки</th>
+              <th>Запрос на перекод</th>
+              <th>согл-е 60 ДКУ</th>
+              <th>согл-е 60 смеж (отпр/согл)</th>
+              <th>4В (отпр/согл)</th>
+              <th>Сверки комм.</th>
+              <th>св-1</th>
+              <th>св-2</th>
+              <th>св-3</th>
+              <th>ПИ</th>
+              <th>текст ОТ</th>
+              <th>Готовность УС</th>
+              <th>Заключение</th>
+              <th>Особенность АИИС</th>
+              <th>кол-во ИК</th>
+              <th>Сосбств. аиис</th>
+              <th>код гтп</th>
+              <th>код сечения</th>
+              <th>id сечения</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input name="naimSechShort" ></td>
+              <td><select  name="vidRabot">
+                <option value="продление">продление</option>
+                <option value="изменения">изменения</option>
+                <option value="новое">новое</option></td>
+              <td><input name="soglGtp" type='date'></td>
+              <td><input name="dopusk" type='date'></td>
+              <td><input name="sdAs" type='date'></td>
+              <td><input name="sdPas" type='date'></td>
+              <td><input name="krSrokPodachi" type='date' ></td>
+              <td><input name="planPodachi" type='date' ></td>
+              <td name="metrologyKomm" contenteditable="true"></td>
+              <td><select name="codirovkaActual">
+                <option value="актуальна">актуальна</option>
+                <option value="Не актуальна">Не актуальна</option>
+                <option value="не проверялась">не проверялась</option> </td>
+              <td name="tipIzmCodirovki" contenteditable="true"></td>
+              <td><input name="zaprosPerecod" type='date' ></td>
+              <td><input name="60SoglDku" type='date' ></td>
+              <td><input name="60SoglSmezhOtpr" type='date'>
+                  <input name="60SoglSmezhSogl" type='date'></td>
+              <td><input name="4vOtprav" type='date'>
+                  <input name="4vSogl" type='date'></td>
+              <td name="sverkiKomm" contenteditable="true"></td>
+              <td name="sv1"  contenteditable="true"></td>
+              <td name="sv2"  contenteditable="true"></td>
+              <td name="sv3"  contenteditable="true"></td>
+              <td name="pi"  contenteditable="true"></td>
+              <td name="textOt"  contenteditable="true"></td>
+              <td name="gotovnostUs"  contenteditable="true"></td>
+              <td name="zakluchenie"  contenteditable="true"></td>
+              <td name="osobenAiis"  contenteditable="true"></td>
+              <td><input name="kolTi"></td>
+              <td><input name="sobstvAiis" rows="1" cols="10"> </td>
+              <td><input name="kodGtp"  ></td>
+              <td><input name="kodSech" ></td>
+              <td><input name="sechId" readonly></td>
+            </tr>
+          </tbody>
+        </table>
+       
+        <br><br>
+
+        <table id="table3">
+          <thead>
+            <tr>
+              <th>ГР</th>
+              <th>Наим. АИИС общ.</th>
+              <th>Наим. АИИС точн.</th>
+              <th>СД СОП</th>
+              <th>Изм-я аиис</th>
+              <th>Тип изменений</th>
+              <th>Необх Работ</th>
+              <th>работы запланированы</th>
+              <th>Договор план / факт</th>
+              <th>смр план / факт</th>
+              <th>выезд план / факт</th>
+              <th>вниимс факт</th>
+              <th>РСТ факт</th>
+              <th>приказ факт</th>
+              <th>оформл СОП факт</th>
+              <th>комментарии</th>
+              <th>id ОТ</th>
+            </tr>
+          </thead>
+          <tbody id="table3tbody">
+          </tbody>
+        </table>
+        <br><br>
+
+        <div class="futer">
+        <input type="button" value=" красный" class="button1" onClick="makeRed();">
+        <input type="button" value="оранжевый" class="button1" onClick="makeOrange();">
+        <input type="button" value="зеленый" class="button1" onClick="makeGreen();">
+        <input type="button" value="черный" class="button1" onClick="makeBlack();">
+        <br><br>
+        <input TYPE="button" value="Внести изменения" class="button1" onClick="editSech();">
+        </div>
+      </form>
+    </div>
+
+    <script type="text/javascript" src="readSech.js"></script>
+  </body>
+</html>
