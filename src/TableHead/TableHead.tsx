@@ -18,7 +18,6 @@ export function TableHead({
   setTableWidth,
 }: IProps) {
   const [colWidths, setColWidths] = useImmer<number[]>([]);
-  // const [tableWidth, setTableWidth] = useState(0);
 
   const startX = useRef(0);
   const startColWidth = useRef(0);
@@ -95,7 +94,7 @@ export function TableHead({
             <th
               className={classes}
               onDoubleClick={() => {
-                // sortBy(param);
+                sortBy(param);
               }}
               style={{
                 minWidth: colWidths[i],

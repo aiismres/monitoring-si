@@ -2,7 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from './app.module.css';
 import { TableHead } from './TableHead';
 import { colOrderObj } from './modules/constants';
-import { IAppState, IResReadSiData, ISechInfo, ISiData } from './app.types';
+import {
+  IAppState,
+  IResReadSiData,
+  ISechInfo,
+  ISiData,
+  ISiObj2,
+} from './app.types';
 import { checkData } from './modules/checkDataMod';
 import produce from 'immer';
 
@@ -83,7 +89,7 @@ function App() {
     console.log(siState, param);
     setSiState((state: ISiData[]) => {
       let stateMod = structuredClone(state);
-      stateMod = stateMod.sort((a: ISiData, b: ISiData) => {
+      stateMod = stateMod.sort((a: ISiObj2, b: ISiObj2) => {
         // console.log(a);
         if (
           [
