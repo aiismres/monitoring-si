@@ -48,6 +48,7 @@ export function TableHead({
     startTableWidth.current = tableWidth;
     console.log('onDragStart', 'e.clientX:', e.clientX, { i });
   }
+
   function onDragTh(e: React.DragEvent, i: number) {
     if (e.clientY <= 0) return; // исключить последниее значение drgon т.к. оно всегда косячное
     let colWidthInc = e.clientX - startX.current;
@@ -79,6 +80,7 @@ export function TableHead({
       return sum1 - 14;
     });
   }
+
   return (
     <thead id="thead1">
       <tr>
