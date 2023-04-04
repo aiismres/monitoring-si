@@ -14,7 +14,7 @@ export interface IAppState {
 }
 
 export interface IResReadSiData {
-  si: ISiData[];
+  si: ISiObj2[];
   sechInfo?: ISechInfo
 }
 
@@ -33,13 +33,14 @@ export interface ISiObjNested {
   status: string;
   status2: string;
   status3: string;
+  selected: string;
 }
 
 export interface ISiObj2 {
   [name: string]: ISiObjNested
 }
 
-export interface ISiData {
+export interface ISiObj1 {
   id: string;
   numTiShem60: {
     v: string;
