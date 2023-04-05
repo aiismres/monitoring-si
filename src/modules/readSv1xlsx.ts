@@ -3,7 +3,7 @@ import ExcelJS from 'exceljs';
 import { sameCharEn, sameCharRu } from './constants.js';
 // import { saveAs } from 'file-saver';
 import { sameChar } from './constants';
-import { ISiObj1 } from '../app.types.js';
+import { ISiObj1, TStatus, TStatus2, TStatus3 } from '../app.types.js';
 
 type TOption = 'samechar' | 'string' | ''
 
@@ -11,8 +11,8 @@ export const readSv1xlsx = async (file: File) => {
   // let file = e.target.files.item(0);
   console.log(file);
   alert(`
-  Импорт Сверка-1.xlsx 
-  
+  Импорт Сверка-1.xlsx
+
   ${file.name}`);
 
   const workbook = new ExcelJS.Workbook();
@@ -39,7 +39,7 @@ export const readSv1xlsx = async (file: File) => {
       const ws = workbook.getWorksheet('Лист 1');
 
       function setValueStatuses(cell: ExcelJS.Cell, option: TOption) {
-        let value, status, status2 ,status3;
+        let value, status: TStatus, status2: TStatus2 ,status3: TStatus3;
         // @ts-ignore
         if (cell.style.fill?.fgColor?.argb === 'FFFFFF00') {
           status = 'warning';
@@ -76,14 +76,14 @@ export const readSv1xlsx = async (file: File) => {
       let i = 3;
 
       let row = ws.getRow(i).values;
-      let siObj: ISiObj1 = {
+      let siObj = {
         kodTi80: { v: '', status: '', status2: '', status3: '' },
         naimTi80: { v: '', status: '', status2: '', status3: '' },
         tipSch80: { v: '' , status: '', status2: '', status3: ''},
         kanaly80: { v: '' , status: '', status2: '', status3: ''},
 
         numTiShem60: { v: '', status: '', status2: '', status3: '' },
-        tiAiis: { v: '' },
+        // tiAiis: { v: 'да' },
         gr: { v: '', status: '', status2: '', status3: '' },
         numTiSop: { v: '', status: '', status2: '', status3: '' },
 
@@ -113,7 +113,7 @@ export const readSv1xlsx = async (file: File) => {
         tipSch60Pre: { v: '', status: '', status2: '', status3: '' },
         kodTi60Pre: { v: '', status: '', status2: '', status3: '' },
         kanaly60Pre: { v: '', status: '', status2: '', status3: ''},
-      };
+      } as ISiObj1;
 
       while (row.length !== 0) {
         console.log(ws.getCell(`E${i}`).value);

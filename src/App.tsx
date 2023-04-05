@@ -4,11 +4,11 @@ import { TableHead } from './TableHead';
 import { colOrderObj, sameChar } from './modules/constants';
 import {
   IAppState,
-  IResReadSiData,
+  // IResReadSiData,
   IResReadSiData1,
   ISechInfo,
   ISiObj1,
-  ISiObj2,
+  // ISiObj2,
 } from './app.types';
 import { checkData } from './modules/checkDataMod';
 import produce from 'immer';
@@ -19,6 +19,18 @@ import AppBar from '@mui/material/AppBar';
 import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import { FileDropZone } from './FileDropZone';
+import { SpeedDialNav } from './SpeedDialNav';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Snackbar,
+  buttonBaseClasses,
+} from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -373,15 +385,94 @@ function App() {
             setAppState={setAppState}
             setSechInfo={setSechInfo}
           />
-          {/* <SpeedDialNav
-            inputFileSv2={inputFileSv2}
+          <SpeedDialNav
             btnExportSv1={btnExportSv1}
+            // inputFileSv2={inputFileSv2}
             btnEdit={btnEdit}
             appState={appState}
             setAppState={setAppState}
-          /> */}
+          />
         </Toolbar>
       </AppBar>
+      <Snackbar
+        open={!appState.isSiStateSave}
+        ContentProps={{
+          sx: {
+            background: '#ff8c00',
+          },
+        }}
+        message="Режим редактирования"
+        action={
+          <Button
+            color="error"
+            size="small"
+            onClick={saveSiData}
+            variant="contained"
+            sx={{ paddingTop: '8px' }}
+          >
+            Сохранить
+          </Button>
+        }
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      />
+      <Snackbar
+        open={appState.isMsgOpen}
+        autoHideDuration={3000}
+        onClose={() => {
+          setAppState((st) => ({ ...st, isMsgOpen: false }));
+        }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity={appState.isSuccess ? 'success' : 'error'}
+          sx={{ width: '100%' }}
+        >
+          {/* <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}> */}
+          {appState.isSuccess
+            ? 'Данные успешно сохранены.'
+            : 'Ошибка, изменения НЕ сохранены!'}
+        </MuiAlert>
+      </Snackbar>
+      <Dialog
+        open={appState.isInfoOpen}
+        onClose={() => {
+          setAppState({ ...appState, isInfoOpen: false });
+        }}
+        maxWidth={'md'}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {appState.naimSechShort}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            80000xml area: {sechInfo?.areaCode}
+          </DialogContentText>
+          <DialogContentText>
+            80000xml name: {sechInfo?.areaName}
+          </DialogContentText>
+          <DialogContentText>60000xml: {sechInfo?.source60}</DialogContentText>
+          <DialogContentText>БД: {sechInfo?.sourceDB}</DialogContentText>
+          <DialogContentText>Кол-во ТИ: {sechInfo?.amountTi}</DialogContentText>
+          <DialogContentText>ОТ: {'asdfasdfasdfs'}</DialogContentText>
+          <DialogContentText>СОП: {'asdfasdfasdfs'}</DialogContentText>
+          <DialogContentText>Сверка-1: {'asdfasdfasdfs'}</DialogContentText>
+          <DialogContentText>Сверка-2: {'asdfasdfasdfs'}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setAppState({ ...appState, isInfoOpen: false });
+            }}
+            // autoFocus
+          >
+            Закрыть
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

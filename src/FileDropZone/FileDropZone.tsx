@@ -8,7 +8,7 @@ import { read80xmlMod } from '../modules/read80xmlMod';
 import { readSv1xlsx } from '../modules/readSv1xlsx';
 import { readDBxlsxMod } from '../modules/readDBxlsxMod';
 import { checkData } from '../modules/checkDataMod';
-import { IAppState, ISechInfo, ISiObj1, ISiObj2 } from '../app.types';
+import { IAppState, ISechInfo, ISiObj1 } from '../app.types';
 
 interface IProps {
   siState: ISiObj1[];

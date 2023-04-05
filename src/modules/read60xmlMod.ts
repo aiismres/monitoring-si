@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import { sameChar } from './constants';
-import { IMesPoint60, ISiObj1, ISiObj2 } from '../app.types';
+import { IMesPoint60, ISiObj1 } from '../app.types';
 
 interface IAiisMesChannel {
   [name:string]: string[]
@@ -23,7 +23,7 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
   }
   alert(`
   Импорт 60000.XML
-  
+
   ${file.name}`);
 
   let encoding = file.name.includes('60002') ? 'UTF-8' : 'Windows-1251';
@@ -203,11 +203,11 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
       siArMod = siArMod.map((siObj: ISiObj1) => {
         if (siObj.naimTi60.v) {
           isPre60 = true;
-          siObj.numTiShem60Pre = { ...siObj.numTiShem60 };
-          siObj.kodTi60Pre = { ...siObj.kodTi60, status3: '' };
-          siObj.naimTi60Pre = { ...siObj.naimTi60, status3: '' };
-          siObj.tipSch60Pre = { ...siObj.tipSch60, status3: '' };
-          siObj.kanaly60Pre = { ...siObj.kanaly60, status3: '' };
+          siObj.numTiShem60Pre = { ...siObj.numTiShem60, status: '', status2: '', status3: '' };
+          siObj.kodTi60Pre = { ...siObj.kodTi60, status: '', status2: '', status3: ''  };
+          siObj.naimTi60Pre = { ...siObj.naimTi60, status: '', status2: '', status3: '' };
+          siObj.tipSch60Pre = { ...siObj.tipSch60, status: '', status2: '', status3: '' };
+          siObj.kanaly60Pre = { ...siObj.kanaly60, status: '', status2: '', status3: ''};
           return siObj;
         } else {
           return {
@@ -347,7 +347,7 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
               naimTi60: {v: si60.naimTi},
               tipSch60: {v: si60.deviceMod},
               kanaly60: {v: si60.kanaly}
-            } 
+            }
           } else {
             return siObj
           }

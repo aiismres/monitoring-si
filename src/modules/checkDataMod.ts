@@ -1,4 +1,4 @@
-import { ISiObj1, ISiObj2 } from "../app.types";
+import { ISiObj1 } from "../app.types";
 
 export function checkData(siArray: ISiObj1[]) {
   console.log("export function compareDate() ", siArray);

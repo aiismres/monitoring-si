@@ -12,8 +12,8 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
     return siAr;
   }
   alert(`
-  Импорт 80000.XML 
-  
+  Импорт 80000.XML
+
   ${file.name}`);
 
   // let encoding = file.name.includes("60002") ? "UTF-8" : "Windows-1251";
@@ -36,7 +36,7 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
         const aiisAreaTag = aiisTag.getElementsByTagName('area')[0];
         const areaCode = aiisAreaTag.getAttribute('ats-code')!;
         const areaName = aiisAreaTag.getAttribute('name')!;
-        let isCorrect80mx = window.confirm(`area-name: 
+        let isCorrect80mx = window.confirm(`area-name:
       ${areaName}
       area-code: ${areaCode}`);
         if (!isCorrect80mx) {
@@ -116,7 +116,7 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
         let siAr80 = mesPointS;
         console.log(siAr80);
 
-        let siArMod = siAr.map((siObj) => {
+        let siArMod: ISiObj1[] = siAr.map((siObj) => {
           return {
             ...siObj,
             // numTiShem80: {},
@@ -125,7 +125,7 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
             tipSch80: { v: '', status: '', status2: '', status3: '' },
             kanaly80: { v: '', status: '', status2: '', status3: '' },
           };
-        });
+        }) ;
         console.log(siArMod);
         siAr80.forEach((si80) => {
           let index = siArMod.findIndex(
@@ -138,9 +138,9 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
               tipSch80: { v: si80.deviceMod , status: '', status2: '', status3: ''},
               kanaly80: { v: si80.kanaly , status: '', status2: '', status3: ''},
 
-              id: nanoid(),
+              // id: nanoid(),
+              // tiAiis: { v: 'да' },
               numTiShem60: { v: '', status: '', status2: '', status3: '' },
-              tiAiis: { v: '' },
               gr: { v: '', status: '', status2: '', status3: '' },
               numTiSop: { v: '', status: '', status2: '', status3: '' },
 
@@ -171,7 +171,7 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
               kodTi60Pre: { v: '', status: '', status2: '', status3: '' },
               kanaly60Pre: { v: '', status: '', status2: '', status3: ''},
 
-            };
+            } as ISiObj1;
             siArMod.push(siOdjfrom80);
           } else {
             siArMod[index] = {
@@ -193,7 +193,7 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
               naimTi80: {v: si80.naimTi},
               tipSch80: {v: si80.deviceMod},
               kanaly80: {v: si80.kanaly}
-            } 
+            }
           } else {
             return siObj
           }
