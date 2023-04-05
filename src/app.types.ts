@@ -13,11 +13,6 @@ export interface IAppState {
     isInfoOpen: boolean;
 }
 
-// export interface IResReadSiData {
-//   si: ISiObj2[];
-//   sechInfo?: ISechInfo
-// }
-
 
 export interface IResReadSiData1 {
   si: ISiObj1[];
@@ -34,21 +29,10 @@ export interface ISechInfo {
   amountTi?: number
 }
 
-// export interface ISiObjNested {
-//   v: string;
-//   status: string;
-//   status2: string;
-//   status3: string;
-//   selected: string;
-// }
-
-// export interface ISiObj2 {
-//   [name: string]: ISiObjNested
-// }
-
 export type TStatus = '' | 'warning';
 export type TStatus2 = '' | 'correct' | 'incorrect';
 export type TStatus3 = '' | 'changed';
+
 export interface IStringString {
   [name: string]: {[name: string]: string | TStatus | TStatus2 | TStatus3 | 'да' | 'нет'}
 }
@@ -57,9 +41,6 @@ export interface ISiObj1 extends IStringString {
   // id?: string;
   // tiAiis: {
   //   v: 'да' | 'нет';
-  //   // status: string;
-  //   // status2: string;
-  //   // status3: string;
   // };
   numTiShem60Pre: {
     v: string;
