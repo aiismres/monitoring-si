@@ -1,6 +1,6 @@
-import { ISiObj2 } from "../app.types";
+import { ISiObj1 } from "../app.types";
 
-export async function exportSv1Mod(siState: ISiObj2[]) {
+export async function exportSv1Mod(siState: ISiObj1[]) {
 
   console.log(siState);
 

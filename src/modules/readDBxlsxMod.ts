@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import ExcelJS from "exceljs";
-import { sameChar } from "./constants.js";
+import { sameChar } from "./constants";
 import { ISiObj1 } from "../app.types.js";
 
 export const readDBxlsxMod = async (file: File, siArray: ISiObj1[]) => {

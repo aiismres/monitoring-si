@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import styles from './FileDropZone.module.css';
+import styles from './filedropzone.module.css';
 import { nanoid } from 'nanoid';
 import { colFullName, colOrderObj, sameChar } from '../modules/constants';
 import { read60xmlMod } from '../modules/read60xmlMod';
@@ -11,8 +11,8 @@ import { checkData } from '../modules/checkDataMod';
 import { IAppState, ISechInfo, ISiObj1, ISiObj2 } from '../app.types';
 
 interface IProps {
-  siState: ISiObj2[];
-  setSiState: (value: SetStateAction<ISiObj2[]>) => void;
+  siState: ISiObj1[];
+  setSiState: (value: SetStateAction<ISiObj1[]>) => void;
   setAppState: (value: SetStateAction<IAppState>) => void;
   setSechInfo: (value: SetStateAction<ISechInfo>) => void;
 }
@@ -34,7 +34,7 @@ export function FileDropZone({
           let [data, source60, isPre60] = (await read60xmlMod(
             file,
             siState
-          )) as [ISiObj2[], string, boolean];
+          )) as [ISiObj1[], string, boolean];
           console.log(data, source60);
           if (isPre60) {
             setAppState((appState) => ({
@@ -50,7 +50,10 @@ export function FileDropZone({
           }));
           setSechInfo((sechInfo) => ({ ...sechInfo, source60 }));
         } else if (file.name.includes('80000')) {
-          let [data, areaCode, areaName] = await read80xmlMod(file, siState);
+          let [data, areaCode, areaName] = (await read80xmlMod(
+            file,
+            siState
+          )) as [ISiObj1[], string, string];
           console.log(data);
           data = checkData(data);
           setSiState(data);
@@ -69,7 +72,7 @@ export function FileDropZone({
           file.name.includes('Сверка-1') ||
           file.name.includes('resultSv1')
         ) {
-          let data = await readSv1xlsx(file);
+          let data = (await readSv1xlsx(file)) as ISiObj1[];
           data = checkData(data);
           setSiState(data);
           setAppState((appState) => ({
@@ -77,7 +80,10 @@ export function FileDropZone({
             isSiStateSave: false,
           }));
         } else if (file.name.includes('Сопоставление ТУ и кодов 80020')) {
-          let [data, sourceDB] = await readDBxlsxMod(file, siState);
+          let [data, sourceDB] = (await readDBxlsxMod(file, siState)) as [
+            ISiObj1[],
+            string
+          ];
           data = checkData(data);
           setSiState(data);
           setAppState((appState) => ({

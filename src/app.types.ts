@@ -18,6 +18,12 @@ export interface IResReadSiData {
   sechInfo?: ISechInfo
 }
 
+
+export interface IResReadSiData1 {
+  si: ISiObj1[];
+  sechInfo?: ISechInfo
+}
+
 export interface ISechInfo {
   sechID?: string;
   naimSechShort?: string;
@@ -37,36 +43,47 @@ export interface ISiObjNested {
 }
 
 export interface ISiObj2 {
-  [name: string]: ISiObjNested
+  [name: string]: ISiObjNested 
 }
 
-export interface ISiObj1 {
-  id?: string;
-  numTiShem60Pre?: {
+
+export interface IStringString {
+  [name: string]: {[name: string]: string} 
+}
+
+export interface ISiObj1 extends IStringString {
+  // id?: string;
+  tiAiis: {
+    v: string;
+    // status: string;
+    // status2: string;
+    // status3: string;
+  };
+  numTiShem60Pre: {
     v: string;
     status: string;
     status2: string;
     status3: string;
   };
-  kodTi60Pre?: {
+  kodTi60Pre: {
     v: string;
     status: string;
     status2: string;
     status3: string;
   };
-  naimTi60Pre?: {
+  naimTi60Pre: {
     v: string;
     status: string;
     status2: string;
     status3: string;
   };
-  tipSch60Pre?: {
+  tipSch60Pre: {
     v: string;
     status: string;
     status2: string;
     status3: string;
   };
-  kanaly60Pre?: {
+  kanaly60Pre: {
     v: string;
     status: string;
     status2: string;
@@ -98,12 +115,6 @@ export interface ISiObj1 {
   };
   kanaly60: {
     v: string;
-    status: string;
-    status2: string;
-    status3: string;
-  };
-  tiAiis: {
-    v: boolean;
     status: string;
     status2: string;
     status3: string;

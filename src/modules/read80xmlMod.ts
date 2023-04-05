@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { sameChar } from './constants.js';
+import { sameChar } from './constants';
 import { IMesPoint80, ISiObj1 } from '../app.types.js';
 
 export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
@@ -140,7 +140,7 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
 
               id: nanoid(),
               numTiShem60: { v: '', status: '', status2: '', status3: '' },
-              tiAiis: { v: true, status: '', status2: '', status3: '' },
+              tiAiis: { v: '' },
               gr: { v: '', status: '', status2: '', status3: '' },
               numTiSop: { v: '', status: '', status2: '', status3: '' },
 
@@ -164,6 +164,13 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
 
               kodTi60: { v: '', status: '', status2: '', status3: '' },
               kanaly60: { v: '', status: '', status2: '', status3: ''},
+
+              numTiShem60Pre: { v: '', status: '', status2: '', status3: '' },
+              naimTi60Pre: { v: '', status: '', status2: '', status3: '' },
+              tipSch60Pre: { v: '', status: '', status2: '', status3: '' },
+              kodTi60Pre: { v: '', status: '', status2: '', status3: '' },
+              kanaly60Pre: { v: '', status: '', status2: '', status3: ''},
+
             };
             siArMod.push(siOdjfrom80);
           } else {

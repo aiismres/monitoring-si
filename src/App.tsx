@@ -5,6 +5,7 @@ import { colOrderObj, sameChar } from './modules/constants';
 import {
   IAppState,
   IResReadSiData,
+  IResReadSiData1,
   ISechInfo,
   ISiObj1,
   ISiObj2,
@@ -27,7 +28,7 @@ declare module 'react' {
 }
 
 function App() {
-  const [siState, setSiState] = useState<ISiObj2[]>([]);
+  const [siState, setSiState] = useState<ISiObj1[]>([]);
   const [appState, setAppState] = useState<IAppState>({
     // selectedCell: {},
     colOrderOpt: 'opt1',
@@ -55,7 +56,7 @@ function App() {
 
   const btnExportSv1 = useRef(null);
   const btnEdit = useRef(null);
-  const siStateMod = useRef<ISiObj2[]>([]);
+  const siStateMod = useRef<ISiObj1[]>([]);
 
   useEffect(() => {
     if (appState.isSiStateSave) {
@@ -88,7 +89,7 @@ function App() {
         },
         body: JSON.stringify({ id: url.searchParams.get('sechID') }),
       });
-      let resJson: IResReadSiData = await res.json();
+      let resJson: IResReadSiData1 = await res.json();
       console.log('res /api/readsidata', resJson);
 
       resJson.si = checkData(resJson.si);
@@ -101,9 +102,9 @@ function App() {
 
   function sortBy(param: string) {
     console.log(siState, param);
-    setSiState((state: ISiObj2[]) => {
+    setSiState((state: ISiObj1[]) => {
       let stateMod = structuredClone(state);
-      stateMod = stateMod.sort((a: ISiObj2, b: ISiObj2) => {
+      stateMod = stateMod.sort((a: ISiObj1, b: ISiObj1) => {
         // console.log(a);
         if (
           [
@@ -148,6 +149,7 @@ function App() {
         let siarrMod = [...siarr];
         siarrMod[i][param].status2 = '';
         siarrMod[i][param].status = '';
+        // siarrMod[i]?[param as keyof ISiObj1].status2 = '';
         return siarrMod;
       });
     } else if (e.ctrlKey) {

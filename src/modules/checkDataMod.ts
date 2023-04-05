@@ -1,9 +1,9 @@
 import { ISiObj1, ISiObj2 } from "../app.types";
 
-export function checkData(siArray: ISiObj2[]) {
+export function checkData(siArray: ISiObj1[]) {
   console.log("export function compareDate() ", siArray);
 
-  function markTipSchWarning(siObj: ISiObj2) {
+  function markTipSchWarning(siObj: ISiObj1) {
     if (siObj.tipSchSop.v) siObj.tipSchSop.status = "warning";
     if (siObj.tipSch80.v) siObj.tipSch80.status = "warning";
     if (siObj.tipSch60.v) siObj.tipSch60.status = "warning";
