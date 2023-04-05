@@ -41,7 +41,37 @@ export interface ISiObj2 {
 }
 
 export interface ISiObj1 {
-  id: string;
+  id?: string;
+  numTiShem60Pre?: {
+    v: string;
+    status: string;
+    status2: string;
+    status3: string;
+  };
+  kodTi60Pre?: {
+    v: string;
+    status: string;
+    status2: string;
+    status3: string;
+  };
+  naimTi60Pre?: {
+    v: string;
+    status: string;
+    status2: string;
+    status3: string;
+  };
+  tipSch60Pre?: {
+    v: string;
+    status: string;
+    status2: string;
+    status3: string;
+  };
+  kanaly60Pre?: {
+    v: string;
+    status: string;
+    status2: string;
+    status3: string;
+  };
   numTiShem60: {
     v: string;
     status: string;
@@ -73,7 +103,7 @@ export interface ISiObj1 {
     status3: string;
   };
   tiAiis: {
-    v: string;
+    v: boolean;
     status: string;
     status2: string;
     status3: string;
@@ -186,4 +216,20 @@ export interface ISiObj1 {
     status2: string;
     status3: string;
   };
+}
+
+export interface IMesPoint60 {
+  'ats-code': string;
+  schemanum: string;
+  naimTi: string;
+  deviceMod: string;
+  kanaly: string;
+  idMesChannelS: string[];
+}
+
+export interface IMesPoint80 {
+  'ats-code': string;
+  naimTi: string;
+  deviceMod: string;
+  kanaly: string;
 }

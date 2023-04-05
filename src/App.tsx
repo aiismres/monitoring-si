@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
 import styles from './app.module.css';
 import { TableHead } from './TableHead';
 import { colOrderObj, sameChar } from './modules/constants';
@@ -13,6 +13,11 @@ import { checkData } from './modules/checkDataMod';
 import produce from 'immer';
 import { nanoid } from 'nanoid';
 import { exportSv1Mod } from './modules/exportSv1Mod';
+import Toolbar from '@mui/material/Toolbar';
+import AppBar from '@mui/material/AppBar';
+import Switch from '@mui/material/Switch';
+import Typography from '@mui/material/Typography';
+import { FileDropZone } from './FileDropZone';
 
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -252,6 +257,23 @@ function App() {
     }
   };
 
+  function handleSwitch(e: ChangeEvent<HTMLInputElement>) {
+    console.log();
+    if (e.target.checked) {
+      setAppState({
+        ...appState,
+        colOrderOpt: 'opt2',
+        colOrder: colOrderObj['opt2'],
+      });
+    } else {
+      setAppState({
+        ...appState,
+        colOrderOpt: 'opt1',
+        colOrder: colOrderObj['opt1'],
+      });
+    }
+  }
+
   return (
     <div className={styles.App}>
       <table
@@ -337,6 +359,27 @@ function App() {
           экспорт св-1
         </button>
       </div>
+      <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
+        <Toolbar>
+          <Switch color="default" onChange={handleSwitch} />
+          <Typography variant="h6" sx={{ mr: 5 }}>
+            {appState.naimSechShort}
+          </Typography>
+          <FileDropZone
+            siState={siState}
+            setSiState={setSiState}
+            setAppState={setAppState}
+            setSechInfo={setSechInfo}
+          />
+          {/* <SpeedDialNav
+            inputFileSv2={inputFileSv2}
+            btnExportSv1={btnExportSv1}
+            btnEdit={btnEdit}
+            appState={appState}
+            setAppState={setAppState}
+          /> */}
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }
