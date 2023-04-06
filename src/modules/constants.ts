@@ -149,7 +149,7 @@ export const colFullName: IStringString = {
   kodTi60: 'кодТИ60',
   naimTi60: 'наимТИ60',
   tipSch60: 'типСч60',
-  kanaly60: 'каналы60',
+  kanaly60: 'каналы 60',
   // tiAiis: "ТИ в АИИС",
   gr: '№ ГР',
   numTiSop: '№ТИ СОП',
@@ -168,7 +168,7 @@ export const colFullName: IStringString = {
   ktnSop: 'Ктн СОП',
   ktnDB: 'Ктн БД',
   kodTi80: 'кодТИ80',
-  kanaly80: 'каналы80',
+  kanaly80: 'каналы 80',
 };
 
 // export const colGroupOrderObj = {

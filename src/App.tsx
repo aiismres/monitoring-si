@@ -227,9 +227,10 @@ function App() {
     }
 
     try {
-      if (!siStateMod.current) {
+      if (!siStateMod.current[0]) {
         siStateMod.current = siState;
       }
+
       let res = await fetch(`/api/savesidata`, {
         method: 'post',
         headers: {

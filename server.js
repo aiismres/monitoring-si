@@ -53,16 +53,16 @@ const auth = () => (req, res, next) => {
     console.log('нет req.cookies?.[sessionID]');
     return next();
   } else {
-    console.log('req.cookies.sessionID', req.cookies.sessionID, sessionIDObj);
+    console.log('req.cookies.sessionID', req.cookies.sessionID);
     // let user = DB.users.find(
     //   (item) => item.sessionID == req.cookies['sessionID']
     // );
     let sessionID = req.cookies['sessionID'];
-    let user = sessionIDObj[sessionID];
-    if (!user) {
-      return next();
-    }
-    req.user = user;
+    // let user = sessionIDObj[sessionID];
+    // if (!user) {
+    //   return next();
+    // }
+    // req.user = user;
     console.log('req.user', req.user);
     next();
   }
