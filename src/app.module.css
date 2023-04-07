@@ -1,7 +1,8 @@
 .App {
   text-align: center;
 }
-/* 
+
+/*
 .App-logo {
   height: 20px;
   pointer-events: none;
@@ -11,7 +12,7 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-} 
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -52,8 +53,8 @@ code {
 }
 
 table {
-margin-bottom: 60px;
-border-bottom: 1px solid rgb(225, 225, 225);
+  margin-bottom: 60px;
+  border-bottom: 1px solid rgb(225, 225, 225);
 }
 
 table,
@@ -66,7 +67,7 @@ td {
 }
 
 table thead {
-  position: sticky; 
+  position: sticky;
   top: 0;
   box-shadow: 0px 1px 5px 0px #a2a2a2;
 }
@@ -86,17 +87,17 @@ th {
   height: 40px;
   padding: 2px 7px;
   resize: horizontal;
-  overflow:hidden;
+  overflow: hidden;
   line-height: 40px;
- }
+}
 
- /* .noresize {
+/* .noresize {
   height: 40px;
   padding: 2px 7px;
   line-height: 40px;
  } */
 
-table tr:nth-child(2n){
+table tr:nth-child(2n) {
   background: rgba(16, 16, 16, 0.05);
 }
 
@@ -120,6 +121,7 @@ table tr:nth-child(2n){
 .selected {
   outline: 2px solid orange;
 }
+
 #input-sv1xlsx {
   width: 115px;
   margin-right: 5px;
@@ -187,11 +189,12 @@ table {
   border: solid 0px;
 } */
 
-input[name='numTiSop'], input[name='kttSop']{
+input[name='numTiSop'],
+input[name='kttSop'] {
   width: 40px;
 }
 
- input[name='ktnSop'] {
+input[name='ktnSop'] {
   width: 60px;
 }
 
@@ -199,7 +202,7 @@ textarea {
   /* height:90%; */
   /* align-items:baseline; */
   font-size: x-large;
-  border: solid 0px ;
+  border: solid 0px;
   resize: none;
 }
 
@@ -214,11 +217,14 @@ textarea {
   /* outline: solid 1px coral; */
 }
 
-.naimTi60, .naimTi80, .naimTiSop {
+.naimTi60,
+.naimTi80,
+.naimTiSop {
   min-width: 200px;
 }
 
-.numSchSch, .numSchSop {
+.numSchSch,
+.numSchSop {
   min-width: 50px;
 }
 
@@ -230,16 +236,17 @@ textarea {
   min-width: 100px;
 }
 
-.tipSchSop, .tipSch80, .tipSchSch {
+.tipSchSop,
+.tipSch80,
+.tipSchSch {
   min-width: 110px;
 }
 
-.numTiSop, .numTiShem60 {
+.numTiSop,
+.numTiShem60 {
   text-align: center;
 }
 
 .dpnone {
   display: none;
 }
-
- 

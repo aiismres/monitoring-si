@@ -204,50 +204,50 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
       let siAr60: IMesPoint60[] = mesPointSAiis[aiisNum];
       console.log(siAr, siAr60);
       let isPre60 = false;
-      let siArMod = structuredClone(siAr);
+      let siArMod = structuredClone(siAr) as ISiObj1[];
       siArMod = siArMod.map((siObj: ISiObj1) => {
         if (siObj.naimTi60.v) {
           // console.log(siObj.naimTi60.v)
           isPre60 = true;
           siObj.numTiShem60Pre = {
             ...siObj.numTiShem60,
-            status: '',
-            status2: '',
-            status3: '',
+            // status: '',
+            // status2: '',
+            // status3: '',
           };
           siObj.kodTi60Pre = {
             ...siObj.kodTi60,
-            status: '',
-            status2: '',
-            status3: '',
+            // status: '',
+            // status2: '',
+            // status3: '',
           };
           siObj.naimTi60Pre = {
             ...siObj.naimTi60,
-            status: '',
-            status2: '',
-            status3: '',
+            // status: '',
+            // status2: '',
+            // status3: '',
           };
           siObj.tipSch60Pre = {
             ...siObj.tipSch60,
-            status: '',
-            status2: '',
-            status3: '',
+            // status: '',
+            // status2: '',
+            // status3: '',
           };
           siObj.kanaly60Pre = {
             ...siObj.kanaly60,
-            status: '',
-            status2: '',
-            status3: '',
+            // status: '',
+            // status2: '',
+            // status3: '',
           };
           return siObj;
         } else {
           return {
             ...siObj,
-            numTiShem60: {},
-            kodTi60: {},
-            naimTi60: {},
-            tipSch60: {},
-            kanaly60: {},
+            numTiShem60: { v: '', status: '', status2: '', status3: '' },
+            kodTi60: { v: '', status: '', status2: '', status3: '' },
+            naimTi60: { v: '', status: '', status2: '', status3: '' },
+            tipSch60: { v: '', status: '', status2: '', status3: '' },
+            kanaly60: { v: '', status: '', status2: '', status3: '' },
           };
         }
       });
@@ -273,6 +273,10 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
               siArMod[indexNumTiShem60Pre].kodTi60Pre
             );
           } else {
+            console.log(
+              siArMod[indexNumTiShem60Pre].kodTi60.v,
+              siArMod[indexNumTiShem60Pre].kodTi60Pre.v
+            );
             siArMod[indexNumTiShem60Pre].kodTi60 = {
               v: si60['ats-code'],
               status: '',
@@ -332,47 +336,107 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
         } else if (indexAtsCode >= 0 && !isPre60) {
           siArMod[indexAtsCode] = {
             ...siArMod[indexAtsCode],
-            numTiShem60: { v: si60.schemanum },
-            kodTi60: { v: si60['ats-code'] },
-            naimTi60: { v: si60.naimTi },
-            tipSch60: { v: si60.deviceMod },
-            kanaly60: { v: si60.kanaly },
+            numTiShem60: {
+              v: si60.schemanum,
+              status: '',
+              status2: '',
+              status3: '',
+            },
+            kodTi60: {
+              v: si60['ats-code'],
+              status: '',
+              status2: '',
+              status3: '',
+            },
+            naimTi60: { v: si60.naimTi, status: '', status2: '', status3: '' },
+            tipSch60: {
+              v: si60.deviceMod,
+              status: '',
+              status2: '',
+              status3: '',
+            },
+            kanaly60: { v: si60.kanaly, status: '', status2: '', status3: '' },
           };
         } else {
           console.log('else');
 
-          const siObj = {
-            numTiShem60: { v: si60.schemanum },
-            kodTi60: { v: si60['ats-code'] },
-            naimTi60: { v: si60.naimTi },
-            tipSch60: { v: si60.deviceMod },
-            kanaly60: { v: si60.kanaly },
+          const siObj: ISiObj1 = {
+            numTiShem60Pre: {
+              v: '',
+              status: '',
+              status2: '',
+              status3: '',
+            },
+            kodTi60Pre: {
+              v: '',
+              status: '',
+              status2: '',
+              status3: '',
+            },
+            naimTi60Pre: {
+              v: '',
+              status: '',
+              status2: '',
+              status3: '',
+            },
+            tipSch60Pre: {
+              v: '',
+              status: '',
+              status2: '',
+              status3: '',
+            },
+            kanaly60Pre: {
+              v: '',
+              status: '',
+              status2: '',
+              status3: '',
+            },
+            numTiShem60: {
+              v: si60.schemanum,
+              status: '',
+              status2: '',
+              status3: '',
+            },
+            kodTi60: {
+              v: si60['ats-code'],
+              status: '',
+              status2: '',
+              status3: '',
+            },
+            naimTi60: { v: si60.naimTi, status: '', status2: '', status3: '' },
+            tipSch60: {
+              v: si60.deviceMod,
+              status: '',
+              status2: '',
+              status3: '',
+            },
+            kanaly60: { v: si60.kanaly, status: '', status2: '', status3: '' },
 
             // id: nanoid(),
             // tiAiis: { v: true },
-            gr: { v: '' },
-            numTiSop: { v: '' },
+            gr: { v: '', status: '', status2: '', status3: '' },
+            numTiSop: { v: '', status: '', status2: '', status3: '' },
 
-            naimTiSop: { v: '' },
-            naimTi80: { v: '' },
-            naimTi82: { v: '' },
+            naimTiSop: { v: '', status: '', status2: '', status3: '' },
+            naimTi80: { v: '', status: '', status2: '', status3: '' },
+            naimTi82: { v: '', status: '', status2: '', status3: '' },
 
-            numSchDB: { v: '' },
-            numSchSop: { v: '' },
-            numSchSch: { v: '' },
+            numSchDB: { v: '', status: '', status2: '', status3: '' },
+            numSchSop: { v: '', status: '', status2: '', status3: '' },
+            numSchSch: { v: '', status: '', status2: '', status3: '' },
 
-            tipSchSop: { v: '' },
-            tipSch80: { v: '' },
-            tipSchSch: { v: '' },
-            tipSchDB: { v: '' },
+            tipSchSop: { v: '', status: '', status2: '', status3: '' },
+            tipSch80: { v: '', status: '', status2: '', status3: '' },
+            tipSchSch: { v: '', status: '', status2: '', status3: '' },
+            tipSchDB: { v: '', status: '', status2: '', status3: '' },
 
-            kttSop: { v: '' },
-            kttDB: { v: '' },
-            ktnSop: { v: '' },
-            ktnDB: { v: '' },
+            kttSop: { v: '', status: '', status2: '', status3: '' },
+            kttDB: { v: '', status: '', status2: '', status3: '' },
+            ktnSop: { v: '', status: '', status2: '', status3: '' },
+            ktnDB: { v: '', status: '', status2: '', status3: '' },
 
-            kodTi80: { v: '' },
-            kanaly80: { v: '' },
+            kodTi80: { v: '', status: '', status2: '', status3: '' },
+            kanaly80: { v: '', status: '', status2: '', status3: '' },
           };
           siArMod.push(siObj);
         }
