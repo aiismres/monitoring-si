@@ -1,5 +1,7 @@
+import { IStringNumber } from '../app.types';
+
 export interface IStringString {
-  [key: string]: string ;
+  [key: string]: string;
 }
 
 export const sameCharEn = [
@@ -169,6 +171,70 @@ export const colFullName: IStringString = {
   ktnDB: 'Ктн БД',
   kodTi80: 'кодТИ80',
   kanaly80: 'каналы 80',
+};
+
+export interface IColsWidth extends IStringNumber {
+  numTiShem60Pre: number;
+  kodTi60Pre: number;
+  naimTi60Pre: number;
+  tipSch60Pre: number;
+  kanaly60Pre: number;
+  numTiShem60: number;
+  kodTi60: number;
+  naimTi60: number;
+  tipSch60: number;
+  kanaly60: number;
+  // tiAiis: "ТИ в АИИС",
+  gr: number;
+  numTiSop: number;
+  naimTiSop: number;
+  naimTi80: number;
+  naimTi82: number;
+  numSchDB: number;
+  numSchSop: number;
+  numSchSch: number;
+  tipSchSop: number;
+  tipSch80: number;
+  tipSchSch: number;
+  tipSchDB: number;
+  kttSop: number;
+  kttDB: number;
+  ktnSop: number;
+  ktnDB: number;
+  kodTi80: number;
+  kanaly80: number;
+}
+
+export const colsWidthInit: IColsWidth = {
+  numTiShem60Pre: 55,
+  kodTi60Pre: 130,
+  naimTi60Pre: 200,
+  tipSch60Pre: 80,
+  kanaly60Pre: 70,
+  numTiShem60: 55,
+  kodTi60: 130,
+  naimTi60: 200,
+  tipSch60: 95,
+  kanaly60: 70,
+  // tiAiis: "ТИ в АИИС",
+  gr: 95,
+  numTiSop: 50,
+  naimTiSop: 200,
+  naimTi80: 200,
+  naimTi82: 150,
+  numSchDB: 80,
+  numSchSop: 80,
+  numSchSch: 80,
+  tipSchSop: 80,
+  tipSch80: 80,
+  tipSchSch: 80,
+  tipSchDB: 80,
+  kttSop: 40,
+  kttDB: 40,
+  ktnSop: 40,
+  ktnDB: 40,
+  kodTi80: 130,
+  kanaly80: 70,
 };
 
 // export const colGroupOrderObj = {

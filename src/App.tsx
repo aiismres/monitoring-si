@@ -43,7 +43,7 @@ function App() {
   const [siState, setSiState] = useState<ISiObj1[]>([]);
   const [appState, setAppState] = useState<IAppState>({
     // selectedCell: {},
-    colOrderOpt: 'opt1',
+    // colOrderOpt: 'opt1',
     colOrder: colOrderObj.opt1,
     sechID: '',
     naimSechShort: '',
@@ -277,13 +277,13 @@ function App() {
     if (e.target.checked) {
       setAppState({
         ...appState,
-        colOrderOpt: 'opt2',
+        // colOrderOpt: 'opt2',
         colOrder: colOrderObj['opt2'],
       });
     } else {
       setAppState({
         ...appState,
-        colOrderOpt: 'opt1',
+        // colOrderOpt: 'opt1',
         colOrder: colOrderObj['opt1'],
       });
     }
@@ -305,6 +305,7 @@ function App() {
         <tbody id="tbodyId1">
           {siState.map((item, index) => {
             let tdContent = appState.colOrder.map((param) => {
+              // let tdContent = colOrderObj[appState.colOrderOpt].map((param) => {
               let isContenteditable =
                 appState.isEdit &&
                 (param.includes('Sop') ||

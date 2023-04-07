@@ -1,22 +1,28 @@
-export interface IAppState {
-  // selectedCell: {},
-    colOrderOpt: string;
-    colOrder: string[];
-    sechID: string;
-    naimSechShort: string;
-    isEdit: boolean;
-    classSSDBtn: string;
-    classEditBtn: string;
-    isSiStateSave: boolean;
-    isMsgOpen: boolean;
-    isSuccess: boolean;
-    isInfoOpen: boolean;
+export interface IStringNumber {
+  [name: string]: number;
 }
 
+// type TColOrderOpt = 'opt1' | 'opt2' | 'opt3';
+
+// export interface IAppState extends IStringString2 {
+export interface IAppState {
+  // selectedCell: {},
+  // colOrderOpt: TColOrderOpt;
+  colOrder: string[];
+  sechID: string;
+  naimSechShort: string;
+  isEdit: boolean;
+  classSSDBtn: string;
+  classEditBtn: string;
+  isSiStateSave: boolean;
+  isMsgOpen: boolean;
+  isSuccess: boolean;
+  isInfoOpen: boolean;
+}
 
 export interface IResReadSiData1 {
   si: ISiObj1[];
-  sechInfo?: ISechInfo
+  sechInfo?: ISechInfo;
 }
 
 export interface ISechInfo {
@@ -26,7 +32,7 @@ export interface ISechInfo {
   areaName?: string;
   sourceDB?: string;
   source60?: string;
-  amountTi?: number
+  amountTi?: number;
 }
 
 export type TStatus = '' | 'warning';
@@ -34,7 +40,9 @@ export type TStatus2 = '' | 'correct' | 'incorrect';
 export type TStatus3 = '' | 'changed';
 
 export interface IStringString {
-  [name: string]: {[name: string]: string | TStatus | TStatus2 | TStatus3 | 'да' | 'нет'}
+  [name: string]: {
+    [name: string]: string | TStatus | TStatus2 | TStatus3 | 'да' | 'нет';
+  };
 }
 
 export interface ISiObj1 extends IStringString {

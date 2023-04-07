@@ -39,7 +39,8 @@ export function FileDropZone({
           if (isPre60) {
             setAppState((appState) => ({
               ...appState,
-              colOrder: colOrderObj.opt3,
+              // colOrder: colOrderObj.opt3,
+              colOrderOpt: 'opt3',
             }));
           }
           data = checkData(data);
