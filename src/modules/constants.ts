@@ -216,7 +216,6 @@ export const colsWidthInit: IColsWidth = {
   naimTi60: 200,
   tipSch60: 95,
   kanaly60: 70,
-  // tiAiis: "ТИ в АИИС",
   gr: 95,
   numTiSop: 50,
   naimTiSop: 200,

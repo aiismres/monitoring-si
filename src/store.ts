@@ -1,59 +1,69 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { IColsWidth } from './modules/constants';
+import { IColsWidth, colsWidthInit } from './modules/constants';
+import produce from 'immer';
 
 interface IAppStore {
   colsWidth: { [name: string]: IColsWidth };
-  bears: number;
-  increasePopulation: () => void;
-  removeAllBears: () => void;
+  tableWidth: { [name: string]: number };
+  setZuTableWidth: (sechId: string, tableWidth: number) => void;
+  setZuColsWidth: (sechId: string, colsWidthObj: IColsWidth) => void;
+  // bears: number;
+  // increasePopulation: () => void;
+  // removeAllBears: () => void;
+  // updateZuColWidth: (
+  //   sechId: string,
+  //   param: keyof IColsWidth,
+  //   colWidth: number
+  // ) => void;
 }
 
 export const useAppStore = create<IAppStore>()(
   devtools(
-    persist(
-      (set) => ({
-        colsWidth: {
-          v: {
-            numTiShem60Pre: 55,
-            kodTi60Pre: 130,
-            naimTi60Pre: 200,
-            tipSch60Pre: 80,
-            kanaly60Pre: 70,
-            numTiShem60: 55,
-            kodTi60: 130,
-            naimTi60: 200,
-            tipSch60: 95,
-            kanaly60: 70,
-            // tiAiis: "ТИ в АИИС",
-            gr: 95,
-            numTiSop: 50,
-            naimTiSop: 200,
-            naimTi80: 200,
-            naimTi82: 150,
-            numSchDB: 80,
-            numSchSop: 80,
-            numSchSch: 80,
-            tipSchSop: 80,
-            tipSch80: 80,
-            tipSchSch: 80,
-            tipSchDB: 80,
-            kttSop: 40,
-            kttDB: 40,
-            ktnSop: 40,
-            ktnDB: 40,
-            kodTi80: 130,
-            kanaly80: 70,
-          },
-        },
-        bears: 0,
-        increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-        removeAllBears: () => set({ bears: 0 }),
-      }),
-      {
-        name: 'monSiAppStorage',
-      }
-    )
+    // persist(
+    (set) => ({
+      colsWidth: {
+        sechIdInit: colsWidthInit,
+      },
+      tableWidth: {
+        sechIDinit: 2700,
+      },
+
+      setZuTableWidth: (sechId, tableWidth) =>
+        set(
+          produce((state: IAppStore) => {
+            state.tableWidth[sechId] = tableWidth;
+          })
+        ),
+
+      setZuColsWidth: (sechId, colsWidthObj) =>
+        set(
+          produce((state) => {
+            state.colsWidth[sechId] = colsWidthObj;
+          })
+        ),
+
+      // bears: 0,
+      // increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+      // removeAllBears: () => set({ bears: 0 }),
+
+      // setZuTableWidth: (sechId, tableWidth) =>
+      //   set((state) => ({
+      //     tableWidth: { ...state.tableWidth, [sechId]: tableWidth },
+      //   })),
+
+      // updateZuColWidth: (sechId, param, colWidth) =>
+      //   set(
+      //     produce((state) => {
+      //       state.colsWidth[sechId][param] = colWidth;
+      //     })
+      //   ),
+    })
+    //   ,
+    //   {
+    //     name: 'monSiAppStorage',
+    //   }
+    // )
   )
 );
