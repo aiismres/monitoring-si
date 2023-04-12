@@ -7,8 +7,8 @@ import produce from 'immer';
 interface IAppStore {
   colsWidth: { [name: string]: IColsWidth };
   tableWidth: { [name: string]: number };
-  setZuTableWidth: (sechId: string, tableWidth: number) => void;
   setZuColsWidth: (sechId: string, colsWidthObj: IColsWidth) => void;
+  setZuTableWidth: (sechId: string, tableWidth: number) => void;
   // bears: number;
   // increasePopulation: () => void;
   // removeAllBears: () => void;
@@ -21,49 +21,48 @@ interface IAppStore {
 
 export const useAppStore = create<IAppStore>()(
   devtools(
-    // persist(
-    (set) => ({
-      colsWidth: {
-        sechIdInit: colsWidthInit,
-      },
-      tableWidth: {
-        sechIDinit: 2700,
-      },
+    persist(
+      (set) => ({
+        colsWidth: {
+          sechIdInit: colsWidthInit,
+        },
+        tableWidth: {
+          sechIDinit: 2700,
+        },
 
-      setZuTableWidth: (sechId, tableWidth) =>
-        set(
-          produce((state: IAppStore) => {
-            state.tableWidth[sechId] = tableWidth;
-          })
-        ),
+        setZuTableWidth: (sechId, tableWidth) =>
+          set(
+            produce((state: IAppStore) => {
+              state.tableWidth[sechId] = tableWidth;
+            })
+          ),
 
-      setZuColsWidth: (sechId, colsWidthObj) =>
-        set(
-          produce((state) => {
-            state.colsWidth[sechId] = colsWidthObj;
-          })
-        ),
+        setZuColsWidth: (sechId, colsWidthObj) =>
+          set(
+            produce((state) => {
+              state.colsWidth[sechId] = colsWidthObj;
+            })
+          ),
 
-      // bears: 0,
-      // increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-      // removeAllBears: () => set({ bears: 0 }),
+        // bears: 0,
+        // increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+        // removeAllBears: () => set({ bears: 0 }),
 
-      // setZuTableWidth: (sechId, tableWidth) =>
-      //   set((state) => ({
-      //     tableWidth: { ...state.tableWidth, [sechId]: tableWidth },
-      //   })),
+        // setZuTableWidth: (sechId, tableWidth) =>
+        //   set((state) => ({
+        //     tableWidth: { ...state.tableWidth, [sechId]: tableWidth },
+        //   })),
 
-      // updateZuColWidth: (sechId, param, colWidth) =>
-      //   set(
-      //     produce((state) => {
-      //       state.colsWidth[sechId][param] = colWidth;
-      //     })
-      //   ),
-    })
-    //   ,
-    //   {
-    //     name: 'monSiAppStorage',
-    //   }
-    // )
+        // updateZuColWidth: (sechId, param, colWidth) =>
+        //   set(
+        //     produce((state) => {
+        //       state.colsWidth[sechId][param] = colWidth;
+        //     })
+        //   ),
+      }),
+      {
+        name: 'monSiAppStorage',
+      }
+    )
   )
 );

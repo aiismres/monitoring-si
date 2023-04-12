@@ -136,17 +136,24 @@ function App() {
 
   const colsWidthObjZu = useAppStore((st) => st.colsWidth[appState.sechID]);
   const tableWidthZu = useAppStore((st) => st.tableWidth[appState.sechID]);
+  const setZuColsWidth = useAppStore((st) => st.setZuColsWidth);
+  const setZuTableWidth = useAppStore((st) => st.setZuTableWidth);
   const refColsWidth = useRef<IColsWidth>({ ...colsWidthInit });
   const refTableWidth = useRef(2700);
 
+  console.log('colsWidthObjZu', colsWidthObjZu, 'tableWidthZu', tableWidthZu);
+
   useLayoutEffect(() => {
-    console.log('useLayoutEffect(() => {},[])');
+    console.log('useLayoutEffect(() => {}');
     if (tableWidthZu) {
+      console.log(' if (tableWidthZu)');
+
       setColsWidthObj(colsWidthObjZu);
       setTableWidth(tableWidthZu);
       refColsWidth.current = { ...colsWidthObjZu };
       refTableWidth.current = tableWidthZu;
     } else {
+      console.log(' else //if (tableWidthZu)');
       const initialTableWidth = Object.values(colsWidthObj).reduce(
         (sum, item) => (sum += item),
         0
@@ -155,7 +162,13 @@ function App() {
       setTableWidth(initialTableWidth);
       refTableWidth.current = initialTableWidth;
     }
-  }, []);
+
+    console.log(
+      'refColsWidth.current refTableWidth.current',
+      refColsWidth.current,
+      refTableWidth.current
+    );
+  }, [colsWidthObjZu, tableWidthZu]);
 
   const startX = useRef(0);
   const startColWidth = useRef(0);
@@ -181,7 +194,7 @@ function App() {
     if (e.clientY <= 0) return; // исключить последнее значение drgon т.к. оно всегда косячное
     let colWidthInc = e.clientX - startX.current;
 
-    refColsWidth.current[param] = startColWidth.current + colWidthInc * 0.93;
+    refColsWidth.current[param] = startColWidth.current + colWidthInc * 0.93; //0.93 имперически выведенный коэфф
 
     if (refColsWidth.current[param] < colsWidthInit[param]) {
       refColsWidth.current[param] = colsWidthInit[param];
@@ -213,7 +226,9 @@ function App() {
   }
 
   function onDragEndTh(e: React.DragEvent, i: number, param: string) {
-    setRerender(1);
+    setZuColsWidth(appState.sechID, { ...refColsWidth.current });
+    setZuTableWidth(appState.sechID, refTableWidth.current);
+    // setRerender(1);
     // setColsWidthObj((st) => {
     //   let newColWidthCalc = startColWidth.current + e.clientX - startX.current;
     //   if (newColWidthCalc < refThsObj.current[param].clientWidth) {
