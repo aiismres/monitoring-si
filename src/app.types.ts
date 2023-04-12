@@ -235,3 +235,7 @@ export interface IMesPoint80 {
   deviceMod: string;
   kanaly: string;
 }
+
+export interface IStringHtml {
+  [N: string]: HTMLElement;
+}

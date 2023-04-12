@@ -1,13 +1,26 @@
-import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  ChangeEvent,
+  useLayoutEffect,
+} from 'react';
 import styles from './app.module.css';
 import { TableHead } from './TableHead';
-import { colOrderObj, sameChar } from './modules/constants';
+import {
+  IColsWidth,
+  colOrderObj,
+  colsWidthInit,
+  sameChar,
+  colFullName,
+} from './modules/constants';
 import {
   IAppState,
   // IResReadSiData,
   IResReadSiData1,
   ISechInfo,
   ISiObj1,
+  IStringHtml,
   // ISiObj2,
 } from './app.types';
 import { checkData } from './modules/checkDataMod';
@@ -31,6 +44,7 @@ import {
   buttonBaseClasses,
 } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
+import { useAppStore } from './store';
 
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -111,6 +125,119 @@ function App() {
       }
     })();
   }, []);
+
+  // block for table head
+
+  const [colsWidthObj, setColsWidthObj] = useState<IColsWidth>({
+    ...colsWidthInit,
+  });
+
+  const [rerender, setRerender] = useState(0);
+
+  const colsWidthObjZu = useAppStore((st) => st.colsWidth[appState.sechID]);
+  const tableWidthZu = useAppStore((st) => st.tableWidth[appState.sechID]);
+  const refColsWidth = useRef<IColsWidth>({ ...colsWidthInit });
+  const refTableWidth = useRef(2700);
+
+  useLayoutEffect(() => {
+    console.log('useLayoutEffect(() => {},[])');
+    if (tableWidthZu) {
+      setColsWidthObj(colsWidthObjZu);
+      setTableWidth(tableWidthZu);
+      refColsWidth.current = { ...colsWidthObjZu };
+      refTableWidth.current = tableWidthZu;
+    } else {
+      const initialTableWidth = Object.values(colsWidthObj).reduce(
+        (sum, item) => (sum += item),
+        0
+      );
+
+      setTableWidth(initialTableWidth);
+      refTableWidth.current = initialTableWidth;
+    }
+  }, []);
+
+  const startX = useRef(0);
+  const startColWidth = useRef(0);
+  const startTableWidth = useRef(0);
+  const refThsObj = useRef<IStringHtml>({});
+
+  function onDragStartTh(e: React.DragEvent, i: number, param: string) {
+    startX.current = e.clientX;
+    // startColWidth.current = colWidths[i];
+    // startColWidth.current = colsWidthObj[param];
+    startColWidth.current = refColsWidth.current[param];
+    // startTableWidth.current = tableWidth;
+    startTableWidth.current = refTableWidth.current;
+    console.log(
+      'onDragStart',
+      colsWidthObj[param],
+      Object.values(colsWidthObj).reduce((sum, item) => sum + item, 0),
+      tableWidth
+    );
+  }
+
+  function onDragTh(e: React.DragEvent, i: number, param: keyof IColsWidth) {
+    if (e.clientY <= 0) return; // исключить последнее значение drgon т.к. оно всегда косячное
+    let colWidthInc = e.clientX - startX.current;
+
+    refColsWidth.current[param] = startColWidth.current + colWidthInc * 0.93;
+
+    if (refColsWidth.current[param] < colsWidthInit[param]) {
+      refColsWidth.current[param] = colsWidthInit[param];
+      return;
+    }
+    refTableWidth.current = startTableWidth.current + colWidthInc;
+    // refTableWidth.current =
+    //   Object.values(refColsWidth.current).reduce((sum, item) => sum + item, 0) +
+    //   2;
+
+    setRerender(colWidthInc);
+    // setColsWidthObj((st) => ({
+    //   ...st,
+    //   [param]: startColWidth.current + colWidthInc,
+    // }));
+
+    // setTableWidth(startTableWidth.current + colWidthInc);
+
+    console.log(
+      'onDrag',
+      e.clientX,
+      e.clientY,
+      startX.current,
+      colWidthInc,
+      colsWidthObj[param],
+      Object.values(colsWidthObj).reduce((sum, item) => sum + item, 0),
+      tableWidth
+    );
+  }
+
+  function onDragEndTh(e: React.DragEvent, i: number, param: string) {
+    setRerender(1);
+    // setColsWidthObj((st) => {
+    //   let newColWidthCalc = startColWidth.current + e.clientX - startX.current;
+    //   if (newColWidthCalc < refThsObj.current[param].clientWidth) {
+    //     newColWidthCalc = refThsObj.current[param].clientWidth;
+    //   }
+    //   console.log({ ...st, [param]: newColWidthCalc - 14 });
+    //   return { ...st, [param]: newColWidthCalc - 40 };
+    // });
+    // setTableWidth((st) => {
+    //   let sum2 = Object.values(colsWidthObj).reduce(
+    //     (sum, item) => sum + item,
+    //     0
+    //   );
+    //   return sum2 - 40;
+    // });
+    // console.log(
+    //   'onDragEnd',
+    //   colsWidthObj[param],
+    //   Object.values(colsWidthObj).reduce((sum, item) => sum + item, 0),
+    //   tableWidth
+    // );
+  }
+
+  // end block for table head
 
   function sortBy(param: string) {
     console.log(siState, param);
@@ -293,15 +420,56 @@ function App() {
     <div className={styles.App}>
       <table
         style={{
-          width: tableWidth,
+          minWidth: refTableWidth.current,
         }}
       >
-        <TableHead
+        {/* <TableHead
           appState={appState}
           sortBy={sortBy}
           tableWidth={tableWidth}
           setTableWidth={setTableWidth}
-        />
+        /> */}
+        <thead id="thead1">
+          <tr>
+            {appState.colOrder.map((param, i) => {
+              // {colOrderObj[appState.colOrderOpt].map((param, i) => {
+              let classes =
+                appState.isEdit &&
+                (param.includes('Sop') ||
+                  param.includes('SchSch') ||
+                  param === 'gr')
+                  ? styles.attention
+                  : '';
+              return (
+                <th
+                  className={classes}
+                  onDoubleClick={() => {
+                    sortBy(param);
+                  }}
+                  style={{
+                    // width: colsWidthObj[param],
+                    // minWidth: colsWidthInit[param],
+                    width: refColsWidth.current[param],
+                  }}
+                  // ref={(el) => (thRefs.current[i] = el!)}
+                  ref={(el) => (refThsObj.current[param] = el!)}
+                >
+                  {colFullName[param]}
+                  <div
+                    className={styles.resizer}
+                    draggable={true}
+                    onDragStart={(e) => onDragStartTh(e, i, param)}
+                    // onMouseDown={(e) => onMouseDownRes(e, i)}
+                    onDrag={(e) => onDragTh(e, i, param)}
+                    onDragEnd={(e) => onDragEndTh(e, i, param)}
+                  >
+                    |
+                  </div>
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
         <tbody id="tbodyId1">
           {siState.map((item, index) => {
             let tdContent = appState.colOrder.map((param) => {
