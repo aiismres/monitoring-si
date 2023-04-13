@@ -5,7 +5,7 @@ import { sameCharEn, sameCharRu } from './constants.js';
 import { sameChar } from './constants';
 import { ISiObj1, TStatus, TStatus2, TStatus3 } from '../app.types.js';
 
-type TOption = 'samechar' | 'string' | ''
+type TOption = 'samechar' | 'string' | '';
 
 export const readSv1xlsx = async (file: File) => {
   // let file = e.target.files.item(0);
@@ -39,7 +39,7 @@ export const readSv1xlsx = async (file: File) => {
       const ws = workbook.getWorksheet('Лист 1');
 
       function setValueStatuses(cell: ExcelJS.Cell, option: TOption) {
-        let value, status: TStatus, status2: TStatus2 ,status3: TStatus3;
+        let value, status: TStatus, status2: TStatus2, status3: TStatus3;
         // @ts-ignore
         if (cell.style.fill?.fgColor?.argb === 'FFFFFF00') {
           status = 'warning';
@@ -63,8 +63,11 @@ export const readSv1xlsx = async (file: File) => {
           status2 = '';
           status3 = '';
         }
-        if (option === 'string') {
-          value = cell.value && String(cell.value);
+
+        if (!cell.value) {
+          value = '';
+        } else if (option === 'string') {
+          value = String(cell.value);
         } else if (option === 'samechar' && cell.value) {
           value = sameChar(String(cell.value));
         } else {
@@ -79,8 +82,8 @@ export const readSv1xlsx = async (file: File) => {
       let siObj = {
         kodTi80: { v: '', status: '', status2: '', status3: '' },
         naimTi80: { v: '', status: '', status2: '', status3: '' },
-        tipSch80: { v: '' , status: '', status2: '', status3: ''},
-        kanaly80: { v: '' , status: '', status2: '', status3: ''},
+        tipSch80: { v: '', status: '', status2: '', status3: '' },
+        kanaly80: { v: '', status: '', status2: '', status3: '' },
 
         numTiShem60: { v: '', status: '', status2: '', status3: '' },
         // tiAiis: { v: 'да' },
@@ -106,13 +109,13 @@ export const readSv1xlsx = async (file: File) => {
         ktnDB: { v: '', status: '', status2: '', status3: '' },
 
         kodTi60: { v: '', status: '', status2: '', status3: '' },
-        kanaly60: { v: '', status: '', status2: '', status3: ''},
+        kanaly60: { v: '', status: '', status2: '', status3: '' },
 
         numTiShem60Pre: { v: '', status: '', status2: '', status3: '' },
         naimTi60Pre: { v: '', status: '', status2: '', status3: '' },
         tipSch60Pre: { v: '', status: '', status2: '', status3: '' },
         kodTi60Pre: { v: '', status: '', status2: '', status3: '' },
-        kanaly60Pre: { v: '', status: '', status2: '', status3: ''},
+        kanaly60Pre: { v: '', status: '', status2: '', status3: '' },
       } as ISiObj1;
 
       while (row.length !== 0) {
