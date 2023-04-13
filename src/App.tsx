@@ -46,9 +46,9 @@ import {
 import MuiAlert from '@mui/material/Alert';
 import { useAppStore } from './store';
 
+// типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
-    // extends React's HTMLAttributes
     colname?: string;
   }
 }
@@ -126,48 +126,27 @@ function App() {
     })();
   }, []);
 
-  // block for table head
-
-  const [colsWidthObj, setColsWidthObj] = useState<IColsWidth>({
-    ...colsWidthInit,
-  });
-
-  const [rerender, setRerender] = useState(0);
+  const [rerender, setRerender] = useState(0); // для ререндера при изм ширины столбцов таблицы
 
   const colsWidthObjZu = useAppStore((st) => st.colsWidth[appState.sechID]);
   const tableWidthZu = useAppStore((st) => st.tableWidth[appState.sechID]);
   const setZuColsWidth = useAppStore((st) => st.setZuColsWidth);
   const setZuTableWidth = useAppStore((st) => st.setZuTableWidth);
   const refColsWidth = useRef<IColsWidth>({ ...colsWidthInit });
-  const refTableWidth = useRef(2700);
-
-  console.log('colsWidthObjZu', colsWidthObjZu, 'tableWidthZu', tableWidthZu);
+  const initialTableWidth = Object.values(colsWidthInit).reduce(
+    (sum, item) => (sum += item),
+    0
+  );
+  const refTableWidth = useRef(initialTableWidth);
 
   useLayoutEffect(() => {
     console.log('useLayoutEffect(() => {}');
     if (tableWidthZu) {
-      console.log(' if (tableWidthZu)');
-
-      setColsWidthObj(colsWidthObjZu);
-      setTableWidth(tableWidthZu);
       refColsWidth.current = { ...colsWidthObjZu };
       refTableWidth.current = tableWidthZu;
     } else {
-      console.log(' else //if (tableWidthZu)');
-      const initialTableWidth = Object.values(colsWidthObj).reduce(
-        (sum, item) => (sum += item),
-        0
-      );
-
-      setTableWidth(initialTableWidth);
       refTableWidth.current = initialTableWidth;
     }
-
-    console.log(
-      'refColsWidth.current refTableWidth.current',
-      refColsWidth.current,
-      refTableWidth.current
-    );
   }, [colsWidthObjZu, tableWidthZu]);
 
   const startX = useRef(0);
@@ -177,17 +156,8 @@ function App() {
 
   function onDragStartTh(e: React.DragEvent, i: number, param: string) {
     startX.current = e.clientX;
-    // startColWidth.current = colWidths[i];
-    // startColWidth.current = colsWidthObj[param];
     startColWidth.current = refColsWidth.current[param];
-    // startTableWidth.current = tableWidth;
     startTableWidth.current = refTableWidth.current;
-    console.log(
-      'onDragStart',
-      colsWidthObj[param],
-      Object.values(colsWidthObj).reduce((sum, item) => sum + item, 0),
-      tableWidth
-    );
   }
 
   function onDragTh(e: React.DragEvent, i: number, param: keyof IColsWidth) {
@@ -201,55 +171,13 @@ function App() {
       return;
     }
     refTableWidth.current = startTableWidth.current + colWidthInc;
-    // refTableWidth.current =
-    //   Object.values(refColsWidth.current).reduce((sum, item) => sum + item, 0) +
-    //   2;
 
     setRerender(colWidthInc);
-    // setColsWidthObj((st) => ({
-    //   ...st,
-    //   [param]: startColWidth.current + colWidthInc,
-    // }));
-
-    // setTableWidth(startTableWidth.current + colWidthInc);
-
-    console.log(
-      'onDrag',
-      e.clientX,
-      e.clientY,
-      startX.current,
-      colWidthInc,
-      colsWidthObj[param],
-      Object.values(colsWidthObj).reduce((sum, item) => sum + item, 0),
-      tableWidth
-    );
   }
 
   function onDragEndTh(e: React.DragEvent, i: number, param: string) {
     setZuColsWidth(appState.sechID, { ...refColsWidth.current });
     setZuTableWidth(appState.sechID, refTableWidth.current);
-    // setRerender(1);
-    // setColsWidthObj((st) => {
-    //   let newColWidthCalc = startColWidth.current + e.clientX - startX.current;
-    //   if (newColWidthCalc < refThsObj.current[param].clientWidth) {
-    //     newColWidthCalc = refThsObj.current[param].clientWidth;
-    //   }
-    //   console.log({ ...st, [param]: newColWidthCalc - 14 });
-    //   return { ...st, [param]: newColWidthCalc - 40 };
-    // });
-    // setTableWidth((st) => {
-    //   let sum2 = Object.values(colsWidthObj).reduce(
-    //     (sum, item) => sum + item,
-    //     0
-    //   );
-    //   return sum2 - 40;
-    // });
-    // console.log(
-    //   'onDragEnd',
-    //   colsWidthObj[param],
-    //   Object.values(colsWidthObj).reduce((sum, item) => sum + item, 0),
-    //   tableWidth
-    // );
   }
 
   // end block for table head
@@ -259,7 +187,6 @@ function App() {
     setSiState((state: ISiObj1[]) => {
       let stateMod = structuredClone(state);
       stateMod = stateMod.sort((a: ISiObj1, b: ISiObj1) => {
-        // console.log(a);
         if (
           [
             'naimTi60',

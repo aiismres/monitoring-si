@@ -9,14 +9,6 @@ interface IAppStore {
   tableWidth: { [name: string]: number };
   setZuColsWidth: (sechId: string, colsWidthObj: IColsWidth) => void;
   setZuTableWidth: (sechId: string, tableWidth: number) => void;
-  // bears: number;
-  // increasePopulation: () => void;
-  // removeAllBears: () => void;
-  // updateZuColWidth: (
-  //   sechId: string,
-  //   param: keyof IColsWidth,
-  //   colWidth: number
-  // ) => void;
 }
 
 export const useAppStore = create<IAppStore>()(
@@ -43,22 +35,6 @@ export const useAppStore = create<IAppStore>()(
               state.colsWidth[sechId] = colsWidthObj;
             })
           ),
-
-        // bears: 0,
-        // increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-        // removeAllBears: () => set({ bears: 0 }),
-
-        // setZuTableWidth: (sechId, tableWidth) =>
-        //   set((state) => ({
-        //     tableWidth: { ...state.tableWidth, [sechId]: tableWidth },
-        //   })),
-
-        // updateZuColWidth: (sechId, param, colWidth) =>
-        //   set(
-        //     produce((state) => {
-        //       state.colsWidth[sechId][param] = colWidth;
-        //     })
-        //   ),
       }),
       {
         name: 'monSiAppStorage',
