@@ -8,6 +8,8 @@ import { IAppState } from '../app.types.js';
 import { ReactComponent as IconExpSv1 } from '../Icons/IconExpSv1.svg';
 import { ReactComponent as IconEdit } from '../Icons/IconEdit.svg';
 import { ReactComponent as IconInfo } from '../Icons/IconInfo.svg';
+import { ReactComponent as IconSverka2 } from '../Icons/IconSverka2.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface IProps {
   btnExportSv1: MutableRefObject<HTMLButtonElement | null>;
@@ -19,12 +21,21 @@ interface IProps {
 
 export function SpeedDialNav({
   btnExportSv1,
-  // inputFileSv2,
   btnEdit,
   appState,
   setAppState,
 }: IProps) {
+  const navigate = useNavigate();
+
   const actions = [
+    {
+      icon: <IconSverka2 />,
+      name: '',
+      ref: null,
+      do: () => {
+        navigate('sverka2');
+      },
+    },
     {
       icon: (
         <IconInfo
