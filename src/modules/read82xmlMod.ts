@@ -2,17 +2,17 @@ import { nanoid } from 'nanoid';
 import { sameChar } from './constants';
 import { IMesPoint80, ISiObj1 } from '../app.types.js';
 
-export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
+export async function read82xmlMod(file: File, siAr: ISiObj1[]) {
   // export async function read80xmlMod(event, siAr) {
 
   // let file = event.target.files.item(0);
   console.log('file.name', file.name);
-  if (!file.name.includes('80000')) {
-    alert('файл не 80000');
+  if (!file.name.includes('80020')) {
+    alert('файл не 80020');
     return siAr;
   }
   alert(`
-  Импорт 80000.XML
+  Импорт 80020.XML
 
   ${file.name}`);
 

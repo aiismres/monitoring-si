@@ -9,6 +9,7 @@ import { readSv1xlsx } from '../modules/readSv1xlsx';
 import { readDBxlsxMod } from '../modules/readDBxlsxMod';
 import { checkData } from '../modules/checkDataMod';
 import { IAppState, ISechInfo, ISiObj1 } from '../app.types';
+import { read82xmlMod } from '../modules/read82xmlMod';
 
 interface IProps {
   siState: ISiObj1[];
@@ -39,8 +40,7 @@ export function FileDropZone({
           if (isPre60) {
             setAppState((appState) => ({
               ...appState,
-              // colOrder: colOrderObj.opt3,
-              colOrderOpt: 'opt3',
+              colOrder: colOrderObj.opt3,
             }));
           }
           data = checkData(data);
@@ -92,6 +92,13 @@ export function FileDropZone({
             isSiStateSave: false,
           }));
           setSechInfo((sechInfo) => ({ ...sechInfo, sourceDB }));
+        } else if (file.name.includes('80020')) {
+          console.log('import 80020');
+          let [data, areaCode, areaName] = (await read82xmlMod(
+            file,
+            siState
+          )) as [ISiObj1[], string, string];
+          console.log(data);
         } else {
           alert(`
           Не соответствует ни одному импрту

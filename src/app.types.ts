@@ -2,13 +2,17 @@ export interface IStringNumber {
   [name: string]: number;
 }
 
+export interface IStringString {
+  [key: string]: string;
+}
+
 // type TColOrderOpt = 'opt1' | 'opt2' | 'opt3';
 
 // export interface IAppState extends IStringString2 {
 export interface IAppState {
   // selectedCell: {},
   // colOrderOpt: TColOrderOpt;
-  colOrder: string[];
+  colOrder: TColShortNames[];
   sechID: string;
   naimSechShort: string;
   isEdit: boolean;
@@ -39,17 +43,41 @@ export type TStatus = '' | 'warning';
 export type TStatus2 = '' | 'correct' | 'incorrect';
 export type TStatus3 = '' | 'changed';
 
-export interface IStringString {
+export interface IStringObj {
   [name: string]: {
-    [name: string]: string | TStatus | TStatus2 | TStatus3 | 'да' | 'нет';
+    [name: string]:
+      | string
+      | TStatus
+      | TStatus2
+      | TStatus3
+      | 'да'
+      | 'нет'
+      | number[];
   };
 }
 
-export interface ISiObj1 extends IStringString {
+export interface IPowProf82 {
+  k01: number[];
+  k02: number[];
+  k03: number[];
+  k04: number[];
+}
+
+interface BigObject<I1, I2> {
+  [index: string]: I1 | I2;
+}
+
+export interface ISiObj1 extends IStringObj {
   // id?: string;
   // tiAiis: {
   //   v: 'да' | 'нет';
   // };
+  powProf82: {
+    k01: number[];
+    k02: number[];
+    k03: number[];
+    k04: number[];
+  };
   numTiShem60Pre: {
     v: string;
     status: TStatus;
@@ -238,4 +266,39 @@ export interface IMesPoint80 {
 
 export interface IStringHtml {
   [N: string]: HTMLElement;
+}
+
+export type TColShortNames =
+  | 'numTiShem60Pre'
+  | 'kodTi60Pre'
+  | 'naimTi60Pre'
+  | 'tipSch60Pre'
+  | 'kanaly60Pre'
+  | 'numTiShem60'
+  | 'kodTi60'
+  | 'naimTi60'
+  | 'tipSch60'
+  | 'kanaly60'
+  // "tiAiis"|
+  | 'gr'
+  | 'numTiSop'
+  | 'naimTiSop'
+  | 'numSchSop'
+  | 'tipSchSop'
+  | 'kttSop'
+  | 'ktnSop'
+  | 'kodTi80'
+  | 'naimTi80'
+  | 'tipSch80'
+  | 'kanaly80'
+  | 'naimTi82'
+  | 'numSchSch'
+  | 'tipSchSch'
+  | 'tipSchDB'
+  | 'numSchDB'
+  | 'kttDB'
+  | 'ktnDB';
+
+export interface IColOrderObj {
+  [N: string]: TColShortNames[];
 }

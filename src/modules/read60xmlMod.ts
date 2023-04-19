@@ -209,37 +209,19 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
         if (siObj.naimTi60.v) {
           // console.log(siObj.naimTi60.v)
           isPre60 = true;
-          siObj.numTiShem60Pre = {
-            ...siObj.numTiShem60,
-            // status: '',
-            // status2: '',
-            // status3: '',
+          siObj.numTiShem60Pre = { ...siObj.numTiShem60 };
+          siObj.kodTi60Pre = { ...siObj.kodTi60 };
+          siObj.naimTi60Pre = { ...siObj.naimTi60 };
+          siObj.tipSch60Pre = { ...siObj.tipSch60 };
+          siObj.kanaly60Pre = { ...siObj.kanaly60 };
+          return {
+            ...siObj,
+            numTiShem60: { v: '', status: '', status2: '', status3: '' },
+            kodTi60: { v: '', status: '', status2: '', status3: '' },
+            naimTi60: { v: '', status: '', status2: '', status3: '' },
+            tipSch60: { v: '', status: '', status2: '', status3: '' },
+            kanaly60: { v: '', status: '', status2: '', status3: '' },
           };
-          siObj.kodTi60Pre = {
-            ...siObj.kodTi60,
-            // status: '',
-            // status2: '',
-            // status3: '',
-          };
-          siObj.naimTi60Pre = {
-            ...siObj.naimTi60,
-            // status: '',
-            // status2: '',
-            // status3: '',
-          };
-          siObj.tipSch60Pre = {
-            ...siObj.tipSch60,
-            // status: '',
-            // status2: '',
-            // status3: '',
-          };
-          siObj.kanaly60Pre = {
-            ...siObj.kanaly60,
-            // status: '',
-            // status2: '',
-            // status3: '',
-          };
-          return siObj;
         } else {
           return {
             ...siObj,
@@ -437,6 +419,7 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
 
             kodTi80: { v: '', status: '', status2: '', status3: '' },
             kanaly80: { v: '', status: '', status2: '', status3: '' },
+            powProf82: { k01: [], k02: [], k03: [], k04: [] },
           };
           siArMod.push(siObj);
         }

@@ -1,8 +1,4 @@
-import { IStringNumber } from '../app.types';
-
-export interface IStringString {
-  [key: string]: string;
-}
+import { IColOrderObj, IStringNumber, IStringString } from '../app.types';
 
 export const sameCharEn = [
   'A',
@@ -55,7 +51,7 @@ export function sameChar(str: string) {
   return str;
 }
 
-export const colOrderObj = {
+export const colOrderObj: IColOrderObj = {
   opt1: [
     'numTiShem60',
     'kodTi60',
