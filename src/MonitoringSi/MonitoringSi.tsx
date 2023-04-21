@@ -4,6 +4,8 @@ import React, {
   useRef,
   ChangeEvent,
   useLayoutEffect,
+  Dispatch,
+  SetStateAction,
 } from 'react';
 import styles from './monitoringsi.module.css';
 import { TableHead } from '../TableHead';
@@ -16,7 +18,6 @@ import {
 } from '../modules/constants';
 import {
   IAppState,
-  IPowProf82,
   // IResReadSiData,
   IResReadSiData1,
   ISechInfo,
@@ -55,8 +56,13 @@ declare module 'react' {
   }
 }
 
-export function MonitoringSi() {
-  const [siState, setSiState] = useState<ISiObj1[]>([]);
+interface IProps {
+  siState: ISiObj1[];
+  setSiState: Dispatch<SetStateAction<ISiObj1[]>>;
+}
+
+export function MonitoringSi({ siState, setSiState }: IProps) {
+  // const [siState, setSiState] = useState<ISiObj1[]>([]);
   const [appState, setAppState] = useState<IAppState>({
     // selectedCell: {},
     // colOrderOpt: 'opt1',

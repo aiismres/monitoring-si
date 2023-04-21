@@ -56,7 +56,11 @@ export interface IStringObj {
   };
 }
 
-export interface IPowProf82 {
+interface IStringStringNumber {
+  [N: string]: string | number[];
+}
+
+export interface IPowProfSch extends IStringStringNumber {
   k01: number[];
   k02: number[];
   k03: number[];
@@ -73,6 +77,13 @@ export interface ISiObj1 extends IStringObj {
   //   v: 'да' | 'нет';
   // };
   powProf82: {
+    date: string;
+    k01: number[];
+    k02: number[];
+    k03: number[];
+    k04: number[];
+  };
+  powProfSch: {
     k01: number[];
     k02: number[];
     k03: number[];

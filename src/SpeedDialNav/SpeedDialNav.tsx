@@ -33,7 +33,7 @@ export function SpeedDialNav({
       name: '',
       ref: null,
       do: () => {
-        navigate('sverka2');
+        navigate(`sverka2?sechID=${appState.sechID}`);
       },
     },
     {

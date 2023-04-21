@@ -419,7 +419,19 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
 
             kodTi80: { v: '', status: '', status2: '', status3: '' },
             kanaly80: { v: '', status: '', status2: '', status3: '' },
-            powProf82: { k01: [], k02: [], k03: [], k04: [] },
+            powProf82: {
+              date: '',
+              k01: [],
+              k02: [],
+              k03: [],
+              k04: [],
+            },
+            powProfSch: {
+              k01: [],
+              k02: [],
+              k03: [],
+              k04: [],
+            },
           };
           siArMod.push(siObj);
         }
