@@ -3,6 +3,7 @@ import { IPowProfSch, ISiObj1 } from '../app.types';
 import styles from './sverka2.module.css';
 import { table } from 'console';
 import { timePeriods } from '../modules/constants';
+import Button from '@mui/material/Button';
 
 interface IProps {
   siState: ISiObj1[];
@@ -135,20 +136,24 @@ export function Sverka2({ siState, setSiState }: IProps) {
                   <td>{siObj.numSchSch.v}</td>
                   <td>{siObj.tipSchDB.v}</td>
                   <td>Ke=</td>
-                  <td></td>
+                  <td>
+                    <input type="text" />
+                  </td>
                   <td></td>
                   <td>---</td>
                   <td></td>
                 </tr>
               </tbody>
             </table>
-            <button
+            <Button
+              variant="contained"
+              color="success"
               onClick={() => {
                 pastPowProfSch(siObj, i);
               }}
             >
               paste Профиль сч
-            </button>
+            </Button>
 
             <table>
               <thead>
