@@ -74,19 +74,23 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
           mesPoint['ats-code'] = mesPointTag.getAttribute('ats-code')!;
           // mesPoint["schemanum"] = mesPointTag.getAttribute("schemanum");
           let nameTag = mesPointTag.getElementsByTagName('name')[0];
-          let naimTi = '';
+          if (nameTag) {
+            let naimTi = '';
 
-          if (nameTag.getAttribute('power-object-name')) {
-            naimTi = nameTag.getAttribute('power-object-name') + ' ';
+            if (nameTag.getAttribute('power-object-name')) {
+              naimTi = nameTag.getAttribute('power-object-name') + ' ';
+            }
+            if (nameTag.getAttribute('location-description')) {
+              naimTi =
+                naimTi + nameTag.getAttribute('location-description') + ' ';
+            }
+            if (nameTag.getAttribute('connection-name')) {
+              naimTi = naimTi + nameTag.getAttribute('connection-name');
+            }
+            mesPoint['naimTi'] = naimTi.trim();
+          } else {
+            mesPoint['naimTi'] = mesPointTag.getAttribute('composite-name')!;
           }
-          if (nameTag.getAttribute('location-description')) {
-            naimTi =
-              naimTi + nameTag.getAttribute('location-description') + ' ';
-          }
-          if (nameTag.getAttribute('connection-name')) {
-            naimTi = naimTi + nameTag.getAttribute('connection-name');
-          }
-          mesPoint['naimTi'] = naimTi.trim();
 
           let mesDeviceTagS =
             mesPointTag.getElementsByTagName('measuring-device');
