@@ -1,3 +1,15 @@
 .pivotTable {
   margin-bottom: 10px;
 }
+
+.warning {
+  background-color: orange;
+}
+
+.correct {
+  background-color: green;
+}
+
+.incorrect {
+  background-color: red;
+}

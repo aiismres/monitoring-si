@@ -1,5 +1,11 @@
 import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import { IPowProfSch, ISiObj1 } from '../app.types';
+import {
+  IPowProfDiff,
+  IPowProfSch,
+  ISiObj1,
+  TStatus,
+  TStatus2,
+} from '../app.types';
 import styles from './sverka2.module.css';
 import { table } from 'console';
 import { timePeriods } from '../modules/constants';
@@ -20,6 +26,18 @@ export function Sverka2({ siState, setSiState }: IProps) {
     })
   );
 
+  function addStatus(v: number) {
+    let status: TStatus | TStatus2;
+    if (isNaN(v)) {
+      status = 'warning';
+    } else if (-1 <= v && v <= 1) {
+      status = 'correct';
+    } else {
+      status = 'incorrect';
+    }
+    return { v, status };
+  }
+
   function pastPowProfSch(siObj: ISiObj1, i: number) {
     const siArrMutable: ISiObj1[] = structuredClone(siState);
     const powProfSch: IPowProfSch = {
@@ -36,7 +54,7 @@ export function Sverka2({ siState, setSiState }: IProps) {
       k04: [],
     };
 
-    const powProfDiff: IPowProfSch = {
+    const powProfDiff: IPowProfDiff = {
       k01: [],
       k02: [],
       k03: [],
@@ -72,27 +90,41 @@ export function Sverka2({ siState, setSiState }: IProps) {
           powProfSchKttne.k04.push(
             Math.round(Number(arr30[3]) * kttne * 10) / 10
           );
-
-          powProfDiff.k01.push(
+          let v =
             Math.round(
-              (Number(siObj.powProf82.k01[i30]) - Number(arr30[1]) * kttne) * 10
-            ) / 10
-          );
-          powProfDiff.k02.push(
+              (Number(siObj.powProf82.k01[i30]) - Number(arr30[0]) * kttne) * 10
+            ) / 10;
+          powProfDiff.k01.push(addStatus(v));
+
+          v =
             Math.round(
               (Number(siObj.powProf82.k02[i30]) - Number(arr30[1]) * kttne) * 10
-            ) / 10
+            ) / 10;
+          // let status: TStatus | TStatus2;
+          // if (isNaN(v)) {
+          //   status = 'warning';
+          // } else if (-1 <= v && v <= 1) {
+          //   status = 'correct';
+          // } else {
+          //   status = 'incorrect';
+          // }
+
+          powProfDiff.k02.push(
+            addStatus(v)
+            // Math.round(
+            //   (Number(siObj.powProf82.k02[i30]) - Number(arr30[1]) * kttne) * 10
+            // ) / 10
           );
-          powProfDiff.k03.push(
+          v =
             Math.round(
-              (Number(siObj.powProf82.k03[i30]) - Number(arr30[1]) * kttne) * 10
-            ) / 10
-          );
-          powProfDiff.k04.push(
+              (Number(siObj.powProf82.k03[i30]) - Number(arr30[2]) * kttne) * 10
+            ) / 10;
+          powProfDiff.k03.push(addStatus(v));
+          v =
             Math.round(
-              (Number(siObj.powProf82.k04[i30]) - Number(arr30[1]) * kttne) * 10
-            ) / 10
-          );
+              (Number(siObj.powProf82.k04[i30]) - Number(arr30[3]) * kttne) * 10
+            ) / 10;
+          powProfDiff.k04.push(addStatus(v));
         });
         console.log(powProfSch);
         siObj = { ...siObj, powProfSch, powProfSchKttne, powProfDiff };
@@ -128,34 +160,47 @@ export function Sverka2({ siState, setSiState }: IProps) {
           (item) => Math.round(item * kttne * 10) / 10
         );
 
-        draft[i].powProfDiff.k01 = siObj.powProfDiff.k01.map(
-          (item, i30) =>
+        draft[i].powProfDiff.k01 = siObj.powProfDiff.k01.map((item, i30) => {
+          const v =
             Math.round(
               (draft[i].powProfSchKttne.k01[i30] - siObj.powProf82.k01[i30]) *
                 10
-            ) / 10
-        );
-        draft[i].powProfDiff.k02 = siObj.powProfDiff.k02.map(
-          (item, i30) =>
+            ) / 10;
+          return addStatus(v);
+        });
+        draft[i].powProfDiff.k02 = siObj.powProfDiff.k02.map((item, i30) => {
+          const v =
             Math.round(
               (draft[i].powProfSchKttne.k02[i30] - siObj.powProf82.k02[i30]) *
                 10
-            ) / 10
-        );
-        draft[i].powProfDiff.k03 = siObj.powProfDiff.k03.map(
-          (item, i30) =>
+            ) / 10;
+          // let status: TStatus | TStatus2;
+          // if (isNaN(v)) {
+          //   status = 'warning';
+          // } else if (-1 <= v && v <= 1) {
+          //   status = 'correct';
+          // } else {
+          //   status = 'incorrect';
+          // }
+          // return { v, status };
+          return addStatus(v);
+        });
+        draft[i].powProfDiff.k03 = siObj.powProfDiff.k03.map((item, i30) => {
+          const v =
             Math.round(
               (draft[i].powProfSchKttne.k03[i30] - siObj.powProf82.k03[i30]) *
                 10
-            ) / 10
-        );
-        draft[i].powProfDiff.k04 = siObj.powProfDiff.k04.map(
-          (item, i30) =>
+            ) / 10;
+          return addStatus(v);
+        });
+        draft[i].powProfDiff.k04 = siObj.powProfDiff.k04.map((item, i30) => {
+          const v =
             Math.round(
               (draft[i].powProfSchKttne.k04[i30] - siObj.powProf82.k04[i30]) *
                 10
-            ) / 10
-        );
+            ) / 10;
+          return addStatus(v);
+        });
       })
     );
   }
@@ -329,10 +374,18 @@ export function Sverka2({ siState, setSiState }: IProps) {
                       <td>{siObj.powProf82 && siObj.powProf82.k03[i]}</td>
                       <td>{siObj.powProf82 && siObj.powProf82.k04[i]}</td>
 
-                      <td>{siObj.powProfDiff && siObj.powProfDiff.k01[i]}</td>
-                      <td>{siObj.powProfDiff && siObj.powProfDiff.k02[i]}</td>
-                      <td>{siObj.powProfDiff && siObj.powProfDiff.k03[i]}</td>
-                      <td>{siObj.powProfDiff && siObj.powProfDiff.k04[i]}</td>
+                      <td className={styles[siObj.powProfDiff?.k01[i].status]}>
+                        {siObj.powProfDiff && siObj.powProfDiff.k01[i].v}
+                      </td>
+                      <td className={styles[siObj.powProfDiff?.k02[i].status]}>
+                        {siObj.powProfDiff && siObj.powProfDiff.k02[i].v}
+                      </td>
+                      <td className={styles[siObj.powProfDiff?.k03[i].status]}>
+                        {siObj.powProfDiff && siObj.powProfDiff.k03[i].v}
+                      </td>
+                      <td className={styles[siObj.powProfDiff?.k04[i].status]}>
+                        {siObj.powProfDiff && siObj.powProfDiff.k04[i].v}
+                      </td>
                     </tr>
                   );
                 })}

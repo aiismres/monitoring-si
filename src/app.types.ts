@@ -52,7 +52,8 @@ export interface IStringObj {
       | TStatus3
       | 'да'
       | 'нет'
-      | number[];
+      | number[]
+      | { v: number; status: TStatus | TStatus2 }[];
   };
 }
 
@@ -60,11 +61,25 @@ interface IStringStringNumber {
   [N: string]: string | number[];
 }
 
+interface IStringObj2 {
+  [N: string]: number[] | { v: number; status: TStatus | TStatus2 }[];
+}
+
 export interface IPowProfSch extends IStringStringNumber {
   k01: number[];
   k02: number[];
   k03: number[];
   k04: number[];
+}
+
+export interface IPowProfDiff extends IStringObj2 {
+  k01: { v: number; status: TStatus | TStatus2 }[];
+  // k01: number[];
+  k02: { v: number; status: TStatus | TStatus2 }[];
+  k03: { v: number; status: TStatus | TStatus2 }[];
+  // k03: number[];
+  k04: { v: number; status: TStatus | TStatus2 }[];
+  // k04: number[];
 }
 
 interface BigObject<I1, I2> {
@@ -96,10 +111,14 @@ export interface ISiObj1 extends IStringObj {
     k04: number[];
   };
   powProfDiff: {
-    k01: number[];
-    k02: number[];
-    k03: number[];
-    k04: number[];
+    // k01: number[];
+    k01: { v: number; status: TStatus | TStatus2 }[];
+    // k02: number[];
+    k02: { v: number; status: TStatus | TStatus2 }[];
+    k03: { v: number; status: TStatus | TStatus2 }[];
+    // k03: number[];
+    k04: { v: number; status: TStatus | TStatus2 }[];
+    // k04: number[];
   };
   numTiShem60Pre: {
     v: string;
