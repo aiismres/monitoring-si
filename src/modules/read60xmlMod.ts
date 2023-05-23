@@ -432,6 +432,21 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
               k03: [],
               k04: [],
             },
+            powProfSchKttne: {
+              k01: [],
+              k02: [],
+              k03: [],
+              k04: [],
+            },
+            powProfDiff: {
+              k01: [],
+              k02: [],
+              k03: [],
+              k04: [],
+            },
+            ke: {
+              v: '1',
+            },
           };
           siArMod.push(siObj);
         }

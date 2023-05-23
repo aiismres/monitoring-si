@@ -1,9 +1,10 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { IPowProfSch, ISiObj1 } from '../app.types';
 import styles from './sverka2.module.css';
 import { table } from 'console';
 import { timePeriods } from '../modules/constants';
 import Button from '@mui/material/Button';
+import { produce } from 'immer';
 
 interface IProps {
   siState: ISiObj1[];
@@ -11,11 +12,31 @@ interface IProps {
 }
 
 export function Sverka2({ siState, setSiState }: IProps) {
-  const siArrMutable: ISiObj1[] = structuredClone(siState);
-  console.log(siArrMutable);
+  // const siArrMutable: ISiObj1[] = structuredClone(siState);
+  // console.log(siArrMutable);
+  setSiState(
+    produce((draft) => {
+      draft.forEach((item) => (item.ke = item.ke || { v: '1' }));
+    })
+  );
 
   function pastPowProfSch(siObj: ISiObj1, i: number) {
+    const siArrMutable: ISiObj1[] = structuredClone(siState);
     const powProfSch: IPowProfSch = {
+      k01: [],
+      k02: [],
+      k03: [],
+      k04: [],
+    };
+
+    const powProfSchKttne: IPowProfSch = {
+      k01: [],
+      k02: [],
+      k03: [],
+      k04: [],
+    };
+
+    const powProfDiff: IPowProfSch = {
       k01: [],
       k02: [],
       k03: [],
@@ -28,16 +49,53 @@ export function Sverka2({ siState, setSiState }: IProps) {
         console.log('Pasted content: ');
         const rows = text.split('\r\n');
         rows.pop(); // удаляется последний элемент '', к. непонятно откуда берется
-        rows.forEach((row) => {
+        rows.forEach((row, i30) => {
           let arr30 = row.split('\t');
           console.log(arr30);
           powProfSch.k01.push(Number(arr30[0]));
           powProfSch.k02.push(Number(arr30[1]));
           powProfSch.k03.push(Number(arr30[2]));
           powProfSch.k04.push(Number(arr30[3]));
+
+          const kttne =
+            Number(siObj.kttDB.v) * Number(siObj.ktnDB.v) * Number(siObj.ke.v);
+
+          powProfSchKttne.k01.push(
+            Math.round(Number(arr30[0]) * kttne * 10) / 10
+          );
+          powProfSchKttne.k02.push(
+            Math.round(Number(arr30[1]) * kttne * 10) / 10
+          );
+          powProfSchKttne.k03.push(
+            Math.round(Number(arr30[2]) * kttne * 10) / 10
+          );
+          powProfSchKttne.k04.push(
+            Math.round(Number(arr30[3]) * kttne * 10) / 10
+          );
+
+          powProfDiff.k01.push(
+            Math.round(
+              (Number(siObj.powProf82.k01[i30]) - Number(arr30[1]) * kttne) * 10
+            ) / 10
+          );
+          powProfDiff.k02.push(
+            Math.round(
+              (Number(siObj.powProf82.k02[i30]) - Number(arr30[1]) * kttne) * 10
+            ) / 10
+          );
+          powProfDiff.k03.push(
+            Math.round(
+              (Number(siObj.powProf82.k03[i30]) - Number(arr30[1]) * kttne) * 10
+            ) / 10
+          );
+          powProfDiff.k04.push(
+            Math.round(
+              (Number(siObj.powProf82.k04[i30]) - Number(arr30[1]) * kttne) * 10
+            ) / 10
+          );
         });
         console.log(powProfSch);
-        siObj = { ...siObj, powProfSch };
+        siObj = { ...siObj, powProfSch, powProfSchKttne, powProfDiff };
         siArrMutable[i] = siObj;
         console.log(siObj, siArrMutable);
         setSiState(siArrMutable);
@@ -47,10 +105,66 @@ export function Sverka2({ siState, setSiState }: IProps) {
       });
   }
 
+  function changeKe(
+    e: ChangeEvent<HTMLInputElement>,
+    siObj: ISiObj1,
+    i: number
+  ) {
+    const kttne =
+      Number(siObj.kttDB.v) * Number(siObj.ktnDB.v) * Number(e.target.value);
+    setSiState(
+      produce((draft) => {
+        draft[i].ke.v = e.target.value;
+        draft[i].powProfSchKttne.k01 = siObj.powProfSch.k01.map(
+          (item) => Math.round(item * kttne * 10) / 10
+        );
+        draft[i].powProfSchKttne.k02 = siObj.powProfSch.k02.map(
+          (item) => Math.round(item * kttne * 10) / 10
+        );
+        draft[i].powProfSchKttne.k03 = siObj.powProfSch.k03.map(
+          (item) => Math.round(item * kttne * 10) / 10
+        );
+        draft[i].powProfSchKttne.k04 = siObj.powProfSch.k04.map(
+          (item) => Math.round(item * kttne * 10) / 10
+        );
+
+        draft[i].powProfDiff.k01 = siObj.powProfDiff.k01.map(
+          (item, i30) =>
+            Math.round(
+              (draft[i].powProfSchKttne.k01[i30] - siObj.powProf82.k01[i30]) *
+                10
+            ) / 10
+        );
+        draft[i].powProfDiff.k02 = siObj.powProfDiff.k02.map(
+          (item, i30) =>
+            Math.round(
+              (draft[i].powProfSchKttne.k02[i30] - siObj.powProf82.k02[i30]) *
+                10
+            ) / 10
+        );
+        draft[i].powProfDiff.k03 = siObj.powProfDiff.k03.map(
+          (item, i30) =>
+            Math.round(
+              (draft[i].powProfSchKttne.k03[i30] - siObj.powProf82.k03[i30]) *
+                10
+            ) / 10
+        );
+        draft[i].powProfDiff.k04 = siObj.powProfDiff.k04.map(
+          (item, i30) =>
+            Math.round(
+              (draft[i].powProfSchKttne.k04[i30] - siObj.powProf82.k04[i30]) *
+                10
+            ) / 10
+        );
+      })
+    );
+  }
+
   return (
     <>
       <div>Страница Сверка-2</div>
-      {siArrMutable.map((siObj, i) => {
+      {siState.map((siObj, i) => {
+        // {siArrMutable.map((siObj, i) => {
         return (
           <>
             <table className={styles.pivotTable}>
@@ -137,7 +251,12 @@ export function Sverka2({ siState, setSiState }: IProps) {
                   <td>{siObj.tipSchDB.v}</td>
                   <td>Ke=</td>
                   <td>
-                    <input type="text" />
+                    <input
+                      style={{ width: 50 }}
+                      type="text"
+                      value={siObj.ke?.v}
+                      onChange={(e) => changeKe(e, siObj, i)}
+                    />
                   </td>
                   <td></td>
                   <td>---</td>
@@ -193,14 +312,27 @@ export function Sverka2({ siState, setSiState }: IProps) {
                       <td>{siObj.powProfSch && siObj.powProfSch.k02[i]}</td>
                       <td>{siObj.powProfSch && siObj.powProfSch.k03[i]}</td>
                       <td>{siObj.powProfSch && siObj.powProfSch.k04[i]}</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
+                      <td>
+                        {siObj.powProfSchKttne && siObj.powProfSchKttne.k01[i]}
+                      </td>
+                      <td>
+                        {siObj.powProfSchKttne && siObj.powProfSchKttne.k02[i]}
+                      </td>
+                      <td>
+                        {siObj.powProfSchKttne && siObj.powProfSchKttne.k03[i]}
+                      </td>
+                      <td>
+                        {siObj.powProfSchKttne && siObj.powProfSchKttne.k04[i]}
+                      </td>
                       <td>{siObj.powProf82 && siObj.powProf82.k01[i]}</td>
                       <td>{siObj.powProf82 && siObj.powProf82.k02[i]}</td>
                       <td>{siObj.powProf82 && siObj.powProf82.k03[i]}</td>
                       <td>{siObj.powProf82 && siObj.powProf82.k04[i]}</td>
+
+                      <td>{siObj.powProfDiff && siObj.powProfDiff.k01[i]}</td>
+                      <td>{siObj.powProfDiff && siObj.powProfDiff.k02[i]}</td>
+                      <td>{siObj.powProfDiff && siObj.powProfDiff.k03[i]}</td>
+                      <td>{siObj.powProfDiff && siObj.powProfDiff.k04[i]}</td>
                     </tr>
                   );
                 })}

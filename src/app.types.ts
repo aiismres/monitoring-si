@@ -89,6 +89,18 @@ export interface ISiObj1 extends IStringObj {
     k03: number[];
     k04: number[];
   };
+  powProfSchKttne: {
+    k01: number[];
+    k02: number[];
+    k03: number[];
+    k04: number[];
+  };
+  powProfDiff: {
+    k01: number[];
+    k02: number[];
+    k03: number[];
+    k04: number[];
+  };
   numTiShem60Pre: {
     v: string;
     status: TStatus;
@@ -244,6 +256,9 @@ export interface ISiObj1 extends IStringObj {
     status: TStatus;
     status2: TStatus2;
     status3: TStatus3;
+  };
+  ke: {
+    v: string;
   };
   kodTi80: {
     v: string;
