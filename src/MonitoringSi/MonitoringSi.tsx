@@ -59,80 +59,91 @@ declare module 'react' {
 interface IProps {
   siState: ISiObj1[];
   setSiState: Dispatch<SetStateAction<ISiObj1[]>>;
+  appState: IAppState;
+  setAppState: Dispatch<SetStateAction<IAppState>>;
+  sechInfo: ISechInfo;
+  setSechInfo: Dispatch<SetStateAction<ISechInfo>>;
 }
 
-export function MonitoringSi({ siState, setSiState }: IProps) {
-  // const [siState, setSiState] = useState<ISiObj1[]>([]);
-  const [appState, setAppState] = useState<IAppState>({
-    // selectedCell: {},
-    // colOrderOpt: 'opt1',
-    colOrder: colOrderObj.opt1,
-    sechID: '',
-    naimSechShort: '',
-    isEdit: false,
-    classSSDBtn: '',
-    classEditBtn: '',
-    isSiStateSave: true,
-    isMsgOpen: false,
-    isSuccess: true,
-    isInfoOpen: false,
-  });
-  const [sechInfo, setSechInfo] = useState<ISechInfo>({
-    sechID: '',
-    naimSechShort: '',
-    areaCode: '',
-    areaName: '',
-    sourceDB: '',
-    source60: '',
-    amountTi: 0,
-  });
+export function MonitoringSi({
+  siState,
+  setSiState,
+  appState,
+  setAppState,
+  sechInfo,
+  setSechInfo,
+}: IProps) {
+  // const [appState, setAppState] = useState<IAppState>({
+  //   // selectedCell: {},
+  //   // colOrderOpt: 'opt1',
+  //   colOrder: colOrderObj.opt1,
+  //   sechID: '',
+  //   naimSechShort: '',
+  //   isEdit: false,
+  //   classSSDBtn: '',
+  //   classEditBtn: '',
+  //   isSiStateSave: true,
+  //   isMsgOpen: false,
+  //   isSuccess: true,
+  //   isInfoOpen: false,
+  // });
+  // const [sechInfo, setSechInfo] = useState<ISechInfo>({
+  //   sechID: '',
+  //   naimSechShort: '',
+  //   areaCode: '',
+  //   areaName: '',
+  //   sourceDB: '',
+  //   source60: '',
+  //   amountTi: 0,
+  // });
+
   const [tableWidth, setTableWidth] = useState<number>(0);
 
   const btnExportSv1 = useRef(null);
   const btnEdit = useRef(null);
   const siStateMod = useRef<ISiObj1[]>([]);
 
-  useEffect(() => {
-    if (appState.isSiStateSave) {
-      setAppState({ ...appState, classSSDBtn: '' });
-    } else {
-      setAppState({ ...appState, classSSDBtn: 'attention' });
-    }
-  }, [appState.isSiStateSave]);
+  // useEffect(() => {
+  //   if (appState.isSiStateSave) {
+  //     // setAppState({ ...appState, classSSDBtn: '' });
+  //   } else {
+  //     // setAppState({ ...appState, classSSDBtn: 'attention' });
+  //   }
+  // }, [appState.isSiStateSave]);
 
-  useEffect(() => {
-    (async () => {
-      console.log(document.URL, window.location.search);
-      let url = new URL(document.URL);
+  // useEffect(() => {
+  //   (async () => {
+  //     console.log(document.URL, window.location.search);
+  //     let url = new URL(document.URL);
 
-      const naimSechShort =
-        url.searchParams.get('naimsechshort') ?? 'defaultNaimSech';
-      document.title = naimSechShort;
+  //     const naimSechShort =
+  //       url.searchParams.get('naimsechshort') ?? 'defaultNaimSech';
+  //     document.title = naimSechShort;
 
-      const sechID = url.searchParams.get('sechID') ?? 'defaultSechID';
-      setAppState({
-        ...appState,
-        sechID,
-        naimSechShort,
-      });
+  //     const sechID = url.searchParams.get('sechID') ?? 'defaultSechID';
+  //     setAppState({
+  //       ...appState,
+  //       sechID,
+  //       naimSechShort,
+  //     });
 
-      let res = await fetch('/api/readsidata', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: url.searchParams.get('sechID') }),
-      });
-      let resJson: IResReadSiData1 = await res.json();
-      console.log('res /api/readsidata', resJson);
+  //     let res = await fetch('/api/readsidata', {
+  //       method: 'post',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ id: url.searchParams.get('sechID') }),
+  //     });
+  //     let resJson: IResReadSiData1 = await res.json();
+  //     console.log('res /api/readsidata', resJson);
 
-      resJson.si = checkData(resJson.si);
-      setSiState(resJson.si);
-      if (resJson.sechInfo) {
-        setSechInfo(resJson.sechInfo);
-      }
-    })();
-  }, []);
+  //     resJson.si = checkData(resJson.si);
+  //     setSiState(resJson.si);
+  //     if (resJson.sechInfo) {
+  //       setSechInfo(resJson.sechInfo);
+  //     }
+  //   })();
+  // }, []);
 
   const [rerender, setRerender] = useState(0); // для ререндера при изм ширины столбцов таблицы
 
@@ -470,7 +481,7 @@ export function MonitoringSi({ siState, setSiState }: IProps) {
               isSiStateSave: !appState.isSiStateSave,
             })
           }
-          className={appState.classEditBtn}
+          // className={appState.classEditBtn}
           ref={btnEdit}
         >
           ред-ть

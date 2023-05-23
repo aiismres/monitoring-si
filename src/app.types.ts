@@ -16,8 +16,8 @@ export interface IAppState {
   sechID: string;
   naimSechShort: string;
   isEdit: boolean;
-  classSSDBtn: string;
-  classEditBtn: string;
+  // classSSDBtn: string;
+  // classEditBtn: string;
   isSiStateSave: boolean;
   isMsgOpen: boolean;
   isSuccess: boolean;
