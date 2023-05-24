@@ -4,24 +4,27 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import styles from './speeddialnav.module.css';
-import { IAppState } from '../app.types.js';
+import { IAppState, ISiObj1 } from '../app.types.js';
 import { ReactComponent as IconExpSv1 } from '../Icons/IconExpSv1.svg';
 import { ReactComponent as IconEdit } from '../Icons/IconEdit.svg';
 import { ReactComponent as IconInfo } from '../Icons/IconInfo.svg';
 import { ReactComponent as IconSverka2 } from '../Icons/IconSverka2.svg';
 import { useNavigate } from 'react-router-dom';
+import { exportSv1Mod } from '../modules/exportSv1Mod';
 
 interface IProps {
-  btnExportSv1: MutableRefObject<HTMLButtonElement | null>;
+  siState: ISiObj1[];
+  // btnExportSv1: MutableRefObject<HTMLButtonElement | null>;
   // inputFileSv2,
-  btnEdit: MutableRefObject<HTMLButtonElement | null>;
+  // btnEdit: MutableRefObject<HTMLButtonElement | null>;
   appState: IAppState;
   setAppState: Dispatch<SetStateAction<IAppState>>;
 }
 
 export function SpeedDialNav({
-  btnExportSv1,
-  btnEdit,
+  // btnExportSv1,
+  // btnEdit,
+  siState,
   appState,
   setAppState,
 }: IProps) {
@@ -69,8 +72,15 @@ export function SpeedDialNav({
         />
       ),
       name: '',
-      ref: btnEdit,
-      do: null,
+      ref: null,
+      // ref: btnEdit,
+      do: () =>
+        setAppState({
+          ...appState,
+          isEdit: !appState.isEdit,
+          isSiStateSave: !appState.isSiStateSave,
+        }),
+      // do: null,
     },
     {
       icon: (
@@ -79,8 +89,13 @@ export function SpeedDialNav({
         />
       ),
       name: '',
-      ref: btnExportSv1,
-      do: null,
+      ref: null,
+      // ref: btnExportSv1,
+      do: () => {
+        console.log(siState);
+        exportSv1Mod(siState);
+      },
+      // do: null,
     },
   ];
 
@@ -106,9 +121,9 @@ export function SpeedDialNav({
             icon={action.icon}
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => {
-              if (action.ref && action.ref.current) {
-                action.ref.current.click();
-              }
+              // if (action.ref && action.ref.current) {
+              //   action.ref.current.click();
+              // }
               if (action.do) {
                 action.do();
               }

@@ -471,9 +471,9 @@ export function MonitoringSi({
           })}
         </tbody>
       </table>
-      <div id="control-panel" className={styles.dpnone}>
-        <div>{appState.naimSechShort}</div>
-        <button
+      {/* <div id="control-panel" className={styles.dpnone}> */}
+      {/* <div>{appState.naimSechShort}</div> */}
+      {/* <button
           onClick={() =>
             setAppState({
               ...appState,
@@ -485,16 +485,16 @@ export function MonitoringSi({
           ref={btnEdit}
         >
           ред-ть
-        </button>
+        </button> */}
 
-        <button
+      {/* <button
           onClick={saveSiData}
           className={appState.isSiStateSave ? '' : styles.attention}
         >
           сохранить изм-я
-        </button>
+        </button> */}
 
-        <button
+      {/* <button
           ref={btnExportSv1}
           onClick={() => {
             console.log(siState);
@@ -503,8 +503,8 @@ export function MonitoringSi({
           className={styles.dpnone}
         >
           экспорт св-1
-        </button>
-      </div>
+        </button> */}
+      {/* </div> */}
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
           <Switch color="default" onChange={handleSwitch} />
@@ -519,9 +519,10 @@ export function MonitoringSi({
           />
 
           <SpeedDialNav
-            btnExportSv1={btnExportSv1}
+            // btnExportSv1={btnExportSv1}
             // inputFileSv2={inputFileSv2}
-            btnEdit={btnEdit}
+            // btnEdit={btnEdit}
+            siState={siState}
             appState={appState}
             setAppState={setAppState}
           />

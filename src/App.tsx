@@ -84,7 +84,14 @@ function App() {
         />
         <Route
           path="/monitoringsi/sverka2"
-          element={<Sverka2 siState={siState} setSiState={setSiState} />}
+          element={
+            <Sverka2
+              siState={siState}
+              setSiState={setSiState}
+              appState={appState}
+              setAppState={setAppState}
+            />
+          }
         />
       </Routes>
     </BrowserRouter>

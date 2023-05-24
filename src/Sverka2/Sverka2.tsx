@@ -1,5 +1,6 @@
 import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import {
+  IAppState,
   IPowProfDiff,
   IPowProfSch,
   ISiObj1,
@@ -11,13 +12,24 @@ import { table } from 'console';
 import { timePeriods } from '../modules/constants';
 import Button from '@mui/material/Button';
 import { produce } from 'immer';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { SpeedDialNav } from '../SpeedDialNav';
 
 interface IProps {
   siState: ISiObj1[];
   setSiState: Dispatch<SetStateAction<ISiObj1[]>>;
+  appState: IAppState;
+  setAppState: Dispatch<SetStateAction<IAppState>>;
 }
 
-export function Sverka2({ siState, setSiState }: IProps) {
+export function Sverka2({
+  siState,
+  setSiState,
+  appState,
+  setAppState,
+}: IProps) {
   // const siArrMutable: ISiObj1[] = structuredClone(siState);
   // console.log(siArrMutable);
   setSiState(
@@ -76,7 +88,9 @@ export function Sverka2({ siState, setSiState }: IProps) {
           powProfSch.k04.push(Number(arr30[3]));
 
           const kttne =
-            Number(siObj.kttDB.v) * Number(siObj.ktnDB.v) * Number(siObj.ke.v);
+            Number(siObj.kttDB.v || siObj.kttSop.v) *
+            Number(siObj.ktnDB.v || siObj.ktnSop.v) *
+            Number(siObj.ke.v);
 
           powProfSchKttne.k01.push(
             Math.round(Number(arr30[0]) * kttne * 10) / 10
@@ -143,7 +157,9 @@ export function Sverka2({ siState, setSiState }: IProps) {
     i: number
   ) {
     const kttne =
-      Number(siObj.kttDB.v) * Number(siObj.ktnDB.v) * Number(e.target.value);
+      Number(siObj.kttDB.v || siObj.kttSop.v) *
+      Number(siObj.ktnDB.v || siObj.ktnSop.v) *
+      Number(e.target.value);
     setSiState(
       produce((draft) => {
         draft[i].ke.v = e.target.value;
@@ -404,6 +420,21 @@ export function Sverka2({ siState, setSiState }: IProps) {
               console.log(e.clipboardData.getData('text/rtf'));
             }}
           /> */}
+      <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
+        <Toolbar>
+          <Typography variant="h6" sx={{ mr: 5 }}>
+            {appState.naimSechShort}
+          </Typography>
+
+          {/* <SpeedDialNav
+            btnExportSv1={btnExportSv1}
+            // inputFileSv2={inputFileSv2}
+            btnEdit={btnEdit}
+            appState={appState}
+            setAppState={setAppState}
+          /> */}
+        </Toolbar>
+      </AppBar>
     </>
   );
 }
