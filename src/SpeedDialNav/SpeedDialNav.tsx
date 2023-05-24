@@ -12,92 +12,100 @@ import { ReactComponent as IconSverka2 } from '../Icons/IconSverka2.svg';
 import { useNavigate } from 'react-router-dom';
 import { exportSv1Mod } from '../modules/exportSv1Mod';
 
+interface IActions {
+  icon: JSX.Element;
+  name: string;
+  do: () => void;
+}
+
 interface IProps {
-  siState: ISiObj1[];
+  // siState: ISiObj1[];
+  // appState: IAppState;
+  // setAppState: Dispatch<SetStateAction<IAppState>>;
+  actions: IActions[];
   // btnExportSv1: MutableRefObject<HTMLButtonElement | null>;
   // inputFileSv2,
   // btnEdit: MutableRefObject<HTMLButtonElement | null>;
-  appState: IAppState;
-  setAppState: Dispatch<SetStateAction<IAppState>>;
 }
 
 export function SpeedDialNav({
   // btnExportSv1,
   // btnEdit,
-  siState,
-  appState,
-  setAppState,
+  // siState,
+  // appState,
+  // setAppState,
+  actions,
 }: IProps) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const actions = [
-    {
-      icon: <IconSverka2 />,
-      name: '',
-      ref: null,
-      do: () => {
-        navigate(`sverka2?sechID=${appState.sechID}`);
-      },
-    },
-    {
-      icon: (
-        <IconInfo
-        //  color={'primary'}
-        />
-      ),
-      name: '',
-      ref: null,
-      do: () => {
-        setAppState({ ...appState, isInfoOpen: true });
-      },
-    },
+  // const actions = [
+  //   {
+  //     icon: <IconSverka2 />,
+  //     name: '',
+  //     // ref: null,
+  //     do: () => {
+  //       navigate(`sverka2?sechID=${appState.sechID}`);
+  //     },
+  //   },
+  //   {
+  //     icon: (
+  //       <IconInfo
+  //       //  color={'primary'}
+  //       />
+  //     ),
+  //     name: '',
+  //     // ref: null,
+  //     do: () => {
+  //       setAppState({ ...appState, isInfoOpen: true });
+  //     },
+  //   },
 
-    // {
-    //   icon: <IconImpSv2 color={'primary'} />,
-    //   name: '',
-    //   ref: inputFileSv2,
-    //   do: null,
-    // },
+  //   // {
+  //   //   icon: <IconImpSv2 color={'primary'} />,
+  //   //   name: '',
+  //   //   ref: inputFileSv2,
+  //   //   do: null,
+  //   // },
 
-    // {
-    //   icon: <Icon82xml color={'primary'} />,
-    //   name: '',
-    //   ref: '',
-    //   do: null,
-    // },
-    {
-      icon: (
-        <IconEdit
-        // color={'primary'}
-        />
-      ),
-      name: '',
-      ref: null,
-      // ref: btnEdit,
-      do: () =>
-        setAppState({
-          ...appState,
-          isEdit: !appState.isEdit,
-          isSiStateSave: !appState.isSiStateSave,
-        }),
-      // do: null,
-    },
-    {
-      icon: (
-        <IconExpSv1
-        //  color={'primary'}
-        />
-      ),
-      name: '',
-      ref: null,
-      // ref: btnExportSv1,
-      do: () => {
-        console.log(siState);
-        exportSv1Mod(siState);
-      },
-      // do: null,
-    },
-  ];
+  //   // {
+  //   //   icon: <Icon82xml color={'primary'} />,
+  //   //   name: '',
+  //   //   ref: '',
+  //   //   do: null,
+  //   // },
+  //   {
+  //     icon: (
+  //       <IconEdit
+  //       // color={'primary'}
+  //       />
+  //     ),
+  //     name: '',
+  //     // ref: null,
+  //     // ref: btnEdit,
+  //     do: () =>
+  //       setAppState({
+  //         ...appState,
+  //         isEdit: !appState.isEdit,
+  //         isSiStateSave: !appState.isSiStateSave,
+  //       }),
+  //     // do: null,
+  //   },
+  //   {
+  //     icon: (
+  //       <IconExpSv1
+  //       //  color={'primary'}
+  //       />
+  //     ),
+  //     name: '',
+  //     // ref: null,
+  //     // ref: btnExportSv1,
+  //     do: () => {
+  //       console.log(siState);
+  //       exportSv1Mod(siState);
+  //     },
+  //     // do: null,
+  //   },
+  // ];
 
   return (
     <Box
@@ -124,9 +132,9 @@ export function SpeedDialNav({
               // if (action.ref && action.ref.current) {
               //   action.ref.current.click();
               // }
-              if (action.do) {
-                action.do();
-              }
+              // if (action.do) {
+              action.do();
+              // }
             }}
             FabProps={{
               variant: 'extended',

@@ -48,6 +48,11 @@ import {
 } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { useAppStore } from '../store';
+import { ReactComponent as IconExpSv1 } from '../Icons/IconExpSv1.svg';
+import { ReactComponent as IconEdit } from '../Icons/IconEdit.svg';
+import { ReactComponent as IconInfo } from '../Icons/IconInfo.svg';
+import { ReactComponent as IconSverka2 } from '../Icons/IconSverka2.svg';
+import { useNavigate } from 'react-router-dom';
 
 // типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {
@@ -96,6 +101,7 @@ export function MonitoringSi({
   //   source60: '',
   //   amountTi: 0,
   // });
+  const navigate = useNavigate();
 
   const [tableWidth, setTableWidth] = useState<number>(0);
 
@@ -377,6 +383,43 @@ export function MonitoringSi({
     }
   }
 
+  const actions = [
+    {
+      icon: <IconSverka2 />,
+      name: '',
+      do: () => {
+        navigate(`sverka2?sechID=${appState.sechID}`);
+      },
+    },
+    {
+      icon: <IconInfo />,
+      name: '',
+      do: () => {
+        setAppState({ ...appState, isInfoOpen: true });
+      },
+    },
+
+    {
+      icon: <IconEdit />,
+      name: '',
+      do: () =>
+        setAppState({
+          ...appState,
+          isEdit: !appState.isEdit,
+          isSiStateSave: !appState.isSiStateSave,
+        }),
+      // do: null,
+    },
+    {
+      icon: <IconExpSv1 />,
+      name: '',
+      do: () => {
+        console.log(siState);
+        exportSv1Mod(siState);
+      },
+    },
+  ];
+
   return (
     <div className={styles.App}>
       <table
@@ -522,9 +565,10 @@ export function MonitoringSi({
             // btnExportSv1={btnExportSv1}
             // inputFileSv2={inputFileSv2}
             // btnEdit={btnEdit}
-            siState={siState}
-            appState={appState}
-            setAppState={setAppState}
+            // siState={siState}
+            // appState={appState}
+            // setAppState={setAppState}
+            actions={actions}
           />
         </Toolbar>
       </AppBar>
