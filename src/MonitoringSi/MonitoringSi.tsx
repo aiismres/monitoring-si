@@ -8,7 +8,7 @@ import React, {
   SetStateAction,
 } from 'react';
 import styles from './monitoringsi.module.css';
-import { TableHead } from '../TableHead';
+// import { TableHead } from '../TableHead';
 import {
   IColsWidth,
   colOrderObj,
@@ -46,13 +46,15 @@ import {
   Snackbar,
   buttonBaseClasses,
 } from '@mui/material';
-import MuiAlert from '@mui/material/Alert';
+import Alert from '@mui/material/Alert';
 import { useAppStore } from '../store';
 import { ReactComponent as IconExpSv1 } from '../Icons/IconExpSv1.svg';
 import { ReactComponent as IconEdit } from '../Icons/IconEdit.svg';
 import { ReactComponent as IconInfo } from '../Icons/IconInfo.svg';
 import { ReactComponent as IconSverka2 } from '../Icons/IconSverka2.svg';
 import { useNavigate } from 'react-router-dom';
+import { SaveBtn } from '../SaveBtn';
+import { AlertSucErr } from '../AlertSucErr';
 
 // типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {
@@ -562,17 +564,17 @@ export function MonitoringSi({
           />
 
           <SpeedDialNav
+            actions={actions}
             // btnExportSv1={btnExportSv1}
             // inputFileSv2={inputFileSv2}
             // btnEdit={btnEdit}
             // siState={siState}
             // appState={appState}
             // setAppState={setAppState}
-            actions={actions}
           />
         </Toolbar>
       </AppBar>
-      <Snackbar
+      {/* <Snackbar
         open={!appState.isSiStateSave}
         ContentProps={{
           sx: {
@@ -592,8 +594,9 @@ export function MonitoringSi({
           </Button>
         }
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
-      <Snackbar
+      /> */}
+      <SaveBtn appState={appState} onClick={saveSiData} />
+      {/* <Snackbar
         open={appState.isMsgOpen}
         autoHideDuration={3000}
         onClose={() => {
@@ -601,18 +604,18 @@ export function MonitoringSi({
         }}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <MuiAlert
+        <Alert
           elevation={6}
           variant="filled"
           severity={appState.isSuccess ? 'success' : 'error'}
           sx={{ width: '100%' }}
         >
-          {/* <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}> */}
           {appState.isSuccess
             ? 'Данные успешно сохранены.'
             : 'Ошибка, изменения НЕ сохранены!'}
-        </MuiAlert>
-      </Snackbar>
+        </Alert>
+      </Snackbar> */}
+      <AlertSucErr appState={appState} setAppState={setAppState} />
       <Dialog
         open={appState.isInfoOpen}
         onClose={() => {

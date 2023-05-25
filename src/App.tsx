@@ -90,6 +90,7 @@ function App() {
               setSiState={setSiState}
               appState={appState}
               setAppState={setAppState}
+              sechInfo={sechInfo}
             />
           }
         />

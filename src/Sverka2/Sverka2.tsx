@@ -3,6 +3,7 @@ import {
   IAppState,
   IPowProfDiff,
   IPowProfSch,
+  ISechInfo,
   ISiObj1,
   TStatus,
   TStatus2,
@@ -16,12 +17,17 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { SpeedDialNav } from '../SpeedDialNav';
+import { ReactComponent as IconEdit } from '../Icons/IconEdit.svg';
+import { ReactComponent as IconInfo } from '../Icons/IconInfo.svg';
+import { SaveBtn } from '../SaveBtn';
+import { AlertSucErr } from '../AlertSucErr';
 
 interface IProps {
   siState: ISiObj1[];
   setSiState: Dispatch<SetStateAction<ISiObj1[]>>;
   appState: IAppState;
   setAppState: Dispatch<SetStateAction<IAppState>>;
+  sechInfo: ISechInfo;
 }
 
 export function Sverka2({
@@ -29,6 +35,7 @@ export function Sverka2({
   setSiState,
   appState,
   setAppState,
+  sechInfo,
 }: IProps) {
   // const siArrMutable: ISiObj1[] = structuredClone(siState);
   // console.log(siArrMutable);
@@ -80,8 +87,9 @@ export function Sverka2({
         const rows = text.split('\r\n');
         rows.pop(); // удаляется последний элемент '', к. непонятно откуда берется
         rows.forEach((row, i30) => {
-          let arr30 = row.split('\t');
+          let arr30 = row.split('\t').map((item) => item.replace(',', '.'));
           console.log(arr30);
+
           powProfSch.k01.push(Number(arr30[0]));
           powProfSch.k02.push(Number(arr30[1]));
           powProfSch.k03.push(Number(arr30[2]));
@@ -163,62 +171,132 @@ export function Sverka2({
     setSiState(
       produce((draft) => {
         draft[i].ke.v = e.target.value;
-        draft[i].powProfSchKttne.k01 = siObj.powProfSch.k01.map(
-          (item) => Math.round(item * kttne * 10) / 10
-        );
-        draft[i].powProfSchKttne.k02 = siObj.powProfSch.k02.map(
-          (item) => Math.round(item * kttne * 10) / 10
-        );
-        draft[i].powProfSchKttne.k03 = siObj.powProfSch.k03.map(
-          (item) => Math.round(item * kttne * 10) / 10
-        );
-        draft[i].powProfSchKttne.k04 = siObj.powProfSch.k04.map(
-          (item) => Math.round(item * kttne * 10) / 10
-        );
+        if (draft[i].powProfSchKttne) {
+          draft[i].powProfSchKttne.k01 = siObj.powProfSch.k01.map(
+            (item) => Math.round(item * kttne * 10) / 10
+          );
+          draft[i].powProfSchKttne.k02 = siObj.powProfSch.k02.map(
+            (item) => Math.round(item * kttne * 10) / 10
+          );
+          draft[i].powProfSchKttne.k03 = siObj.powProfSch.k03.map(
+            (item) => Math.round(item * kttne * 10) / 10
+          );
+          draft[i].powProfSchKttne.k04 = siObj.powProfSch.k04.map(
+            (item) => Math.round(item * kttne * 10) / 10
+          );
 
-        draft[i].powProfDiff.k01 = siObj.powProfDiff.k01.map((item, i30) => {
-          const v =
-            Math.round(
-              (draft[i].powProfSchKttne.k01[i30] - siObj.powProf82.k01[i30]) *
-                10
-            ) / 10;
-          return addStatus(v);
-        });
-        draft[i].powProfDiff.k02 = siObj.powProfDiff.k02.map((item, i30) => {
-          const v =
-            Math.round(
-              (draft[i].powProfSchKttne.k02[i30] - siObj.powProf82.k02[i30]) *
-                10
-            ) / 10;
-          // let status: TStatus | TStatus2;
-          // if (isNaN(v)) {
-          //   status = 'warning';
-          // } else if (-1 <= v && v <= 1) {
-          //   status = 'correct';
-          // } else {
-          //   status = 'incorrect';
-          // }
-          // return { v, status };
-          return addStatus(v);
-        });
-        draft[i].powProfDiff.k03 = siObj.powProfDiff.k03.map((item, i30) => {
-          const v =
-            Math.round(
-              (draft[i].powProfSchKttne.k03[i30] - siObj.powProf82.k03[i30]) *
-                10
-            ) / 10;
-          return addStatus(v);
-        });
-        draft[i].powProfDiff.k04 = siObj.powProfDiff.k04.map((item, i30) => {
-          const v =
-            Math.round(
-              (draft[i].powProfSchKttne.k04[i30] - siObj.powProf82.k04[i30]) *
-                10
-            ) / 10;
-          return addStatus(v);
-        });
+          draft[i].powProfDiff.k01 = siObj.powProfDiff.k01.map((item, i30) => {
+            const v =
+              Math.round(
+                (draft[i].powProfSchKttne.k01[i30] - siObj.powProf82.k01[i30]) *
+                  10
+              ) / 10;
+            return addStatus(v);
+          });
+          draft[i].powProfDiff.k02 = siObj.powProfDiff.k02.map((item, i30) => {
+            const v =
+              Math.round(
+                (draft[i].powProfSchKttne.k02[i30] - siObj.powProf82.k02[i30]) *
+                  10
+              ) / 10;
+            // let status: TStatus | TStatus2;
+            // if (isNaN(v)) {
+            //   status = 'warning';
+            // } else if (-1 <= v && v <= 1) {
+            //   status = 'correct';
+            // } else {
+            //   status = 'incorrect';
+            // }
+            // return { v, status };
+            return addStatus(v);
+          });
+          draft[i].powProfDiff.k03 = siObj.powProfDiff.k03.map((item, i30) => {
+            const v =
+              Math.round(
+                (draft[i].powProfSchKttne.k03[i30] - siObj.powProf82.k03[i30]) *
+                  10
+              ) / 10;
+            return addStatus(v);
+          });
+          draft[i].powProfDiff.k04 = siObj.powProfDiff.k04.map((item, i30) => {
+            const v =
+              Math.round(
+                (draft[i].powProfSchKttne.k04[i30] - siObj.powProf82.k04[i30]) *
+                  10
+              ) / 10;
+            return addStatus(v);
+          });
+        }
       })
     );
+  }
+
+  const actions = [
+    {
+      icon: <IconInfo />,
+      name: '',
+      do: () => {
+        setAppState({ ...appState, isInfoOpen: true });
+      },
+    },
+
+    {
+      icon: <IconEdit />,
+      name: '',
+      do: () =>
+        setAppState({
+          ...appState,
+          isEdit: !appState.isEdit,
+          isSiStateSave: !appState.isSiStateSave,
+        }),
+    },
+  ];
+
+  async function saveSiData() {
+    try {
+      // if (!siStateMod.current[0]) {
+      //   siStateMod.current = siState;
+      // }
+
+      let res = await fetch(`/api/savesidata`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          siState: siState,
+          sechInfo,
+          sechID: appState.sechID,
+        }),
+      });
+      // siStateMod.current = [];
+      console.log(`/api/savesidata, res:`, res, 'res.ok:', res.ok);
+      if (res.ok) {
+        setAppState((st) => ({
+          ...st,
+          isSiStateSave: true,
+          isEdit: false,
+          isMsgOpen: true,
+          isSuccess: true,
+        }));
+      } else {
+        setAppState((st) => ({
+          ...st,
+          isSiStateSave: true,
+          isEdit: false,
+          isMsgOpen: true,
+          isSuccess: false,
+        }));
+      }
+    } catch (err) {
+      setAppState((st) => ({
+        ...st,
+        isSiStateSave: true,
+        isEdit: false,
+        isMsgOpen: true,
+        isSuccess: false,
+      }));
+    }
   }
 
   return (
@@ -305,21 +383,51 @@ export function Sverka2({
                   <td>---</td>
                 </tr>
                 <tr>
-                  <th>Выгрузка Сч</th>
+                  <th className={appState.isEdit ? styles.warning : ''}>
+                    Выгрузка Сч
+                  </th>
                   <td>---</td>
                   <td>---</td>
-                  <td>{siObj.numSchSch.v}</td>
-                  <td>{siObj.tipSchDB.v}</td>
+                  <td>
+                    <input
+                      type="text"
+                      readOnly={!appState.isEdit}
+                      value={siObj.numSchSch.v}
+                      onChange={(e) =>
+                        setSiState(
+                          produce((draft) => {
+                            draft[i].numSchSch.v = e.target.value;
+                          })
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    {' '}
+                    <input
+                      type="text"
+                      readOnly={!appState.isEdit}
+                      value={siObj.tipSchSch.v}
+                      onChange={(e) =>
+                        setSiState(
+                          produce((draft) => {
+                            draft[i].tipSchSch.v = e.target.value;
+                          })
+                        )
+                      }
+                    />
+                  </td>
                   <td>Ke=</td>
                   <td>
                     <input
-                      style={{ width: 50 }}
                       type="text"
+                      style={{ width: 50 }}
+                      readOnly={!appState.isEdit}
                       value={siObj.ke?.v}
                       onChange={(e) => changeKe(e, siObj, i)}
                     />
                   </td>
-                  <td></td>
+                  <td>---</td>
                   <td>---</td>
                   <td></td>
                 </tr>
@@ -327,6 +435,7 @@ export function Sverka2({
             </table>
             <Button
               variant="contained"
+              disabled={!appState.isEdit}
               color="success"
               onClick={() => {
                 pastPowProfSch(siObj, i);
@@ -433,8 +542,11 @@ export function Sverka2({
             appState={appState}
             setAppState={setAppState}
           /> */}
+          <SpeedDialNav actions={actions} />
         </Toolbar>
       </AppBar>
+      <SaveBtn appState={appState} onClick={saveSiData} />
+      <AlertSucErr appState={appState} setAppState={setAppState} />
     </>
   );
 }

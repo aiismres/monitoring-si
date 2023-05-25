@@ -19,23 +19,23 @@ interface IActions {
 }
 
 interface IProps {
+  actions: IActions[];
   // siState: ISiObj1[];
   // appState: IAppState;
   // setAppState: Dispatch<SetStateAction<IAppState>>;
-  actions: IActions[];
   // btnExportSv1: MutableRefObject<HTMLButtonElement | null>;
   // inputFileSv2,
   // btnEdit: MutableRefObject<HTMLButtonElement | null>;
 }
 
 export function SpeedDialNav({
-  // btnExportSv1,
-  // btnEdit,
-  // siState,
-  // appState,
-  // setAppState,
   actions,
-}: IProps) {
+}: // btnExportSv1,
+// btnEdit,
+// siState,
+// appState,
+// setAppState,
+IProps) {
   // const navigate = useNavigate();
 
   // const actions = [
