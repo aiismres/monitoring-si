@@ -403,7 +403,6 @@ export function Sverka2({
                     />
                   </td>
                   <td>
-                    {' '}
                     <input
                       type="text"
                       readOnly={!appState.isEdit}
@@ -475,6 +474,7 @@ export function Sverka2({
               </thead>
               <tbody>
                 {timePeriods.map((timePeriod, i) => {
+                  console.log({ i });
                   return (
                     <tr>
                       <td>{timePeriod}</td>
@@ -499,17 +499,17 @@ export function Sverka2({
                       <td>{siObj.powProf82 && siObj.powProf82.k03[i]}</td>
                       <td>{siObj.powProf82 && siObj.powProf82.k04[i]}</td>
 
-                      <td className={styles[siObj.powProfDiff?.k01[i].status]}>
-                        {siObj.powProfDiff && siObj.powProfDiff.k01[i].v}
+                      <td className={styles[siObj.powProfDiff?.k01[i]?.status]}>
+                        {siObj.powProfDiff && siObj.powProfDiff.k01[i]?.v}
                       </td>
-                      <td className={styles[siObj.powProfDiff?.k02[i].status]}>
-                        {siObj.powProfDiff && siObj.powProfDiff.k02[i].v}
+                      <td className={styles[siObj.powProfDiff?.k02[i]?.status]}>
+                        {siObj.powProfDiff && siObj.powProfDiff.k02[i]?.v}
                       </td>
-                      <td className={styles[siObj.powProfDiff?.k03[i].status]}>
-                        {siObj.powProfDiff && siObj.powProfDiff.k03[i].v}
+                      <td className={styles[siObj.powProfDiff?.k03[i]?.status]}>
+                        {siObj.powProfDiff && siObj.powProfDiff.k03[i]?.v}
                       </td>
-                      <td className={styles[siObj.powProfDiff?.k04[i].status]}>
-                        {siObj.powProfDiff && siObj.powProfDiff.k04[i].v}
+                      <td className={styles[siObj.powProfDiff?.k04[i]?.status]}>
+                        {siObj.powProfDiff && siObj.powProfDiff.k04[i]?.v}
                       </td>
                     </tr>
                   );
