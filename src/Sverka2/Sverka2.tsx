@@ -122,21 +122,8 @@ export function Sverka2({
             Math.round(
               (Number(siObj.powProf82.k02[i30]) - Number(arr30[1]) * kttne) * 10
             ) / 10;
-          // let status: TStatus | TStatus2;
-          // if (isNaN(v)) {
-          //   status = 'warning';
-          // } else if (-1 <= v && v <= 1) {
-          //   status = 'correct';
-          // } else {
-          //   status = 'incorrect';
-          // }
 
-          powProfDiff.k02.push(
-            addStatus(v)
-            // Math.round(
-            //   (Number(siObj.powProf82.k02[i30]) - Number(arr30[1]) * kttne) * 10
-            // ) / 10
-          );
+          powProfDiff.k02.push(addStatus(v));
           v =
             Math.round(
               (Number(siObj.powProf82.k03[i30]) - Number(arr30[2]) * kttne) * 10
@@ -199,15 +186,6 @@ export function Sverka2({
                 (draft[i].powProfSchKttne.k02[i30] - siObj.powProf82.k02[i30]) *
                   10
               ) / 10;
-            // let status: TStatus | TStatus2;
-            // if (isNaN(v)) {
-            //   status = 'warning';
-            // } else if (-1 <= v && v <= 1) {
-            //   status = 'correct';
-            // } else {
-            //   status = 'incorrect';
-            // }
-            // return { v, status };
             return addStatus(v);
           });
           draft[i].powProfDiff.k03 = siObj.powProfDiff.k03.map((item, i30) => {
@@ -301,7 +279,6 @@ export function Sverka2({
 
   return (
     <>
-      <div>Страница Сверка-2</div>
       {siState.map((siObj, i) => {
         // {siArrMutable.map((siObj, i) => {
         return (
@@ -332,7 +309,7 @@ export function Sverka2({
                   <td>---</td>
                   <td></td>
                   <td></td>
-                  <td>{siObj.powProf82.date}</td>
+                  <td>{siObj.powProf82?.date}</td>
                 </tr>
                 <tr>
                   <th>80000 xml</th>
