@@ -12,12 +12,12 @@ export interface IStringString {
 export interface IAppState {
   // selectedCell: {},
   // colOrderOpt: TColOrderOpt;
-  colOrder: TColShortNames[];
   sechID: string;
   naimSechShort: string;
-  isEdit: boolean;
+  colOrder: TColShortNames[];
   // classSSDBtn: string;
   // classEditBtn: string;
+  isEdit: boolean;
   isSiStateSave: boolean;
   isMsgOpen: boolean;
   isSuccess: boolean;

@@ -1,4 +1,11 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import React, {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+} from 'react';
 import {
   IAppState,
   IPowProfDiff,
@@ -39,11 +46,13 @@ export function Sverka2({
 }: IProps) {
   // const siArrMutable: ISiObj1[] = structuredClone(siState);
   // console.log(siArrMutable);
-  setSiState(
-    produce((draft) => {
-      draft.forEach((item) => (item.ke = item.ke || { v: '1' }));
-    })
-  );
+  useEffect(() => {
+    setSiState(
+      produce((draft) => {
+        draft.forEach((item) => (item.ke = item.ke || { v: '1' }));
+      })
+    );
+  }, []);
 
   function addStatus(v: number) {
     let status: TStatus | TStatus2;
@@ -209,26 +218,29 @@ export function Sverka2({
     );
   }
 
-  const actions = [
-    {
-      icon: <IconInfo />,
-      name: '',
-      do: () => {
-        setAppState({ ...appState, isInfoOpen: true });
+  const actions = useMemo(
+    () => [
+      {
+        icon: <IconInfo />,
+        name: '',
+        do: () => {
+          setAppState({ ...appState, isInfoOpen: true });
+        },
       },
-    },
 
-    {
-      icon: <IconEdit />,
-      name: '',
-      do: () =>
-        setAppState({
-          ...appState,
-          isEdit: !appState.isEdit,
-          isSiStateSave: !appState.isSiStateSave,
-        }),
-    },
-  ];
+      {
+        icon: <IconEdit />,
+        name: '',
+        do: () =>
+          setAppState({
+            ...appState,
+            isEdit: !appState.isEdit,
+            isSiStateSave: !appState.isSiStateSave,
+          }),
+      },
+    ],
+    []
+  );
 
   async function saveSiData() {
     try {
@@ -511,14 +523,6 @@ export function Sverka2({
           <Typography variant="h6" sx={{ mr: 5 }}>
             {appState.naimSechShort}
           </Typography>
-
-          {/* <SpeedDialNav
-            btnExportSv1={btnExportSv1}
-            // inputFileSv2={inputFileSv2}
-            btnEdit={btnEdit}
-            appState={appState}
-            setAppState={setAppState}
-          /> */}
           <SpeedDialNav actions={actions} />
         </Toolbar>
       </AppBar>
