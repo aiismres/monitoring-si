@@ -25,3 +25,17 @@
   top: 0;
   box-shadow: 0px 1px 5px 0px #a2a2a2;
 }
+
+.input {
+  padding: 0;
+  /* width: 100%; */
+  border: none;
+  background-color: rgba(1, 1, 1, 0);
+}
+
+.textarea {
+  padding: 0;
+  border: none;
+  background-color: rgba(1, 1, 1, 0);
+  font-size: 1.3em;
+}

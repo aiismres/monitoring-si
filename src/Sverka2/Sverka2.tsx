@@ -17,7 +17,7 @@ import {
 } from '../app.types';
 import styles from './sverka2.module.css';
 import { table } from 'console';
-import { timePeriods } from '../modules/constants';
+import { sameChar, timePeriods } from '../modules/constants';
 import Button from '@mui/material/Button';
 import { produce } from 'immer';
 import AppBar from '@mui/material/AppBar';
@@ -46,15 +46,48 @@ export function Sverka2({
 }: IProps) {
   // const siArrMutable: ISiObj1[] = structuredClone(siState);
   // console.log(siArrMutable);
-  useEffect(() => {
+  useLayoutEffect(() => {
     setSiState(
       produce((draft) => {
-        draft.forEach((item) => (item.ke = item.ke || { v: '1' }));
+        draft.forEach((item, i) => {
+          // const tipSch = item.tipSchSch.v || item.tipSchSop.v;
+          draft[i].ke = item.ke || {
+            v: defineKe(item.tipSchSch.v),
+          };
+        });
       })
     );
   }, []);
 
-  function addStatus(v: number) {
+  function defineKe(tipSch: string) {
+    let ke;
+    const tipSch3char = sameChar(tipSch.trim()).slice(0, 3);
+    console.log(tipSch3char);
+    if (tipSch3char === 'СЭТ') {
+      ke = 0.0001;
+    } else if (tipSch3char === 'А18') {
+      ke = 0.000025;
+    } else if (tipSch3char === 'ЕА0') {
+      ke = 0.00005;
+    } else if (tipSch3char === 'Мер') {
+      ke = 0.0001;
+    } else ke = 1;
+    return String(ke);
+  }
+
+  // function addStatus(v: number) {
+  //   let status: TStatus | TStatus2;
+  //   if (isNaN(v)) {
+  //     status = 'warning';
+  //   } else if (-1 <= v && v <= 1) {
+  //     status = 'correct';
+  //   } else {
+  //     status = 'incorrect';
+  //   }
+  //   return { v, status };
+  // }
+
+  function defineStatus(v: number) {
     let status: TStatus | TStatus2;
     if (isNaN(v)) {
       status = 'warning';
@@ -63,7 +96,7 @@ export function Sverka2({
     } else {
       status = 'incorrect';
     }
-    return { v, status };
+    return status;
   }
 
   function pastPowProfSch(siObj: ISiObj1, i: number) {
@@ -75,19 +108,19 @@ export function Sverka2({
       k04: [],
     };
 
-    const powProfSchKttne: IPowProfSch = {
-      k01: [],
-      k02: [],
-      k03: [],
-      k04: [],
-    };
+    // const powProfSchKttne: IPowProfSch = {
+    //   k01: [],
+    //   k02: [],
+    //   k03: [],
+    //   k04: [],
+    // };
 
-    const powProfDiff: IPowProfDiff = {
-      k01: [],
-      k02: [],
-      k03: [],
-      k04: [],
-    };
+    // const powProfDiff: IPowProfDiff = {
+    //   k01: [],
+    //   k02: [],
+    //   k03: [],
+    //   k04: [],
+    // };
 
     navigator.clipboard
       .readText()
@@ -104,48 +137,48 @@ export function Sverka2({
           powProfSch.k03.push(Number(arr30[2]));
           powProfSch.k04.push(Number(arr30[3]));
 
-          const kttne =
-            Number(siObj.kttDB.v || siObj.kttSop.v) *
-            Number(siObj.ktnDB.v || siObj.ktnSop.v) *
-            Number(siObj.ke.v);
+          // const kttne =
+          //   Number(siObj.kttDB.v || siObj.kttSop.v) *
+          //   Number(siObj.ktnDB.v || siObj.ktnSop.v) *
+          //   Number(siObj.ke.v);
 
-          powProfSchKttne.k01.push(
-            Math.round(Number(arr30[0]) * kttne * 10) / 10
-          );
-          powProfSchKttne.k02.push(
-            Math.round(Number(arr30[1]) * kttne * 10) / 10
-          );
-          powProfSchKttne.k03.push(
-            Math.round(Number(arr30[2]) * kttne * 10) / 10
-          );
-          powProfSchKttne.k04.push(
-            Math.round(Number(arr30[3]) * kttne * 10) / 10
-          );
-          let v =
-            Math.round(
-              (Number(siObj.powProf82.k01[i30]) - Number(arr30[0]) * kttne) * 10
-            ) / 10;
-          powProfDiff.k01.push(addStatus(v));
+          // powProfSchKttne.k01.push(
+          //   Math.round(Number(arr30[0]) * kttne * 10) / 10
+          // );
+          // powProfSchKttne.k02.push(
+          //   Math.round(Number(arr30[1]) * kttne * 10) / 10
+          // );
+          // powProfSchKttne.k03.push(
+          //   Math.round(Number(arr30[2]) * kttne * 10) / 10
+          // );
+          // powProfSchKttne.k04.push(
+          //   Math.round(Number(arr30[3]) * kttne * 10) / 10
+          // );
+          // let v =
+          //   Math.round(
+          //     (Number(siObj.powProf82.k01[i30]) - Number(arr30[0]) * kttne) * 10
+          //   ) / 10;
+          // powProfDiff.k01.push(addStatus(v));
 
-          v =
-            Math.round(
-              (Number(siObj.powProf82.k02[i30]) - Number(arr30[1]) * kttne) * 10
-            ) / 10;
+          // v =
+          //   Math.round(
+          //     (Number(siObj.powProf82.k02[i30]) - Number(arr30[1]) * kttne) * 10
+          //   ) / 10;
 
-          powProfDiff.k02.push(addStatus(v));
-          v =
-            Math.round(
-              (Number(siObj.powProf82.k03[i30]) - Number(arr30[2]) * kttne) * 10
-            ) / 10;
-          powProfDiff.k03.push(addStatus(v));
-          v =
-            Math.round(
-              (Number(siObj.powProf82.k04[i30]) - Number(arr30[3]) * kttne) * 10
-            ) / 10;
-          powProfDiff.k04.push(addStatus(v));
+          // powProfDiff.k02.push(addStatus(v));
+          // v =
+          //   Math.round(
+          //     (Number(siObj.powProf82.k03[i30]) - Number(arr30[2]) * kttne) * 10
+          //   ) / 10;
+          // powProfDiff.k03.push(addStatus(v));
+          // v =
+          //   Math.round(
+          //     (Number(siObj.powProf82.k04[i30]) - Number(arr30[3]) * kttne) * 10
+          //   ) / 10;
+          // powProfDiff.k04.push(addStatus(v));
         });
-        console.log(powProfSch);
-        siObj = { ...siObj, powProfSch, powProfSchKttne, powProfDiff };
+        // siObj = { ...siObj, powProfSch, powProfSchKttne, powProfDiff };
+        siObj = { ...siObj, powProfSch };
         siArrMutable[i] = siObj;
         console.log(siObj, siArrMutable);
         setSiState(siArrMutable);
@@ -155,92 +188,89 @@ export function Sverka2({
       });
   }
 
-  function changeKe(
-    e: ChangeEvent<HTMLInputElement>,
-    siObj: ISiObj1,
-    i: number
-  ) {
-    const kttne =
-      Number(siObj.kttDB.v || siObj.kttSop.v) *
-      Number(siObj.ktnDB.v || siObj.ktnSop.v) *
-      Number(e.target.value);
-    setSiState(
-      produce((draft) => {
-        draft[i].ke.v = e.target.value;
-        if (draft[i].powProfSchKttne) {
-          draft[i].powProfSchKttne.k01 = siObj.powProfSch.k01.map(
-            (item) => Math.round(item * kttne * 10) / 10
-          );
-          draft[i].powProfSchKttne.k02 = siObj.powProfSch.k02.map(
-            (item) => Math.round(item * kttne * 10) / 10
-          );
-          draft[i].powProfSchKttne.k03 = siObj.powProfSch.k03.map(
-            (item) => Math.round(item * kttne * 10) / 10
-          );
-          draft[i].powProfSchKttne.k04 = siObj.powProfSch.k04.map(
-            (item) => Math.round(item * kttne * 10) / 10
-          );
+  // function changeKe(
+  //   e: ChangeEvent<HTMLInputElement>,
+  //   siObj: ISiObj1,
+  //   i: number
+  // ) {
+  //   const kttne =
+  //     Number(siObj.kttDB.v || siObj.kttSop.v) *
+  //     Number(siObj.ktnDB.v || siObj.ktnSop.v) *
+  //     Number(e.target.value);
+  //   setSiState(
+  //     produce((draft) => {
+  //       draft[i].ke.v = e.target.value;
+  //       if (draft[i].powProfSchKttne) {
+  //         draft[i].powProfSchKttne.k01 = siObj.powProfSch.k01.map(
+  //           (item) => Math.round(item * kttne * 10) / 10
+  //         );
+  //         draft[i].powProfSchKttne.k02 = siObj.powProfSch.k02.map(
+  //           (item) => Math.round(item * kttne * 10) / 10
+  //         );
+  //         draft[i].powProfSchKttne.k03 = siObj.powProfSch.k03.map(
+  //           (item) => Math.round(item * kttne * 10) / 10
+  //         );
+  //         draft[i].powProfSchKttne.k04 = siObj.powProfSch.k04.map(
+  //           (item) => Math.round(item * kttne * 10) / 10
+  //         );
 
-          draft[i].powProfDiff.k01 = siObj.powProfDiff.k01.map((item, i30) => {
-            const v =
-              Math.round(
-                (draft[i].powProfSchKttne.k01[i30] - siObj.powProf82.k01[i30]) *
-                  10
-              ) / 10;
-            return addStatus(v);
-          });
-          draft[i].powProfDiff.k02 = siObj.powProfDiff.k02.map((item, i30) => {
-            const v =
-              Math.round(
-                (draft[i].powProfSchKttne.k02[i30] - siObj.powProf82.k02[i30]) *
-                  10
-              ) / 10;
-            return addStatus(v);
-          });
-          draft[i].powProfDiff.k03 = siObj.powProfDiff.k03.map((item, i30) => {
-            const v =
-              Math.round(
-                (draft[i].powProfSchKttne.k03[i30] - siObj.powProf82.k03[i30]) *
-                  10
-              ) / 10;
-            return addStatus(v);
-          });
-          draft[i].powProfDiff.k04 = siObj.powProfDiff.k04.map((item, i30) => {
-            const v =
-              Math.round(
-                (draft[i].powProfSchKttne.k04[i30] - siObj.powProf82.k04[i30]) *
-                  10
-              ) / 10;
-            return addStatus(v);
-          });
-        }
-      })
-    );
-  }
+  //         draft[i].powProfDiff.k01 = siObj.powProfDiff.k01.map((item, i30) => {
+  //           const v =
+  //             Math.round(
+  //               (draft[i].powProfSchKttne.k01[i30] - siObj.powProf82.k01[i30]) *
+  //                 10
+  //             ) / 10;
+  //           return addStatus(v);
+  //         });
+  //         draft[i].powProfDiff.k02 = siObj.powProfDiff.k02.map((item, i30) => {
+  //           const v =
+  //             Math.round(
+  //               (draft[i].powProfSchKttne.k02[i30] - siObj.powProf82.k02[i30]) *
+  //                 10
+  //             ) / 10;
+  //           return addStatus(v);
+  //         });
+  //         draft[i].powProfDiff.k03 = siObj.powProfDiff.k03.map((item, i30) => {
+  //           const v =
+  //             Math.round(
+  //               (draft[i].powProfSchKttne.k03[i30] - siObj.powProf82.k03[i30]) *
+  //                 10
+  //             ) / 10;
+  //           return addStatus(v);
+  //         });
+  //         draft[i].powProfDiff.k04 = siObj.powProfDiff.k04.map((item, i30) => {
+  //           const v =
+  //             Math.round(
+  //               (draft[i].powProfSchKttne.k04[i30] - siObj.powProf82.k04[i30]) *
+  //                 10
+  //             ) / 10;
+  //           return addStatus(v);
+  //         });
+  //       }
+  //     })
+  //   );
+  // }
 
-  const actions = useMemo(
-    () => [
-      {
-        icon: <IconInfo />,
-        name: '',
-        do: () => {
-          setAppState({ ...appState, isInfoOpen: true });
-        },
+  const actions = [
+    {
+      icon: <IconInfo />,
+      name: '',
+      do: () => {
+        setAppState({ ...appState, isInfoOpen: true });
       },
+    },
 
-      {
-        icon: <IconEdit />,
-        name: '',
-        do: () =>
-          setAppState({
-            ...appState,
-            isEdit: !appState.isEdit,
-            isSiStateSave: !appState.isSiStateSave,
-          }),
-      },
-    ],
-    []
-  );
+    {
+      icon: <IconEdit />,
+      name: '',
+      do: () =>
+        setAppState({
+          ...appState,
+          isEdit: !appState.isEdit,
+          isSiStateSave: !appState.isSiStateSave,
+        }),
+    },
+  ];
 
   async function saveSiData() {
     try {
@@ -293,6 +323,11 @@ export function Sverka2({
     <>
       {siState.map((siObj, i) => {
         // {siArrMutable.map((siObj, i) => {
+        const kttne =
+          (Number(siObj.kttDB?.v) || Number(siObj.kttSop?.v)) *
+          (Number(siObj.ktnDB?.v) || Number(siObj.ktnSop?.v)) *
+          Number(siObj.ke?.v);
+
         return (
           <>
             <table className={styles.pivotTable}>
@@ -348,13 +383,116 @@ export function Sverka2({
                   <td>---</td>
                 </tr>
                 <tr>
-                  <th>СОП АИИС</th>
-                  <td>{siObj.numTiSop.v}</td>
-                  <td>{siObj.naimTiSop.v}</td>
-                  <td>{siObj.numSchSop.v}</td>
-                  <td>{siObj.tipSchSop.v}</td>
-                  <td>{siObj.kttSop.v}</td>
-                  <td>{siObj.ktnSop.v}</td>
+                  <th className={appState.isEdit ? styles.warning : ''}>
+                    СОП АИИС
+                  </th>
+                  <td>
+                    {/* {siObj.numTiSop.v} */}
+                    <input
+                      type="text"
+                      className={styles.input}
+                      style={{
+                        width: siObj.numTiSop.v.length * 8 || 20 + 'px',
+                      }}
+                      readOnly={!appState.isEdit}
+                      value={siObj.numTiSop.v}
+                      onChange={(e) =>
+                        setSiState(
+                          produce((draft) => {
+                            draft[i].numTiSop.v = e.target.value.trim();
+                          })
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    {/* {siObj.naimTiSop.v} */}
+                    <textarea
+                      className={styles.textarea}
+                      readOnly={!appState.isEdit}
+                      value={siObj.naimTiSop.v}
+                      onChange={(e) =>
+                        setSiState(
+                          produce((draft) => {
+                            draft[i].naimTiSop.v = e.target.value.trim();
+                          })
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    {/* {siObj.numSchSop.v} */}
+                    <input
+                      type="text"
+                      className={styles.input}
+                      style={{
+                        width: siObj.numSchSop.v.length * 8 || 20 + 'px',
+                      }}
+                      // minLength={siObj.numSchSop.v.length}
+                      readOnly={!appState.isEdit}
+                      value={siObj.numSchSop.v}
+                      onChange={(e) =>
+                        setSiState(
+                          produce((draft) => {
+                            draft[i].numSchSop.v = e.target.value.trim();
+                          })
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    {/* {siObj.tipSchSop.v} */}
+                    <textarea
+                      className={styles.textarea}
+                      readOnly={!appState.isEdit}
+                      value={siObj.tipSchSop.v}
+                      onChange={(e) =>
+                        setSiState(
+                          produce((draft) => {
+                            draft[i].tipSchSop.v = e.target.value.trim();
+                          })
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    {/* {siObj.kttSop.v} */}
+                    <input
+                      type="text"
+                      className={styles.input}
+                      style={{
+                        width: siObj.kttSop.v.length * 8 || 20 + 'px',
+                      }}
+                      readOnly={!appState.isEdit}
+                      value={siObj.kttSop.v}
+                      onChange={(e) =>
+                        setSiState(
+                          produce((draft) => {
+                            draft[i].kttSop.v = e.target.value.trim();
+                          })
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    {/* {siObj.ktnSop.v} */}
+                    <input
+                      type="text"
+                      className={styles.input}
+                      style={{
+                        width: siObj.ktnSop.v.length * 8 || 20 + 'px',
+                      }}
+                      readOnly={!appState.isEdit}
+                      value={siObj.ktnSop.v}
+                      onChange={(e) =>
+                        setSiState(
+                          produce((draft) => {
+                            draft[i].ktnSop.v = e.target.value.trim();
+                          })
+                        )
+                      }
+                    />
+                  </td>
                   <td>---</td>
                   <td>---</td>
                   <td>---</td>
@@ -380,12 +518,16 @@ export function Sverka2({
                   <td>
                     <input
                       type="text"
+                      className={styles.input}
+                      style={{
+                        width: siObj.numSchSch.v.length * 8 || 20 + 'px',
+                      }}
                       readOnly={!appState.isEdit}
                       value={siObj.numSchSch.v}
                       onChange={(e) =>
                         setSiState(
                           produce((draft) => {
-                            draft[i].numSchSch.v = e.target.value;
+                            draft[i].numSchSch.v = e.target.value.trim();
                           })
                         )
                       }
@@ -394,12 +536,17 @@ export function Sverka2({
                   <td>
                     <input
                       type="text"
+                      className={styles.input}
+                      style={{
+                        width: siObj.tipSchSch.v.length * 8 || 20 + 'px',
+                      }}
                       readOnly={!appState.isEdit}
                       value={siObj.tipSchSch.v}
                       onChange={(e) =>
                         setSiState(
                           produce((draft) => {
-                            draft[i].tipSchSch.v = e.target.value;
+                            draft[i].tipSchSch.v = e.target.value.trim();
+                            draft[i].ke.v = defineKe(e.target.value);
                           })
                         )
                       }
@@ -408,11 +555,22 @@ export function Sverka2({
                   <td>Ke=</td>
                   <td>
                     <input
+                      className={styles.input}
+                      style={{
+                        width: siObj.ke.v.length * 8 || 20 + 'px',
+                      }}
                       type="text"
-                      style={{ width: 50 }}
+                      // style={{ width: 60 }}
                       readOnly={!appState.isEdit}
                       value={siObj.ke?.v}
-                      onChange={(e) => changeKe(e, siObj, i)}
+                      // onChange={(e) => changeKe(e, siObj, i)}
+                      onChange={(e) =>
+                        setSiState(
+                          produce((draft) => {
+                            draft[i].ke.v = e.target.value;
+                          })
+                        )
+                      }
                     />
                   </td>
                   <td>---</td>
@@ -463,43 +621,81 @@ export function Sverka2({
               </thead>
               <tbody>
                 {timePeriods.map((timePeriod, i) => {
-                  console.log({ i });
+                  // console.log({ i });
+                  const diff01 =
+                    Math.round(
+                      (siObj.powProf82?.k01[i] -
+                        siObj.powProfSch?.k01[i] * kttne) *
+                        10
+                    ) / 10;
+                  const diff02 =
+                    Math.round(
+                      (siObj.powProf82?.k02[i] -
+                        siObj.powProfSch?.k02[i] * kttne) *
+                        10
+                    ) / 10;
+                  const diff03 =
+                    Math.round(
+                      (siObj.powProf82?.k03[i] -
+                        siObj.powProfSch?.k03[i] * kttne) *
+                        10
+                    ) / 10;
+                  const diff04 =
+                    Math.round(
+                      (siObj.powProf82?.k04[i] -
+                        siObj.powProfSch?.k04[i] * kttne) *
+                        10
+                    ) / 10;
+
+                  const diffSt01 = defineStatus(diff01);
+                  const diffSt02 = defineStatus(diff02);
+                  const diffSt03 = defineStatus(diff03);
+                  const diffSt04 = defineStatus(diff04);
+
                   return (
                     <tr>
                       <td>{timePeriod}</td>
-                      <td>{siObj.powProfSch && siObj.powProfSch.k01[i]}</td>
-                      <td>{siObj.powProfSch && siObj.powProfSch.k02[i]}</td>
-                      <td>{siObj.powProfSch && siObj.powProfSch.k03[i]}</td>
-                      <td>{siObj.powProfSch && siObj.powProfSch.k04[i]}</td>
+                      <td>{siObj.powProfSch?.k01[i]}</td>
+                      {/* <td>{siObj.powProfSch && siObj.powProfSch.k01[i]}</td> */}
+                      <td>{siObj.powProfSch?.k02[i]}</td>
+                      <td>{siObj.powProfSch?.k03[i]}</td>
+                      <td>{siObj.powProfSch?.k04[i]}</td>
                       <td>
-                        {siObj.powProfSchKttne && siObj.powProfSchKttne.k01[i]}
+                        {Math.round(siObj.powProfSch?.k01[i] * kttne * 10) / 10}
+                        {/* {siObj.powProfSchKttne && siObj.powProfSchKttne.k01[i]} */}
                       </td>
                       <td>
-                        {siObj.powProfSchKttne && siObj.powProfSchKttne.k02[i]}
+                        {Math.round(siObj.powProfSch?.k02[i] * kttne * 10) / 10}
+                        {/* {siObj.powProfSchKttne && siObj.powProfSchKttne.k02[i]} */}
                       </td>
                       <td>
-                        {siObj.powProfSchKttne && siObj.powProfSchKttne.k03[i]}
+                        {Math.round(siObj.powProfSch?.k03[i] * kttne * 10) / 10}
+                        {/* {siObj.powProfSchKttne && siObj.powProfSchKttne.k03[i]} */}
                       </td>
                       <td>
-                        {siObj.powProfSchKttne && siObj.powProfSchKttne.k04[i]}
+                        {Math.round(siObj.powProfSch?.k04[i] * kttne * 10) / 10}
+                        {/* {siObj.powProfSchKttne && siObj.powProfSchKttne.k04[i]} */}
                       </td>
-                      <td>{siObj.powProf82 && siObj.powProf82.k01[i]}</td>
-                      <td>{siObj.powProf82 && siObj.powProf82.k02[i]}</td>
-                      <td>{siObj.powProf82 && siObj.powProf82.k03[i]}</td>
-                      <td>{siObj.powProf82 && siObj.powProf82.k04[i]}</td>
+                      {/* <td>{siObj.powProf82 && siObj.powProf82.k01[i]}</td> */}
+                      <td>{siObj.powProf82?.k01[i]}</td>
+                      <td>{siObj.powProf82?.k02[i]}</td>
+                      <td>{siObj.powProf82?.k03[i]}</td>
+                      <td>{siObj.powProf82?.k04[i]}</td>
 
-                      <td className={styles[siObj.powProfDiff?.k01[i]?.status]}>
-                        {siObj.powProfDiff && siObj.powProfDiff.k01[i]?.v}
+                      <td className={styles[diffSt01]}>
+                        {/* <td className={styles[siObj.powProfDiff?.k01[i]?.status]}> */}
+                        {/* {siObj.powProfDiff && siObj.powProfDiff.k01[i]?.v} */}
+                        {/* {Math.round(
+                          (siObj.powProf82?.k01[i] -
+                            siObj.powProfSch?.k01[i] * kttne) *
+                            10
+                        ) / 10} */}
+                        {diff01}
                       </td>
-                      <td className={styles[siObj.powProfDiff?.k02[i]?.status]}>
-                        {siObj.powProfDiff && siObj.powProfDiff.k02[i]?.v}
-                      </td>
-                      <td className={styles[siObj.powProfDiff?.k03[i]?.status]}>
-                        {siObj.powProfDiff && siObj.powProfDiff.k03[i]?.v}
-                      </td>
-                      <td className={styles[siObj.powProfDiff?.k04[i]?.status]}>
-                        {siObj.powProfDiff && siObj.powProfDiff.k04[i]?.v}
-                      </td>
+                      <td className={styles[diffSt02]}>{diff02}</td>
+
+                      <td className={styles[diffSt03]}>{diff03}</td>
+                      <td className={styles[diffSt04]}>{diff04}</td>
                     </tr>
                   );
                 })}
