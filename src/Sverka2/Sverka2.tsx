@@ -391,9 +391,10 @@ export function Sverka2({
                     <input
                       type="text"
                       className={styles.input}
-                      style={{
-                        width: siObj.numTiSop.v.length * 8 || 20 + 'px',
-                      }}
+                      // style={{
+                      //   width: siObj.numTiSop.v.length * 8 || 20 + 'px',
+                      // }}
+                      size={siObj.numTiSop.v.length || 1}
                       readOnly={!appState.isEdit}
                       value={siObj.numTiSop.v}
                       onChange={(e) =>
@@ -425,10 +426,10 @@ export function Sverka2({
                     <input
                       type="text"
                       className={styles.input}
-                      style={{
-                        width: siObj.numSchSop.v.length * 8 || 20 + 'px',
-                      }}
-                      // minLength={siObj.numSchSop.v.length}
+                      // style={{
+                      //   width: siObj.numSchSop.v.length * 8 || 20 + 'px',
+                      // }}
+                      size={siObj.numSchSop.v.length || 1}
                       readOnly={!appState.isEdit}
                       value={siObj.numSchSop.v}
                       onChange={(e) =>
@@ -460,9 +461,10 @@ export function Sverka2({
                     <input
                       type="text"
                       className={styles.input}
-                      style={{
-                        width: siObj.kttSop.v.length * 8 || 20 + 'px',
-                      }}
+                      // style={{
+                      //   width: siObj.kttSop.v.length * 8 || 20 + 'px',
+                      // }}
+                      size={siObj.kttSop.v.length || 1}
                       readOnly={!appState.isEdit}
                       value={siObj.kttSop.v}
                       onChange={(e) =>
@@ -479,9 +481,10 @@ export function Sverka2({
                     <input
                       type="text"
                       className={styles.input}
-                      style={{
-                        width: siObj.ktnSop.v.length * 8 || 20 + 'px',
-                      }}
+                      // style={{
+                      //   width: siObj.ktnSop.v.length * 8 || 20 + 'px',
+                      // }}
+                      size={siObj.ktnSop.v.length || 1}
                       readOnly={!appState.isEdit}
                       value={siObj.ktnSop.v}
                       onChange={(e) =>
@@ -519,9 +522,10 @@ export function Sverka2({
                     <input
                       type="text"
                       className={styles.input}
-                      style={{
-                        width: siObj.numSchSch.v.length * 8 || 20 + 'px',
-                      }}
+                      size={siObj.numSchSch.v.length || 1}
+                      // style={{
+                      //   width: siObj.numSchSch.v.length * 8 || 20 + 'px',
+                      // }}
                       readOnly={!appState.isEdit}
                       value={siObj.numSchSch.v}
                       onChange={(e) =>
@@ -537,9 +541,10 @@ export function Sverka2({
                     <input
                       type="text"
                       className={styles.input}
-                      style={{
-                        width: siObj.tipSchSch.v.length * 8 || 20 + 'px',
-                      }}
+                      size={siObj.tipSchSch.v.length || 1}
+                      // style={{
+                      //   width: siObj.tipSchSch.v.length * 8 || 20 + 'px',
+                      // }}
                       readOnly={!appState.isEdit}
                       value={siObj.tipSchSch.v}
                       onChange={(e) =>
@@ -555,11 +560,12 @@ export function Sverka2({
                   <td>Ke=</td>
                   <td>
                     <input
-                      className={styles.input}
-                      style={{
-                        width: siObj.ke.v.length * 8 || 20 + 'px',
-                      }}
                       type="text"
+                      className={styles.input}
+                      size={siObj.ke.v.length || 1}
+                      // style={{
+                      //   width: siObj.ke.v.length * 8 || 20 + 'px',
+                      // }}
                       // style={{ width: 60 }}
                       readOnly={!appState.isEdit}
                       value={siObj.ke?.v}
