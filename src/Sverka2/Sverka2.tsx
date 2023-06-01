@@ -562,7 +562,7 @@ export function Sverka2({
                     <input
                       type="text"
                       className={styles.input}
-                      size={siObj.ke.v.length || 1}
+                      size={siObj.ke?.v.length || 1}
                       // style={{
                       //   width: siObj.ke.v.length * 8 || 20 + 'px',
                       // }}
