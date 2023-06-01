@@ -67,7 +67,7 @@ export function Sverka2({
       ke = 0.0001;
     } else if (tipSch3char === 'А18') {
       ke = 0.000025;
-    } else if (tipSch3char === 'ЕА0') {
+    } else if (tipSch3char === 'Евр') {
       ke = 0.00005;
     } else if (tipSch3char === 'Мер') {
       ke = 0.0001;
