@@ -50,21 +50,37 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
         let send = aupDelivPoint.getElementsByTagName('send')[0];
         let receive = aupDelivPoint.getElementsByTagName('receive')[0];
 
-        if (receive) {
-          for (let item of receive.children[0].children) {
-            aiisMesChannel[idAiis].push(
-              item.getAttribute('id-measuring-channel')!
-            );
-          }
-        }
+        // некорректная обработка начало
 
-        if (send) {
-          for (let item of send.children[0].children) {
-            aiisMesChannel[idAiis].push(
-              item.getAttribute('id-measuring-channel')!
-            );
-          }
+        // if (receive) {
+        //   for (let item of receive.children[0].children) {
+        //     aiisMesChannel[idAiis].push(
+        //       item.getAttribute('id-measuring-channel')!
+        //     );
+        //   }
+        // }
+
+        // if (send) {
+        //   for (let item of send.children[0].children) {
+        //     aiisMesChannel[idAiis].push(
+        //       item.getAttribute('id-measuring-channel')!
+        //     );
+        //   }
+        // }
+        // конец некорректная обработка
+
+        // Эксперимент успешный начало **************
+        const idMesChannelSet = new Set<string>();
+        let mesChannelS =
+          aupDelivPoint.getElementsByTagName('measuring-channel');
+        for (let mesChannel of mesChannelS) {
+          idMesChannelSet.add(mesChannel.getAttribute('id-measuring-channel')!);
         }
+        aiisMesChannel[idAiis] = aiisMesChannel[idAiis].concat([
+          ...idMesChannelSet,
+        ]);
+        // console.log([...idMesChannelSet], aiisMesChannel);
+        // конец Эксперимента  **************
       }
       console.log('aiisMesChannel', aiisMesChannel);
 
@@ -87,7 +103,7 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
           smallMesDeviceTag.getAttribute('id-measuring-device')
         );
       }
-      console.log(setSmallMesDevices);
+      console.log('М.П. id-measuring-device', setSmallMesDevices);
 
       let mesPointTags = doc.getElementsByTagName('measuring-point');
       console.log(mesPointTags);
@@ -157,12 +173,12 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
             mesPoint.idMesChannelS.some((id) => aiisMesChannel[1].includes(id))
           ) {
             mesPointSAiis['1'].push(mesPoint);
-          }
-
-          if (
+          } else if (
             mesPoint.idMesChannelS.some((id) => aiisMesChannel[2].includes(id))
           ) {
             mesPointSAiis['2'].push(mesPoint);
+          } else {
+            console.log('не найден ни в одной аиис', mesPoint);
           }
         }
       }
