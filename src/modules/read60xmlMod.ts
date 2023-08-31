@@ -262,6 +262,8 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
 
         if (indexNumTiShem60Pre >= 0) {
           console.log('if (indexNumTiShem60Pre >= 0)');
+          // numTiShem
+          siArMod[indexNumTiShem60Pre].numTiShem60.v = si60['schemanum'];
           // kodTi
           if (siArMod[indexNumTiShem60Pre].kodTi60Pre.v === si60['ats-code']) {
             console.log(
