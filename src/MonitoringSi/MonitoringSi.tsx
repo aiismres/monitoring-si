@@ -240,6 +240,8 @@ export function MonitoringSi({
           ].includes(param)
         ) {
           return Number(a[param]['v']) - Number(b[param]['v']);
+        } else {
+          return 1;
         }
       });
       return stateMod;
