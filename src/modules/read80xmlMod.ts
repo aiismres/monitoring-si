@@ -111,7 +111,6 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
           }
           mesPoint = { ...mesPoint, kanaly };
           // mesPoint = { ...mesPoint, kanaly, idMesChannelS };
-          mesPointS.push(mesPoint);
 
           mesPointS.push(mesPoint);
         }

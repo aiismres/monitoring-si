@@ -8,6 +8,23 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Roboto', 'Courier New',
     monospace;
+}
+
+/* input {
+  padding: 0;
+  background-color: rgba(1, 1, 1, 0);
+  border: none;
+} */
+
+/* textarea {
+  padding: 0;
+  border: none;
+  background-color: rgba(1, 1, 1, 0);
+  font-size: 10px;
+} */
+
+*:focus {
+  outline: none;
 }

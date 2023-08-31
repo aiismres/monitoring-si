@@ -66,11 +66,11 @@ td {
   text-align: left;
 }
 
-/* table thead {
+table thead {
   position: sticky;
   top: 0;
   box-shadow: 0px 1px 5px 0px #a2a2a2;
-} */
+}
 
 th {
   /* position: relative; */
@@ -201,7 +201,7 @@ input[name='ktnSop'] {
 textarea {
   /* height:90%; */
   /* align-items:baseline; */
-  font-size: x-large;
+  /* font-size: x-large; */
   border: solid 0px;
   resize: none;
 }

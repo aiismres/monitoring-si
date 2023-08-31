@@ -12,12 +12,12 @@ export interface IStringString {
 export interface IAppState {
   // selectedCell: {},
   // colOrderOpt: TColOrderOpt;
-  colOrder: TColShortNames[];
   sechID: string;
   naimSechShort: string;
+  colOrder: TColShortNames[];
+  // classSSDBtn: string;
+  // classEditBtn: string;
   isEdit: boolean;
-  classSSDBtn: string;
-  classEditBtn: string;
   isSiStateSave: boolean;
   isMsgOpen: boolean;
   isSuccess: boolean;
@@ -52,15 +52,34 @@ export interface IStringObj {
       | TStatus3
       | 'да'
       | 'нет'
-      | number[];
+      | number[]
+      | { v: number; status: TStatus | TStatus2 }[];
   };
 }
 
-export interface IPowProf82 {
+interface IStringStringNumber {
+  [N: string]: string | number[];
+}
+
+interface IStringObj2 {
+  [N: string]: number[] | { v: number; status: TStatus | TStatus2 }[];
+}
+
+export interface IPowProfSch extends IStringStringNumber {
   k01: number[];
   k02: number[];
   k03: number[];
   k04: number[];
+}
+
+export interface IPowProfDiff extends IStringObj2 {
+  k01: { v: number; status: TStatus | TStatus2 }[];
+  // k01: number[];
+  k02: { v: number; status: TStatus | TStatus2 }[];
+  k03: { v: number; status: TStatus | TStatus2 }[];
+  // k03: number[];
+  k04: { v: number; status: TStatus | TStatus2 }[];
+  // k04: number[];
 }
 
 interface BigObject<I1, I2> {
@@ -73,10 +92,33 @@ export interface ISiObj1 extends IStringObj {
   //   v: 'да' | 'нет';
   // };
   powProf82: {
+    date: string;
     k01: number[];
     k02: number[];
     k03: number[];
     k04: number[];
+  };
+  powProfSch: {
+    k01: number[];
+    k02: number[];
+    k03: number[];
+    k04: number[];
+  };
+  powProfSchKttne: {
+    k01: number[];
+    k02: number[];
+    k03: number[];
+    k04: number[];
+  };
+  powProfDiff: {
+    // k01: number[];
+    k01: { v: number; status: TStatus | TStatus2 }[];
+    // k02: number[];
+    k02: { v: number; status: TStatus | TStatus2 }[];
+    k03: { v: number; status: TStatus | TStatus2 }[];
+    // k03: number[];
+    k04: { v: number; status: TStatus | TStatus2 }[];
+    // k04: number[];
   };
   numTiShem60Pre: {
     v: string;
@@ -233,6 +275,9 @@ export interface ISiObj1 extends IStringObj {
     status: TStatus;
     status2: TStatus2;
     status3: TStatus3;
+  };
+  ke: {
+    v: string;
   };
   kodTi80: {
     v: string;

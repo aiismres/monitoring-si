@@ -30,8 +30,8 @@ export function FileDropZone({
       // console.log(files);
       let file = files[0];
       (async () => {
-        // console.log(siState);
-        if (file.name.includes('60000') || file.name.includes('60002')) {
+        console.log(file.name);
+        if (file.name.includes('60000_') || file.name.includes('60002_')) {
           let [data, source60, isPre60] = (await read60xmlMod(
             file,
             siState
@@ -50,7 +50,7 @@ export function FileDropZone({
             isSiStateSave: false,
           }));
           setSechInfo((sechInfo) => ({ ...sechInfo, source60 }));
-        } else if (file.name.includes('80000')) {
+        } else if (file.name.includes('80000_')) {
           let [data, areaCode, areaName] = (await read80xmlMod(
             file,
             siState
@@ -92,13 +92,18 @@ export function FileDropZone({
             isSiStateSave: false,
           }));
           setSechInfo((sechInfo) => ({ ...sechInfo, sourceDB }));
-        } else if (file.name.includes('80020')) {
+        } else if (file.name.includes('80020_')) {
           console.log('import 80020');
           let [data, areaCode, areaName] = (await read82xmlMod(
             file,
             siState
           )) as [ISiObj1[], string, string];
           console.log(data);
+          setSiState(data);
+          setAppState((appState) => ({
+            ...appState,
+            isSiStateSave: false,
+          }));
         } else {
           alert(`
           Не соответствует ни одному импрту
