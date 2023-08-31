@@ -443,7 +443,7 @@ export function Sverka2({
                   </td>
                   <td>
                     {/* {siObj.tipSchSop.v} */}
-                    <textarea
+                    <input
                       className={styles.textarea}
                       readOnly={!appState.isEdit}
                       value={siObj.tipSchSop.v}
