@@ -168,18 +168,40 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
           }
           mesPoint = { ...mesPoint, kanaly, idMesChannelS };
           mesPointS.push(mesPoint);
+          // работало неверно
+          // if (
+          //   mesPoint.idMesChannelS.some((id) => aiisMesChannel[1].includes(id))
+          // ) {
+          //   mesPointSAiis['1'].push(mesPoint);
+          // } else if (
+          //   mesPoint.idMesChannelS.some((id) => aiisMesChannel[2].includes(id))
+          // ) {
+          //   mesPointSAiis['2'].push(mesPoint);
+          // } else {
+          //   console.log('не найден ни в одной аиис', mesPoint);
+          // }
+          // конец работало неверно
 
+          // экспримент успешный *********************
           if (
             mesPoint.idMesChannelS.some((id) => aiisMesChannel[1].includes(id))
           ) {
             mesPointSAiis['1'].push(mesPoint);
-          } else if (
+          }
+          if (
             mesPoint.idMesChannelS.some((id) => aiisMesChannel[2].includes(id))
           ) {
             mesPointSAiis['2'].push(mesPoint);
-          } else {
+          }
+          if (
+            !mesPoint.idMesChannelS.some((id) =>
+              aiisMesChannel[1].includes(id)
+            ) &&
+            !mesPoint.idMesChannelS.some((id) => aiisMesChannel[2].includes(id))
+          ) {
             console.log('не найден ни в одной аиис', mesPoint);
           }
+          // конец эксперимента успешного *************************
         }
       }
       console.log('mesPointS', mesPointS);
