@@ -132,7 +132,9 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
         console.log(siArMod);
         siAr80.forEach((si80) => {
           let index = siArMod.findIndex(
-            (siObj) => siObj.kodTi80.v === si80['ats-code']
+            (siObj) =>
+              siObj.kodTi80.v === si80['ats-code'] ||
+              siObj.kodTi60.v === si80['ats-code']
           );
           if (index === -1) {
             let siOdjfrom80 = {
