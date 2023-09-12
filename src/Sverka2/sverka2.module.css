@@ -53,3 +53,9 @@
   font-size: 1.0em;
   background-color: rgba(1, 1, 1, 0);
 }
+
+.pastFileDropContainer {
+  display: flex;
+  width: 770px;
+  justify-content: space-between;
+}

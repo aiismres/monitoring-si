@@ -91,6 +91,7 @@ function App() {
               appState={appState}
               setAppState={setAppState}
               sechInfo={sechInfo}
+              setSechInfo={setSechInfo}
             />
           }
         />

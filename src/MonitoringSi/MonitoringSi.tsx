@@ -563,6 +563,7 @@ export function MonitoringSi({
             setSiState={setSiState}
             setAppState={setAppState}
             setSechInfo={setSechInfo}
+            only82xml={false}
           />
 
           <SpeedDialNav

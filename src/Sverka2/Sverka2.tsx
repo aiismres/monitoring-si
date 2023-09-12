@@ -28,6 +28,7 @@ import { ReactComponent as IconEdit } from '../Icons/IconEdit.svg';
 import { ReactComponent as IconInfo } from '../Icons/IconInfo.svg';
 import { SaveBtn } from '../SaveBtn';
 import { AlertSucErr } from '../AlertSucErr';
+import { FileDropZone } from '../FileDropZone';
 
 interface IProps {
   siState: ISiObj1[];
@@ -35,6 +36,7 @@ interface IProps {
   appState: IAppState;
   setAppState: Dispatch<SetStateAction<IAppState>>;
   sechInfo: ISechInfo;
+  setSechInfo: Dispatch<SetStateAction<ISechInfo>>;
 }
 
 export function Sverka2({
@@ -43,6 +45,7 @@ export function Sverka2({
   appState,
   setAppState,
   sechInfo,
+  setSechInfo,
 }: IProps) {
   // const siArrMutable: ISiObj1[] = structuredClone(siState);
   // console.log(siArrMutable);
@@ -587,17 +590,26 @@ export function Sverka2({
                 </tr>
               </tbody>
             </table>
-            <Button
-              variant="contained"
-              disabled={!appState.isEdit}
-              color="success"
-              onClick={() => {
-                pastPowProfSch(siObj, i);
-              }}
-            >
-              paste Профиль сч
-            </Button>
-
+            <div className={styles.pastFileDropContainer}>
+              <Button
+                variant="contained"
+                disabled={!appState.isEdit}
+                color="success"
+                onClick={() => {
+                  pastPowProfSch(siObj, i);
+                }}
+              >
+                paste Профиль сч
+              </Button>
+              <FileDropZone
+                siState={siState}
+                setSiState={setSiState}
+                setAppState={setAppState}
+                setSechInfo={setSechInfo}
+                only82xml={true}
+                kodTi={siObj.kodTi80.v || siObj.kodTi60.v}
+              />
+            </div>
             <table>
               <thead>
                 <tr>
@@ -727,6 +739,13 @@ export function Sverka2({
           <Typography variant="h6" sx={{ mr: 5 }}>
             {appState.naimSechShort}
           </Typography>
+          <FileDropZone
+            siState={siState}
+            setSiState={setSiState}
+            setAppState={setAppState}
+            setSechInfo={setSechInfo}
+            only82xml={true}
+          />
           <SpeedDialNav actions={actions} />
         </Toolbar>
       </AppBar>

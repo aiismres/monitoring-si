@@ -16,6 +16,8 @@ interface IProps {
   setSiState: (value: SetStateAction<ISiObj1[]>) => void;
   setAppState: (value: SetStateAction<IAppState>) => void;
   setSechInfo: (value: SetStateAction<ISechInfo>) => void;
+  only82xml: boolean;
+  kodTi?: string;
 }
 
 export function FileDropZone({
@@ -23,6 +25,8 @@ export function FileDropZone({
   setSiState,
   setAppState,
   setSechInfo,
+  only82xml,
+  kodTi,
 }: IProps) {
   const onDrop = useCallback(
     (files: File[]) => {
@@ -31,7 +35,10 @@ export function FileDropZone({
       let file = files[0];
       (async () => {
         console.log(file.name);
-        if (file.name.includes('60000_') || file.name.includes('60002_')) {
+        if (
+          file.name.includes('60000_') ||
+          (file.name.includes('60002_') && !only82xml)
+        ) {
           let [data, source60, isPre60] = (await read60xmlMod(
             file,
             siState
@@ -50,7 +57,7 @@ export function FileDropZone({
             isSiStateSave: false,
           }));
           setSechInfo((sechInfo) => ({ ...sechInfo, source60 }));
-        } else if (file.name.includes('80000_')) {
+        } else if (file.name.includes('80000_') && !only82xml) {
           let [data, areaCode, areaName] = (await read80xmlMod(
             file,
             siState
@@ -69,9 +76,10 @@ export function FileDropZone({
             amountTi: data.length,
           }));
         } else if (
-          file.name.includes('Сверка 1') ||
-          file.name.includes('Сверка-1') ||
-          file.name.includes('resultSv1')
+          (file.name.includes('Сверка 1') ||
+            file.name.includes('Сверка-1') ||
+            file.name.includes('resultSv1')) &&
+          !only82xml
         ) {
           let data = (await readSv1xlsx(file)) as ISiObj1[];
           data = checkData(data);
@@ -80,7 +88,10 @@ export function FileDropZone({
             ...appState,
             isSiStateSave: false,
           }));
-        } else if (file.name.includes('Сопоставление ТУ и кодов 80020')) {
+        } else if (
+          file.name.includes('Сопоставление ТУ и кодов 80020') &&
+          !only82xml
+        ) {
           let [data, sourceDB] = (await readDBxlsxMod(file, siState)) as [
             ISiObj1[],
             string
@@ -92,11 +103,12 @@ export function FileDropZone({
             isSiStateSave: false,
           }));
           setSechInfo((sechInfo) => ({ ...sechInfo, sourceDB }));
-        } else if (file.name.includes('80020_')) {
+        } else if (file.name.includes('80020_') && only82xml) {
           console.log('import 80020');
           let [data, areaCode, areaName] = (await read82xmlMod(
             file,
-            siState
+            siState,
+            kodTi
           )) as [ISiObj1[], string, string];
           console.log(data);
           setSiState(data);
@@ -106,7 +118,7 @@ export function FileDropZone({
           }));
         } else {
           alert(`
-          Не соответствует ни одному импрту
+          Не соответствует ни одному импорту
 
           ${files[0].name} `);
         }
@@ -122,8 +134,10 @@ export function FileDropZone({
       <input {...getInputProps()} />
       {isDragActive ? (
         <p>Drop the files here ...</p>
-      ) : (
+      ) : !only82xml ? (
         <p>Drag 'n' drop files here Св-1 / БД / 80 / 60</p>
+      ) : (
+        <p>Drag 'n' drop file here 82xml</p>
       )}
     </div>
   );

@@ -4,7 +4,11 @@ import { IMesPoint80, ISiObj1 } from '../app.types.js';
 
 type TKanal = 'k01' | 'k02' | 'k03' | 'k04';
 
-export async function read82xmlMod(file: File, siAr: ISiObj1[]) {
+export async function read82xmlMod(
+  file: File,
+  siAr: ISiObj1[],
+  kodTi?: string
+) {
   const siArMutable: ISiObj1[] = structuredClone(siAr);
 
   console.log('file.name', file.name);
@@ -85,22 +89,28 @@ export async function read82xmlMod(file: File, siAr: ISiObj1[]) {
               siObj.kodTi80.v === kodTi82 || siObj.kodTi60.v === kodTi82
           );
 
-          siArMutable[indexTi] = {
-            ...siObj1,
-            powProf82,
-            naimTi82: { v: naimTi82v, status: '', status2: '', status3: '' },
-          };
+          if (
+            !kodTi ||
+            siArMutable[indexTi].kodTi80.v === kodTi ||
+            siArMutable[indexTi].kodTi60.v === kodTi
+          ) {
+            siArMutable[indexTi] = {
+              ...siObj1,
+              powProf82,
+              naimTi82: { v: naimTi82v, status: '', status2: '', status3: '' },
+            };
 
-          for (const mesChannel of mesChannelSTag) {
-            const kanal = ('k' + mesChannel.getAttribute('code')!) as TKanal;
-            const valueTags = mesChannel.getElementsByTagName('value');
+            for (const mesChannel of mesChannelSTag) {
+              const kanal = ('k' + mesChannel.getAttribute('code')!) as TKanal;
+              const valueTags = mesChannel.getElementsByTagName('value');
 
-            console.log(kanal);
-            for (const value of valueTags) {
-              // console.log(value.textContent);
-              siArMutable[indexTi].powProf82[kanal].push(
-                Number(value.textContent)
-              );
+              console.log(kanal);
+              for (const value of valueTags) {
+                // console.log(value.textContent);
+                siArMutable[indexTi].powProf82[kanal].push(
+                  Number(value.textContent)
+                );
+              }
             }
           }
         }
