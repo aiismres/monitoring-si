@@ -43,7 +43,7 @@
   display: inline-table;
   padding: 0;
   width: 100%;
-  /* height: auto; */
+  height: 20px;
   border: none;
   font-family: -apple-system,
     BlinkMacSystemFont,
