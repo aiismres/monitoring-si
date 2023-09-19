@@ -10,6 +10,7 @@ import { readDBxlsxMod } from '../modules/readDBxlsxMod';
 import { checkData } from '../modules/checkDataMod';
 import { IAppState, ISechInfo, ISiObj1 } from '../app.types';
 import { read82xmlMod } from '../modules/read82xmlMod';
+import { readDbMirxlsxMod } from '../modules/readDbMirXlsxMod';
 
 interface IProps {
   siState: ISiObj1[];
@@ -93,6 +94,18 @@ export function FileDropZone({
           !only82xml
         ) {
           let [data, sourceDB] = (await readDBxlsxMod(file, siState)) as [
+            ISiObj1[],
+            string
+          ];
+          data = checkData(data);
+          setSiState(data);
+          setAppState((appState) => ({
+            ...appState,
+            isSiStateSave: false,
+          }));
+          setSechInfo((sechInfo) => ({ ...sechInfo, sourceDB }));
+        } else if (file.name.includes('Отчет1') && !only82xml) {
+          let [data, sourceDB] = (await readDbMirxlsxMod(file, siState)) as [
             ISiObj1[],
             string
           ];

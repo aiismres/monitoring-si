@@ -202,6 +202,12 @@ export async function read80xmlMod(file: File, siAr: ISiObj1[]) {
               ...siArMod[index],
               // numTiShem80: { v: si80.schemanum, id: nanoid() },
               // kodTi80: { v: si80["ats-code"], id: nanoid() },
+              kodTi80: {
+                v: si80['ats-code'],
+                status: '',
+                status2: '',
+                status3: '',
+              },
               naimTi80: {
                 v: si80.naimTi,
                 status: '',
