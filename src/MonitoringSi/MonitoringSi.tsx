@@ -44,6 +44,7 @@ import {
   DialogContentText,
   DialogTitle,
   Snackbar,
+  Tooltip,
   buttonBaseClasses,
 } from '@mui/material';
 import Alert from '@mui/material/Alert';
@@ -55,7 +56,8 @@ import { ReactComponent as IconSverka2 } from '../Icons/IconSverka2.svg';
 import { useNavigate } from 'react-router-dom';
 import { SaveBtn } from '../SaveBtn';
 import { AlertSucErr } from '../AlertSucErr';
-
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { Tips } from '../Tips';
 // типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -565,7 +567,7 @@ export function MonitoringSi({
             setSechInfo={setSechInfo}
             only82xml={false}
           />
-
+          <Tips />
           <SpeedDialNav
             actions={actions}
             // btnExportSv1={btnExportSv1}
