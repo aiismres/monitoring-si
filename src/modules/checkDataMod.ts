@@ -30,6 +30,25 @@ export function checkData(siArray: ISiObj1[]) {
     siObj.naimTi60.status = '';
     siObj.kanaly60.status = '';
 
+    siObj.tipSchSop.status3 = '';
+    siObj.tipSch80.status3 = '';
+    siObj.tipSch60.status3 = '';
+    siObj.tipSchSch.status3 = '';
+    siObj.tipSchDB.status3 = '';
+
+    siObj.numSchSop.status3 = '';
+    siObj.numSchSch.status3 = '';
+    siObj.numSchDB.status3 = '';
+
+    siObj.kttSop.status3 = '';
+    siObj.kttDB.status3 = '';
+
+    siObj.ktnSop.status3 = '';
+    siObj.ktnDB.status3 = '';
+
+    siObj.naimTi60.status3 = '';
+    siObj.kanaly60.status3 = '';
+
     if (
       siObj.naimTi80.v &&
       siObj.naimTi60.v &&

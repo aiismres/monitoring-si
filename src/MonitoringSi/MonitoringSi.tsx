@@ -6,6 +6,7 @@ import React, {
   useLayoutEffect,
   Dispatch,
   SetStateAction,
+  useCallback,
 } from 'react';
 import styles from './monitoringsi.module.css';
 // import { TableHead } from '../TableHead';
@@ -58,6 +59,7 @@ import { SaveBtn } from '../SaveBtn';
 import { AlertSucErr } from '../AlertSucErr';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Tips } from '../Tips';
+import { keyboardKey } from '@testing-library/user-event';
 // типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -107,30 +109,84 @@ export function MonitoringSi({
   // });
   const navigate = useNavigate();
 
-  const [tableWidth, setTableWidth] = useState<number>(0);
+  const [status2, setStatus2] = useState<'' | 'correct' | 'incorrect' | null>(
+    null
+  );
+  const [status3, setStatus3] = useState<'' | 'selected' | null>(null);
+  const [selectedItems, setSelectedItems] = useState<
+    {
+      i: number;
+      param: string;
+    }[]
+  >([]);
 
   const btnExportSv1 = useRef(null);
   const btnEdit = useRef(null);
   const siStateMod = useRef<ISiObj1[]>([]);
 
   useEffect(() => {
-    document.addEventListener('keydown', (e) => {
-      console.log(e.key);
-    });
-
-    return document.removeEventListener('keydown', (e) => {
-      console.log(e.key);
-    });
+    function handlekeydownEvent(e: keyboardKey) {
+      const { key, keyCode, code } = e;
+      console.log(key, keyCode, code);
+      if (code === 'KeyT') {
+        setStatus2('correct');
+      } else if (code === 'KeyF') {
+        setStatus2('incorrect');
+      } else if (code === 'KeyU') {
+        setStatus2('');
+      } else if (code === 'KeyS') {
+        setStatus3('selected');
+      }
+    }
+    document.addEventListener('keydown', handlekeydownEvent);
+    return () => {
+      document.removeEventListener('keydown', handlekeydownEvent);
+    };
   }, []);
 
   useEffect(() => {
-    document.addEventListener('mousedown', (e) => {
-      console.log(e.type);
-    });
-    return document.removeEventListener('mousedown', (e) => {
-      console.log(e.type);
-    });
+    function handlekeyupEvent() {
+      setStatus2(null);
+      setStatus3(null);
+    }
+    document.addEventListener('keyup', handlekeyupEvent);
+    return () => {
+      document.removeEventListener('keyup', handlekeyupEvent);
+    };
   }, []);
+
+  useEffect(() => {
+    function handlePasteEvent(e: ClipboardEvent) {
+      if (e.clipboardData) {
+        console.log(e.clipboardData.getData('text'), selectedItems);
+        if (!selectedItems[0]) return;
+        setSiState((siArr) => {
+          let siArrMod = [...siArr];
+          selectedItems.forEach(({ i, param }) => {
+            siArrMod[i][param].v = e.clipboardData
+              ? e.clipboardData.getData('text')
+              : '';
+          });
+          return siArrMod;
+        });
+        setAppState({ ...appState, isSiStateSave: false });
+      }
+    }
+    document.addEventListener('paste', handlePasteEvent);
+    return () => {
+      document.removeEventListener('paste', handlePasteEvent);
+    };
+  }, [selectedItems, appState]);
+
+  // useEffect(() => {
+  //   document.addEventListener('keyup', (e) => {
+  //     console.log(e.code);
+  //   });
+  //   return document.removeEventListener('keyup', (e) => {
+  //     console.log(e.code);
+  //   });
+  // }, []);
+  // end для отладки
 
   // useEffect(() => {
   //   if (appState.isSiStateSave) {
@@ -274,28 +330,49 @@ export function MonitoringSi({
     i: number,
     param: string
   ) {
-    if (e.ctrlKey && e.altKey) {
+    // if (e.ctrlKey && e.altKey) {
+    //   setAppState({ ...appState, isSiStateSave: false });
+    //   setSiState((siarr) => {
+    //     let siarrMod = [...siarr];
+    //     siarrMod[i][param].status2 = '';
+    //     siarrMod[i][param].status = '';
+    //     return siarrMod;
+    //   });
+    // } else if (e.ctrlKey) {
+    //   setAppState({ ...appState, isSiStateSave: false });
+    //   setSiState((siarr) => {
+    //     let siarrMod = [...siarr];
+    //     siarrMod[i][param].status2 = 'incorrect';
+    //     siarrMod[i][param].status = 'warning';
+    //     return siarrMod;
+    //   });
+    // } else if (e.altKey) {
+    //   setAppState({ ...appState, isSiStateSave: false });
+    //   setSiState((siarr) => {
+    //     let siarrMod = [...siarr];
+    //     siarrMod[i][param].status2 = 'correct';
+    //     return siarrMod;
+    //   });
+    // }
+    if (status2 !== null) {
       setAppState({ ...appState, isSiStateSave: false });
       setSiState((siarr) => {
         let siarrMod = [...siarr];
-        siarrMod[i][param].status2 = '';
-        siarrMod[i][param].status = '';
-        // siarrMod[i]?[param as keyof ISiObj1].status2 = '';
+        siarrMod[i][param].status2 = status2;
+        if (status2 === 'incorrect') {
+          siarrMod[i][param].status = 'warning';
+        } else {
+          siarrMod[i][param].status = '';
+        }
         return siarrMod;
       });
-    } else if (e.ctrlKey) {
-      setAppState({ ...appState, isSiStateSave: false });
+    }
+    if (status3 !== null) {
+      // setAppState({ ...appState, isSiStateSave: false });
       setSiState((siarr) => {
         let siarrMod = [...siarr];
-        siarrMod[i][param].status2 = 'incorrect';
-        siarrMod[i][param].status = 'warning';
-        return siarrMod;
-      });
-    } else if (e.altKey) {
-      setAppState({ ...appState, isSiStateSave: false });
-      setSiState((siarr) => {
-        let siarrMod = [...siarr];
-        siarrMod[i][param].status2 = 'correct';
+        siarrMod[i][param].status3 = status3;
+        setSelectedItems((st) => st.concat({ i, param }));
         return siarrMod;
       });
     }
@@ -344,7 +421,7 @@ export function MonitoringSi({
       siStateMod.current = checkData(siStateMod.current);
       setSiState(siStateMod.current);
     }
-
+    console.log('sechID:', appState.sechID);
     try {
       if (!siStateMod.current[0]) {
         siStateMod.current = siState;
@@ -535,7 +612,7 @@ export function MonitoringSi({
                 </td>
               );
             });
-            return <tr key={nanoid()}>{tdContent}</tr>;
+            return <tr key={String(item.id)}>{tdContent}</tr>;
           })}
         </tbody>
       </table>

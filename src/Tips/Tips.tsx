@@ -30,9 +30,13 @@ export function Tips() {
           title={
             <React.Fragment>
               <h2 color="inherit">Подсказки</h2>
-              <p className={styles.p}>ctrl + пкм = выделить красным шрифтом</p>
-              <p className={styles.p}>ctrl + лкм = выделить зеленым </p>
-              <p className={styles.p}>ctrl + alt + лкм = снять выделение </p>
+              <p className={styles.p}>F + лкм = выделить красным</p>
+              <p className={styles.p}>T + лкм = выделить зеленым </p>
+              <p className={styles.p}>U + лкм = снять выделение </p>
+              <p className={styles.p}>S + лкм = выбрать ячейку </p>
+              <p className={styles.p}>
+                ctrl + v = копировать в выбранные ячейки{' '}
+              </p>
             </React.Fragment>
           }
         >

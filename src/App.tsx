@@ -5,6 +5,7 @@ import { Sverka2 } from './Sverka2';
 import { IAppState, IResReadSiData1, ISechInfo, ISiObj1 } from './app.types';
 import { colOrderObj } from './modules/constants';
 import { checkData } from './modules/checkDataMod';
+import { nanoid } from 'nanoid';
 
 function App() {
   const [siState, setSiState] = useState<ISiObj1[]>([]);
@@ -59,6 +60,7 @@ function App() {
       console.log('res /api/readsidata', resJson);
 
       resJson.si = checkData(resJson.si);
+      resJson.si.map((item) => (item.id ? item : { ...item, id: nanoid() }));
       setSiState(resJson.si);
       if (resJson.sechInfo) {
         setSechInfo(resJson.sechInfo);

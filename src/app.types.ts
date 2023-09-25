@@ -41,7 +41,7 @@ export interface ISechInfo {
 
 export type TStatus = '' | 'warning';
 export type TStatus2 = '' | 'correct' | 'incorrect';
-export type TStatus3 = '' | 'changed';
+export type TStatus3 = '' | 'changed' | 'selected';
 
 export interface IStringObj {
   [name: string]: {
