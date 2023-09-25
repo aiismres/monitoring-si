@@ -113,6 +113,17 @@ export function MonitoringSi({
   const btnEdit = useRef(null);
   const siStateMod = useRef<ISiObj1[]>([]);
 
+  useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      e.preventDefault();
+      console.log(e.key);
+    });
+    document.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      console.log(e.type);
+    });
+  }, []);
+
   // useEffect(() => {
   //   if (appState.isSiStateSave) {
   //     // setAppState({ ...appState, classSSDBtn: '' });
