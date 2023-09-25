@@ -115,11 +115,19 @@ export function MonitoringSi({
 
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
-      e.preventDefault();
       console.log(e.key);
     });
+
+    return document.removeEventListener('keydown', (e) => {
+      console.log(e.key);
+    });
+  }, []);
+
+  useEffect(() => {
     document.addEventListener('mousedown', (e) => {
-      e.preventDefault();
+      console.log(e.type);
+    });
+    return document.removeEventListener('mousedown', (e) => {
       console.log(e.type);
     });
   }, []);
