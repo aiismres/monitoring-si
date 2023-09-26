@@ -7,6 +7,7 @@ import React, {
   Dispatch,
   SetStateAction,
   useCallback,
+  StrictMode,
 } from 'react';
 import styles from './monitoringsi.module.css';
 // import { TableHead } from '../TableHead';
@@ -107,6 +108,7 @@ export function MonitoringSi({
   //   source60: '',
   //   amountTi: 0,
   // });
+  type Params = keyof ISiObj1;
   const navigate = useNavigate();
 
   const [status2, setStatus2] = useState<'' | 'correct' | 'incorrect' | null>(
@@ -116,7 +118,7 @@ export function MonitoringSi({
   const [selectedItems, setSelectedItems] = useState<
     {
       i: number;
-      param: string;
+      param: Params;
     }[]
   >([]);
 
@@ -128,21 +130,31 @@ export function MonitoringSi({
     function handlekeydownEvent(e: keyboardKey) {
       const { key, keyCode, code } = e;
       console.log(key, keyCode, code);
-      if (code === 'KeyT') {
+      if (code === 'KeyQ') {
         setStatus2('correct');
-      } else if (code === 'KeyF') {
+      } else if (code === 'KeyW') {
         setStatus2('incorrect');
-      } else if (code === 'KeyU') {
+      } else if (code === 'KeyE') {
         setStatus2('');
       } else if (code === 'KeyS') {
         setStatus3('selected');
       }
+      // if (!selectedItems[0]) return;
+      // setSiState((siArr) => {
+      //   let siArrMod = [...siArr];
+      //   selectedItems.forEach(({ i, param }) => {
+      //     siArrMod[i][param].v = e.key || '';
+      //   });
+      //   return siArrMod;
+      // });
+      // setAppState({ ...appState, isSiStateSave: false });
     }
+
     document.addEventListener('keydown', handlekeydownEvent);
     return () => {
       document.removeEventListener('keydown', handlekeydownEvent);
     };
-  }, []);
+  }, [selectedItems, setSiState]);
 
   useEffect(() => {
     function handlekeyupEvent() {
