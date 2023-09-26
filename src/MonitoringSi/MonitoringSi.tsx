@@ -61,6 +61,7 @@ import { AlertSucErr } from '../AlertSucErr';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Tips } from '../Tips';
 import { keyboardKey } from '@testing-library/user-event';
+import { resetStatus3 } from '../modules/resetStatus3';
 // типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -136,18 +137,43 @@ export function MonitoringSi({
         setStatus2('incorrect');
       } else if (code === 'KeyE') {
         setStatus2('');
-      } else if (code === 'KeyS') {
-        setStatus3('selected');
       }
-      // if (!selectedItems[0]) return;
-      // setSiState((siArr) => {
-      //   let siArrMod = [...siArr];
-      //   selectedItems.forEach(({ i, param }) => {
-      //     siArrMod[i][param].v = e.key || '';
-      //   });
-      //   return siArrMod;
-      // });
-      // setAppState({ ...appState, isSiStateSave: false });
+      // else if (code === 'KeyS') {
+      //   setStatus3('selected');
+      // }
+
+      if (!selectedItems[0]) {
+        return;
+      } else if (e.key === 'Alt' || e.key === 'Control') {
+        return;
+      } else if (e.code === 'Delete') {
+        setSiState((siArr) => {
+          let siArrMod = [...siArr];
+          selectedItems.forEach(({ i, param }) => {
+            siArrMod[i][param].v = '';
+          });
+          return siArrMod;
+        });
+        setAppState({ ...appState, isSiStateSave: false });
+      } else if (e.code === 'Backspace') {
+        setSiState((siArr) => {
+          let siArrMod = [...siArr];
+          selectedItems.forEach(({ i, param }) => {
+            siArrMod[i][param].v = siArrMod[i][param].v.slice(0, -1);
+          });
+          return siArrMod;
+        });
+        setAppState({ ...appState, isSiStateSave: false });
+      } else {
+        setSiState((siArr) => {
+          let siArrMod = [...siArr];
+          selectedItems.forEach(({ i, param }) => {
+            siArrMod[i][param].v += e.key || '';
+          });
+          return siArrMod;
+        });
+        setAppState({ ...appState, isSiStateSave: false });
+      }
     }
 
     document.addEventListener('keydown', handlekeydownEvent);
@@ -379,11 +405,11 @@ export function MonitoringSi({
         return siarrMod;
       });
     }
-    if (status3 !== null) {
+    if (e.altKey) {
       // setAppState({ ...appState, isSiStateSave: false });
       setSiState((siarr) => {
         let siarrMod = [...siarr];
-        siarrMod[i][param].status3 = status3;
+        siarrMod[i][param].status3 = 'selected';
         setSelectedItems((st) => st.concat({ i, param }));
         return siarrMod;
       });
@@ -432,6 +458,10 @@ export function MonitoringSi({
       console.log('siStateMod.current', siStateMod.current);
       siStateMod.current = checkData(siStateMod.current);
       setSiState(siStateMod.current);
+    } else {
+      siStateMod.current = resetStatus3(siState);
+      setSiState(siStateMod.current);
+      // console.log(siStateMod.current, resetStatus3(siStateMod.current));
     }
     console.log('sechID:', appState.sechID);
     try {
