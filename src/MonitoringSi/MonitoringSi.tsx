@@ -410,8 +410,15 @@ export function MonitoringSi({
       setSiState((siarr) => {
         let siarrMod = [...siarr];
         siarrMod[i][param].status3 = 'selected';
-        setSelectedItems((st) => st.concat({ i, param }));
         return siarrMod;
+      });
+      setSelectedItems((st) => {
+        console.log({ i, param }, st, st.includes({ i, param }));
+        if (st.some((item) => item.i === i && item.param === param)) {
+          return st;
+        } else {
+          return st.concat({ i, param });
+        }
       });
     }
   }
