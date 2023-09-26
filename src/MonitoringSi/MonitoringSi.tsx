@@ -461,6 +461,7 @@ export function MonitoringSi({
     } else {
       siStateMod.current = resetStatus3(siState);
       setSiState(siStateMod.current);
+      setSelectedItems([]);
       // console.log(siStateMod.current, resetStatus3(siStateMod.current));
     }
     console.log('sechID:', appState.sechID);
