@@ -486,8 +486,18 @@ export function MonitoringSi({
       console.log('siStateMod.current', siStateMod.current);
       siStateMod.current = checkData(siStateMod.current);
       setSiState(siStateMod.current);
-    } else {
+    } else if (appState.isEdit2) {
       siStateMod.current = resetStatus3(siState);
+      siStateMod.current.forEach((siObj) => {
+        if (siObj.kttSop.v.includes('/')) {
+          const kttKtn = siObj.kttSop.v.split('/');
+          siObj.kttSop.v = String(Number(kttKtn[0]) / Number(kttKtn[1]));
+        }
+        if (siObj.ktnSop.v.includes('/')) {
+          const kttKtn = siObj.ktnSop.v.split('/');
+          siObj.ktnSop.v = String(Number(kttKtn[0]) / Number(kttKtn[1]));
+        }
+      });
       setSiState(siStateMod.current);
       setSelectedItems([]);
       // console.log(siStateMod.current, resetStatus3(siStateMod.current));
@@ -695,7 +705,7 @@ export function MonitoringSi({
                   }}
                   tabIndex={0}
                   onKeyDown={(e) => {
-                    console.log(e);
+                    console.log(e, 'e.code', e.code, 'e.key', e.key);
                     const { i, param } = selectedItems[0];
                     const paramIndex = appState.colOrder.findIndex(
                       (item) => item === param
@@ -801,6 +811,42 @@ export function MonitoringSi({
                       setStatus2('incorrect');
                     } else if (e.code === 'KeyE') {
                       setStatus2('');
+                    } else if (e.key.match(/\d+/) || String(e.key) === '/') {
+                      console.log('match!');
+                      setSiState((siArr) => {
+                        let siArrMod = [...siArr];
+                        selectedItems.forEach(({ i, param }) => {
+                          siArrMod[i][param].v += e.key || '';
+                        });
+                        return siArrMod;
+                      });
+                      setAppState({ ...appState, isSiStateSave: false });
+                    } else if (e.code === 'Backspace') {
+                      setSiState((siArr) => {
+                        let siArrMod = [...siArr];
+                        selectedItems.forEach(({ i, param }) => {
+                          siArrMod[i][param].v = siArrMod[i][param].v.slice(
+                            0,
+                            -1
+                          );
+                        });
+                        return siArrMod;
+                      });
+                      setAppState({ ...appState, isSiStateSave: false });
+                    } else if (e.key === 'Enter') {
+                      const { i, param } = selectedItems[0];
+                      if (
+                        ['kttSop', 'ktnSop'].includes(param) &&
+                        siState[i][param].v.indexOf('/') >= 0
+                      ) {
+                        const kttKtn = siState[i][param].v.split('/');
+                        const siArrMod = structuredClone(siState);
+                        siArrMod[i][param].v = String(
+                          Number(kttKtn[0]) / Number(kttKtn[1])
+                        );
+                        setSiState(siArrMod);
+                        setAppState({ ...appState, isSiStateSave: false });
+                      }
                     }
                   }}
                   onKeyUp={() => setStatus2(null)}
@@ -869,6 +915,15 @@ export function MonitoringSi({
             }
           >
             isEdit {String(appState.isEdit2)}
+          </Button>
+          <Button
+            variant="contained"
+            color={'secondary'}
+            onClick={() =>
+              setAppState((st) => ({ ...st, isEdit2: !st.isEdit2 }))
+            }
+          >
+            отменить
           </Button>
           <SpeedDialNav
             actions={actions}
