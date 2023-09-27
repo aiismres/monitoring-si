@@ -16,6 +16,7 @@ function App() {
     sechID: '',
     naimSechShort: '',
     isEdit: false,
+    isEdit2: false,
     // classSSDBtn: '',
     // classEditBtn: '',
     isSiStateSave: true,

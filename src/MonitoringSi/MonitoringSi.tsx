@@ -53,6 +53,7 @@ import Alert from '@mui/material/Alert';
 import { useAppStore } from '../store';
 import { ReactComponent as IconExpSv1 } from '../Icons/IconExpSv1.svg';
 import { ReactComponent as IconEdit } from '../Icons/IconEdit.svg';
+import { ReactComponent as IconEdit2 } from '../Icons/IconEdit2.svg';
 import { ReactComponent as IconInfo } from '../Icons/IconInfo.svg';
 import { ReactComponent as IconSverka2 } from '../Icons/IconSverka2.svg';
 import { useNavigate } from 'react-router-dom';
@@ -119,7 +120,7 @@ export function MonitoringSi({
   const [selectedItems, setSelectedItems] = useState<
     {
       i: number;
-      param: Params;
+      param: TColShortNames;
     }[]
   >([]);
 
@@ -127,104 +128,115 @@ export function MonitoringSi({
   const btnEdit = useRef(null);
   const siStateMod = useRef<ISiObj1[]>([]);
 
-  useEffect(() => {
-    function handlekeydownEvent(e: keyboardKey) {
-      const { key, keyCode, code } = e;
-      console.log(key, keyCode, code);
-      if (code === 'KeyQ') {
-        setStatus2('correct');
-      } else if (code === 'KeyW') {
-        setStatus2('incorrect');
-      } else if (code === 'KeyE') {
-        setStatus2('');
-      }
-      // else if (code === 'KeyS') {
-      //   setStatus3('selected');
-      // }
-
-      if (!selectedItems[0]) {
-        return;
-      } else if (e.key === 'Alt' || e.key === 'Control') {
-        return;
-      } else if (e.code === 'Delete') {
-        setSiState((siArr) => {
-          let siArrMod = [...siArr];
-          selectedItems.forEach(({ i, param }) => {
-            siArrMod[i][param].v = '';
-          });
-          return siArrMod;
-        });
-        setAppState({ ...appState, isSiStateSave: false });
-      } else if (e.code === 'Backspace') {
-        setSiState((siArr) => {
-          let siArrMod = [...siArr];
-          selectedItems.forEach(({ i, param }) => {
-            siArrMod[i][param].v = siArrMod[i][param].v.slice(0, -1);
-          });
-          return siArrMod;
-        });
-        setAppState({ ...appState, isSiStateSave: false });
-      } else {
-        setSiState((siArr) => {
-          let siArrMod = [...siArr];
-          selectedItems.forEach(({ i, param }) => {
-            siArrMod[i][param].v += e.key || '';
-          });
-          return siArrMod;
-        });
-        setAppState({ ...appState, isSiStateSave: false });
-      }
-    }
-
-    document.addEventListener('keydown', handlekeydownEvent);
-    return () => {
-      document.removeEventListener('keydown', handlekeydownEvent);
-    };
-  }, [selectedItems, setSiState]);
-
-  useEffect(() => {
-    function handlekeyupEvent() {
-      setStatus2(null);
-      setStatus3(null);
-    }
-    document.addEventListener('keyup', handlekeyupEvent);
-    return () => {
-      document.removeEventListener('keyup', handlekeyupEvent);
-    };
-  }, []);
-
-  useEffect(() => {
-    function handlePasteEvent(e: ClipboardEvent) {
-      if (e.clipboardData) {
-        console.log(e.clipboardData.getData('text'), selectedItems);
-        if (!selectedItems[0]) return;
-        setSiState((siArr) => {
-          let siArrMod = [...siArr];
-          selectedItems.forEach(({ i, param }) => {
-            siArrMod[i][param].v = e.clipboardData
-              ? e.clipboardData.getData('text')
-              : '';
-          });
-          return siArrMod;
-        });
-        setAppState({ ...appState, isSiStateSave: false });
-      }
-    }
-    document.addEventListener('paste', handlePasteEvent);
-    return () => {
-      document.removeEventListener('paste', handlePasteEvent);
-    };
-  }, [selectedItems, appState]);
+  // Управление клавишами (работает, перерес в <td onClick()>) начало
 
   // useEffect(() => {
-  //   document.addEventListener('keyup', (e) => {
-  //     console.log(e.code);
-  //   });
-  //   return document.removeEventListener('keyup', (e) => {
-  //     console.log(e.code);
-  //   });
+  //   function handlekeydownEvent(e: keyboardKey) {
+  //     if (e.key === 'Control') return;
+  //     const { key, keyCode, code } = e;
+  //     console.log(key, keyCode, code);
+  //     if (code === 'KeyQ') {
+  //       setStatus2('correct');
+  //     } else if (code === 'KeyW') {
+  //       setStatus2('incorrect');
+  //     } else if (code === 'KeyE') {
+  //       setStatus2('');
+  //     }
+  //     // else if (code === 'KeyS') {
+  //     //   setStatus3('selected');
+  //     // }
+
+  //     if (!selectedItems[0]) {
+  //       return;
+  //     } else if (e.key === 'Alt' || e.key === 'Control') {
+  //       return;
+  //     } else if (e.code === 'Delete') {
+  //       setSiState((siArr) => {
+  //         let siArrMod = [...siArr];
+  //         selectedItems.forEach(({ i, param }) => {
+  //           siArrMod[i][param].v = '';
+  //         });
+  //         return siArrMod;
+  //       });
+  //       setAppState({ ...appState, isSiStateSave: false });
+  //     } else if (e.code === 'Backspace') {
+  //       setSiState((siArr) => {
+  //         let siArrMod = [...siArr];
+  //         selectedItems.forEach(({ i, param }) => {
+  //           siArrMod[i][param].v = siArrMod[i][param].v.slice(0, -1);
+  //         });
+  //         return siArrMod;
+  //       });
+  //       setAppState({ ...appState, isSiStateSave: false });
+  //     } else if (e.code === 'ArrowRight') {
+  //       const { i, param } = selectedItems[0];
+  //       const paramIndex = appState.colOrder.findIndex(
+  //         (item) => item === param
+  //       );
+  //       setSelectedItems((st) => [
+  //         { ...st[0], param: appState.colOrder[paramIndex + 1] },
+  //       ]);
+  //       setSiState((siArr) => {
+  //         const siArrMod = resetStatus3(siArr);
+  //         siArrMod[i][appState.colOrder[paramIndex + 1]].status3 = 'selected';
+  //         return siArrMod;
+  //       });
+  //     } else {
+  //       setSiState((siArr) => {
+  //         let siArrMod = [...siArr];
+  //         selectedItems.forEach(({ i, param }) => {
+  //           siArrMod[i][param].v += e.key || '';
+  //         });
+  //         return siArrMod;
+  //       });
+  //       setAppState({ ...appState, isSiStateSave: false });
+  //     }
+  //   }
+
+  //   document.addEventListener('keydown', handlekeydownEvent);
+  //   return () => {
+  //     document.removeEventListener('keydown', handlekeydownEvent);
+  //   };
+  // }, [selectedItems, setSiState]);
+
+  // useEffect(() => {
+  //   function handlekeyupEvent() {
+  //     setStatus2(null);
+  //     setStatus3(null);
+  //   }
+  //   document.addEventListener('keyup', handlekeyupEvent);
+  //   return () => {
+  //     document.removeEventListener('keyup', handlekeyupEvent);
+  //   };
   // }, []);
-  // end для отладки
+
+  // конец управление клавишами (работает)
+
+  // копирование ctrl+v (перенес в table onPaste) начало
+  // useEffect(() => {
+  //   function handlePasteEvent(e: ClipboardEvent) {
+  //     if (e.clipboardData) {
+  //       console.log(e.clipboardData.getData('text'), selectedItems);
+  //       if (!selectedItems[0]) return;
+  //       setSiState((siArr) => {
+  //         let siArrMod = [...siArr];
+  //         selectedItems.forEach(({ i, param }) => {
+  //           siArrMod[i][param].v = e.clipboardData
+  //             ? e.clipboardData.getData('text')
+  //             : '';
+  //         });
+  //         return siArrMod;
+  //       });
+  //       setAppState({ ...appState, isSiStateSave: false });
+  //     }
+  //   }
+  //   document.addEventListener('paste', handlePasteEvent);
+  //   return () => {
+  //     document.removeEventListener('paste', handlePasteEvent);
+  //   };
+  // }, [selectedItems, appState]);
+
+  // конец копирование ctrl+v (перенес в table onPaste)
 
   // useEffect(() => {
   //   if (appState.isSiStateSave) {
@@ -366,7 +378,7 @@ export function MonitoringSi({
   function tdOnClick3(
     e: React.MouseEvent<HTMLElement>,
     i: number,
-    param: string
+    param: TColShortNames
   ) {
     // if (e.ctrlKey && e.altKey) {
     //   setAppState({ ...appState, isSiStateSave: false });
@@ -420,6 +432,15 @@ export function MonitoringSi({
           return st.concat({ i, param });
         }
       });
+    }
+    if (appState.isEdit2) {
+      setSiState((siarr) => {
+        let siarrMod = resetStatus3([...siarr]);
+
+        siarrMod[i][param].status3 = 'selected';
+        return siarrMod;
+      });
+      setSelectedItems([{ i, param }]);
     }
   }
 
@@ -560,7 +581,6 @@ export function MonitoringSi({
           isEdit: !appState.isEdit,
           isSiStateSave: !appState.isSiStateSave,
         }),
-      // do: null,
     },
     {
       icon: <IconExpSv1 />,
@@ -577,6 +597,22 @@ export function MonitoringSi({
       <table
         style={{
           minWidth: refTableWidth.current,
+        }}
+        onPaste={(e) => {
+          if (e.clipboardData) {
+            console.log(e.clipboardData.getData('text'), selectedItems);
+            if (!selectedItems[0]) return;
+            setSiState((siArr) => {
+              let siArrMod = [...siArr];
+              selectedItems.forEach(({ i, param }) => {
+                siArrMod[i][param].v = e.clipboardData
+                  ? e.clipboardData.getData('text')
+                  : '';
+              });
+              return siArrMod;
+            });
+            setAppState({ ...appState, isSiStateSave: false });
+          }
         }}
       >
         {/* <TableHead
@@ -657,6 +693,117 @@ export function MonitoringSi({
                   onClick={(e) => {
                     tdOnClick3(e, index, param);
                   }}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    console.log(e);
+                    const { i, param } = selectedItems[0];
+                    const paramIndex = appState.colOrder.findIndex(
+                      (item) => item === param
+                    );
+                    if (e.code === 'ArrowRight') {
+                      // const { i, param } = selectedItems[0];
+                      // const paramIndex = appState.colOrder.findIndex(
+                      //   (item) => item === param
+                      // );
+                      setSelectedItems((st) =>
+                        appState.colOrder[paramIndex + 1]
+                          ? [
+                              {
+                                ...st[0],
+                                param: appState.colOrder[paramIndex + 1],
+                              },
+                            ]
+                          : st
+                      );
+                      setSiState((siArr) => {
+                        const siArrMod = resetStatus3(siArr);
+                        if (siArrMod[i][appState.colOrder[paramIndex + 1]]) {
+                          siArrMod[i][
+                            appState.colOrder[paramIndex + 1]
+                          ].status3 = 'selected';
+                          return siArrMod;
+                        } else {
+                          return siArr;
+                        }
+                      });
+                    } else if (e.code === 'ArrowLeft') {
+                      // const { i, param } = selectedItems[0];
+                      // const paramIndex = appState.colOrder.findIndex(
+                      //   (item) => item === param
+                      // );
+                      setSelectedItems((st) =>
+                        appState.colOrder[paramIndex - 1]
+                          ? [
+                              {
+                                ...st[0],
+                                param: appState.colOrder[paramIndex - 1],
+                              },
+                            ]
+                          : st
+                      );
+                      setSiState((siArr) => {
+                        const siArrMod = resetStatus3(siArr);
+                        if (siArrMod[i][appState.colOrder[paramIndex - 1]]) {
+                          siArrMod[i][
+                            appState.colOrder[paramIndex - 1]
+                          ].status3 = 'selected';
+                          return siArrMod;
+                        } else {
+                          return siArr;
+                        }
+                      });
+                    } else if (e.code === 'ArrowUp') {
+                      setSelectedItems((st) =>
+                        i - 1 >= 0 ? [{ ...st[0], i: i - 1 }] : st
+                      );
+                      setSiState((siArr) => {
+                        const siArrMod = resetStatus3(siArr);
+                        if (siArrMod[i - 1]) {
+                          siArrMod[i - 1][param].status3 = 'selected';
+                          return siArrMod;
+                        } else {
+                          return siArr;
+                        }
+                      });
+                    } else if (e.code === 'ArrowDown' && !e.shiftKey) {
+                      setSelectedItems((st) =>
+                        siState[i + 1] ? [{ ...st[0], i: i + 1 }] : st
+                      );
+                      setSiState((siArr) => {
+                        const siArrMod = resetStatus3(siArr);
+                        if (siArrMod[i + 1]) {
+                          siArrMod[i + 1][param].status3 = 'selected';
+                          return siArrMod;
+                        } else {
+                          return siArr;
+                        }
+                      });
+                    } else if (e.code === 'ArrowDown' && e.shiftKey) {
+                      const lastI =
+                        selectedItems.at(-1)?.i || selectedItems[0].i;
+                      setSelectedItems((st) =>
+                        siState[lastI + 1]
+                          ? st.concat([{ ...st[0], i: lastI + 1 }])
+                          : st
+                      );
+                      setSiState((siArr) => {
+                        const siArrMod = structuredClone(siArr);
+                        if (siArrMod[lastI + 1]) {
+                          siArrMod[lastI + 1][param].status3 = 'selected';
+                          return siArrMod;
+                        } else {
+                          return siArr;
+                        }
+                      });
+                    } else if (e.code === 'KeyQ') {
+                      setStatus2('correct');
+                    } else if (e.code === 'KeyW') {
+                      setStatus2('incorrect');
+                    } else if (e.code === 'KeyE') {
+                      setStatus2('');
+                    }
+                  }}
+                  onKeyUp={() => setStatus2(null)}
                 >
                   {item[param]?.v}
                 </td>
@@ -714,6 +861,15 @@ export function MonitoringSi({
             only82xml={false}
           />
           <Tips />
+          <Button
+            variant="contained"
+            color={appState.isEdit2 ? 'warning' : 'secondary'}
+            onClick={() =>
+              setAppState((st) => ({ ...st, isEdit2: !st.isEdit2 }))
+            }
+          >
+            isEdit {String(appState.isEdit2)}
+          </Button>
           <SpeedDialNav
             actions={actions}
             // btnExportSv1={btnExportSv1}

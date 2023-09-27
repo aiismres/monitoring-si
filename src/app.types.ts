@@ -18,6 +18,7 @@ export interface IAppState {
   // classSSDBtn: string;
   // classEditBtn: string;
   isEdit: boolean;
+  isEdit2: boolean;
   isSiStateSave: boolean;
   isMsgOpen: boolean;
   isSuccess: boolean;
