@@ -375,6 +375,151 @@ export function MonitoringSi({
     });
   }
 
+  function handleKeyDown(e: React.KeyboardEvent<HTMLTableSectionElement>) {
+    console.log(e, 'e.code', e.code, 'e.key', e.key);
+    const { i, param } = selectedItems[0] || { i: null, param: null };
+
+    const paramIndex = appState.colOrder.findIndex((item) => item === param);
+    if (e.code === 'ArrowRight') {
+      // const { i, param } = selectedItems[0];
+      // const paramIndex = appState.colOrder.findIndex(
+      //   (item) => item === param
+      // );
+      setSelectedItems((st) =>
+        appState.colOrder[paramIndex + 1]
+          ? [
+              {
+                ...st[0],
+                param: appState.colOrder[paramIndex + 1],
+              },
+            ]
+          : st
+      );
+      setSiState((siArr) => {
+        const siArrMod = resetStatus3(siArr);
+        if (siArrMod[i][appState.colOrder[paramIndex + 1]]) {
+          siArrMod[i][appState.colOrder[paramIndex + 1]].status3 = 'selected';
+          return siArrMod;
+        } else {
+          return siArr;
+        }
+      });
+    } else if (e.code === 'ArrowLeft') {
+      // const { i, param } = selectedItems[0];
+      // const paramIndex = appState.colOrder.findIndex(
+      //   (item) => item === param
+      // );
+      setSelectedItems((st) =>
+        appState.colOrder[paramIndex - 1]
+          ? [
+              {
+                ...st[0],
+                param: appState.colOrder[paramIndex - 1],
+              },
+            ]
+          : st
+      );
+      setSiState((siArr) => {
+        const siArrMod = resetStatus3(siArr);
+        if (siArrMod[i][appState.colOrder[paramIndex - 1]]) {
+          siArrMod[i][appState.colOrder[paramIndex - 1]].status3 = 'selected';
+          return siArrMod;
+        } else {
+          return siArr;
+        }
+      });
+    } else if (e.code === 'ArrowUp') {
+      setSelectedItems((st) => (i - 1 >= 0 ? [{ ...st[0], i: i - 1 }] : st));
+      setSiState((siArr) => {
+        const siArrMod = resetStatus3(siArr);
+        if (siArrMod[i - 1]) {
+          siArrMod[i - 1][param].status3 = 'selected';
+          return siArrMod;
+        } else {
+          return siArr;
+        }
+      });
+    } else if (e.code === 'ArrowDown' && !e.shiftKey) {
+      setSelectedItems((st) =>
+        siState[i + 1] ? [{ ...st[0], i: i + 1 }] : st
+      );
+      setSiState((siArr) => {
+        const siArrMod = resetStatus3(siArr);
+        if (siArrMod[i + 1]) {
+          siArrMod[i + 1][param].status3 = 'selected';
+          return siArrMod;
+        } else {
+          return siArr;
+        }
+      });
+    } else if (e.code === 'ArrowDown' && e.shiftKey) {
+      const lastI = selectedItems.at(-1)?.i || selectedItems[0].i;
+      setSelectedItems((st) =>
+        siState[lastI + 1] ? st.concat([{ ...st[0], i: lastI + 1 }]) : st
+      );
+      setSiState((siArr) => {
+        const siArrMod = structuredClone(siArr);
+        if (siArrMod[lastI + 1]) {
+          siArrMod[lastI + 1][param].status3 = 'selected';
+          return siArrMod;
+        } else {
+          return siArr;
+        }
+      });
+    } else if (e.code === 'KeyQ') {
+      setStatus2('correct');
+    } else if (e.code === 'KeyW') {
+      setStatus2('incorrect');
+    } else if (e.code === 'KeyE') {
+      setStatus2('');
+    }
+
+    if (
+      [
+        'gr',
+        'numTiSop',
+        'naimTiSop',
+        'numSchSop',
+        'tipSchSop',
+        'kttSop',
+        'ktnSop',
+      ].includes(param)
+    ) {
+      if (e.key.match(/\d+/) || ['/', '-'].includes(e.key)) {
+        console.log('match!');
+        setSiState((siArr) => {
+          let siArrMod = [...siArr];
+          selectedItems.forEach(({ i, param }) => {
+            siArrMod[i][param].v += e.key || '';
+          });
+          return siArrMod;
+        });
+        setAppState({ ...appState, isSiStateSave: false });
+      } else if (e.code === 'Backspace') {
+        setSiState((siArr) => {
+          let siArrMod = [...siArr];
+          selectedItems.forEach(({ i, param }) => {
+            siArrMod[i][param].v = siArrMod[i][param].v.slice(0, -1);
+          });
+          return siArrMod;
+        });
+        setAppState({ ...appState, isSiStateSave: false });
+      } else if (e.key === 'Enter') {
+        const { i, param } = selectedItems[0];
+        if (
+          ['kttSop', 'ktnSop'].includes(param) &&
+          siState[i][param].v.indexOf('/') >= 0
+        ) {
+          const kttKtn = siState[i][param].v.split('/');
+          const siArrMod = structuredClone(siState);
+          siArrMod[i][param].v = String(Number(kttKtn[0]) / Number(kttKtn[1]));
+          setSiState(siArrMod);
+          setAppState({ ...appState, isSiStateSave: false });
+        }
+      }
+    }
+  }
+
   function tdOnClick3(
     e: React.MouseEvent<HTMLElement>,
     i: number,
@@ -672,7 +817,11 @@ export function MonitoringSi({
             })}
           </tr>
         </thead>
-        <tbody id="tbodyId1">
+        <tbody
+          id="tbodyId1"
+          onKeyDown={(e) => handleKeyDown(e)}
+          onKeyUp={() => setStatus2(null)}
+        >
           {siState.map((item, index) => {
             let tdContent = appState.colOrder.map((param) => {
               // let tdContent = colOrderObj[appState.colOrderOpt].map((param) => {
@@ -704,152 +853,6 @@ export function MonitoringSi({
                     tdOnClick3(e, index, param);
                   }}
                   tabIndex={0}
-                  onKeyDown={(e) => {
-                    console.log(e, 'e.code', e.code, 'e.key', e.key);
-                    const { i, param } = selectedItems[0];
-                    const paramIndex = appState.colOrder.findIndex(
-                      (item) => item === param
-                    );
-                    if (e.code === 'ArrowRight') {
-                      // const { i, param } = selectedItems[0];
-                      // const paramIndex = appState.colOrder.findIndex(
-                      //   (item) => item === param
-                      // );
-                      setSelectedItems((st) =>
-                        appState.colOrder[paramIndex + 1]
-                          ? [
-                              {
-                                ...st[0],
-                                param: appState.colOrder[paramIndex + 1],
-                              },
-                            ]
-                          : st
-                      );
-                      setSiState((siArr) => {
-                        const siArrMod = resetStatus3(siArr);
-                        if (siArrMod[i][appState.colOrder[paramIndex + 1]]) {
-                          siArrMod[i][
-                            appState.colOrder[paramIndex + 1]
-                          ].status3 = 'selected';
-                          return siArrMod;
-                        } else {
-                          return siArr;
-                        }
-                      });
-                    } else if (e.code === 'ArrowLeft') {
-                      // const { i, param } = selectedItems[0];
-                      // const paramIndex = appState.colOrder.findIndex(
-                      //   (item) => item === param
-                      // );
-                      setSelectedItems((st) =>
-                        appState.colOrder[paramIndex - 1]
-                          ? [
-                              {
-                                ...st[0],
-                                param: appState.colOrder[paramIndex - 1],
-                              },
-                            ]
-                          : st
-                      );
-                      setSiState((siArr) => {
-                        const siArrMod = resetStatus3(siArr);
-                        if (siArrMod[i][appState.colOrder[paramIndex - 1]]) {
-                          siArrMod[i][
-                            appState.colOrder[paramIndex - 1]
-                          ].status3 = 'selected';
-                          return siArrMod;
-                        } else {
-                          return siArr;
-                        }
-                      });
-                    } else if (e.code === 'ArrowUp') {
-                      setSelectedItems((st) =>
-                        i - 1 >= 0 ? [{ ...st[0], i: i - 1 }] : st
-                      );
-                      setSiState((siArr) => {
-                        const siArrMod = resetStatus3(siArr);
-                        if (siArrMod[i - 1]) {
-                          siArrMod[i - 1][param].status3 = 'selected';
-                          return siArrMod;
-                        } else {
-                          return siArr;
-                        }
-                      });
-                    } else if (e.code === 'ArrowDown' && !e.shiftKey) {
-                      setSelectedItems((st) =>
-                        siState[i + 1] ? [{ ...st[0], i: i + 1 }] : st
-                      );
-                      setSiState((siArr) => {
-                        const siArrMod = resetStatus3(siArr);
-                        if (siArrMod[i + 1]) {
-                          siArrMod[i + 1][param].status3 = 'selected';
-                          return siArrMod;
-                        } else {
-                          return siArr;
-                        }
-                      });
-                    } else if (e.code === 'ArrowDown' && e.shiftKey) {
-                      const lastI =
-                        selectedItems.at(-1)?.i || selectedItems[0].i;
-                      setSelectedItems((st) =>
-                        siState[lastI + 1]
-                          ? st.concat([{ ...st[0], i: lastI + 1 }])
-                          : st
-                      );
-                      setSiState((siArr) => {
-                        const siArrMod = structuredClone(siArr);
-                        if (siArrMod[lastI + 1]) {
-                          siArrMod[lastI + 1][param].status3 = 'selected';
-                          return siArrMod;
-                        } else {
-                          return siArr;
-                        }
-                      });
-                    } else if (e.code === 'KeyQ') {
-                      setStatus2('correct');
-                    } else if (e.code === 'KeyW') {
-                      setStatus2('incorrect');
-                    } else if (e.code === 'KeyE') {
-                      setStatus2('');
-                    } else if (e.key.match(/\d+/) || String(e.key) === '/') {
-                      console.log('match!');
-                      setSiState((siArr) => {
-                        let siArrMod = [...siArr];
-                        selectedItems.forEach(({ i, param }) => {
-                          siArrMod[i][param].v += e.key || '';
-                        });
-                        return siArrMod;
-                      });
-                      setAppState({ ...appState, isSiStateSave: false });
-                    } else if (e.code === 'Backspace') {
-                      setSiState((siArr) => {
-                        let siArrMod = [...siArr];
-                        selectedItems.forEach(({ i, param }) => {
-                          siArrMod[i][param].v = siArrMod[i][param].v.slice(
-                            0,
-                            -1
-                          );
-                        });
-                        return siArrMod;
-                      });
-                      setAppState({ ...appState, isSiStateSave: false });
-                    } else if (e.key === 'Enter') {
-                      const { i, param } = selectedItems[0];
-                      if (
-                        ['kttSop', 'ktnSop'].includes(param) &&
-                        siState[i][param].v.indexOf('/') >= 0
-                      ) {
-                        const kttKtn = siState[i][param].v.split('/');
-                        const siArrMod = structuredClone(siState);
-                        siArrMod[i][param].v = String(
-                          Number(kttKtn[0]) / Number(kttKtn[1])
-                        );
-                        setSiState(siArrMod);
-                        setAppState({ ...appState, isSiStateSave: false });
-                      }
-                    }
-                  }}
-                  onKeyUp={() => setStatus2(null)}
                 >
                   {item[param]?.v}
                 </td>
