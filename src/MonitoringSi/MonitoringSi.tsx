@@ -382,6 +382,7 @@ export function MonitoringSi({
 
     const paramIndex = appState.colOrder.findIndex((item) => item === param);
     if (e.code === 'ArrowRight') {
+      e.preventDefault();
       // const { i, param } = selectedItems[0];
       // const paramIndex = appState.colOrder.findIndex(
       //   (item) => item === param
@@ -406,6 +407,7 @@ export function MonitoringSi({
         }
       });
     } else if (e.code === 'ArrowLeft') {
+      e.preventDefault();
       // const { i, param } = selectedItems[0];
       // const paramIndex = appState.colOrder.findIndex(
       //   (item) => item === param
@@ -920,15 +922,7 @@ export function MonitoringSi({
           >
             isEdit {String(appState.isEdit2)}
           </Button>
-          <Button
-            variant="contained"
-            color={'secondary'}
-            onClick={() =>
-              setAppState((st) => ({ ...st, isEdit2: !st.isEdit2 }))
-            }
-          >
-            отменить
-          </Button>
+
           <SpeedDialNav
             actions={actions}
             // btnExportSv1={btnExportSv1}
