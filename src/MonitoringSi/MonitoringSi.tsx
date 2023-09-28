@@ -376,6 +376,7 @@ export function MonitoringSi({
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTableSectionElement>) {
+    if (appState.isEdit) return;
     console.log(e, 'e.code', e.code, 'e.key', e.key);
     const { i, param } = selectedItems[0] || { i: null, param: null };
 
