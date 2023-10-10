@@ -123,11 +123,11 @@ export function MonitoringSi({
       param: TColShortNames;
     }[]
   >([]);
+  const [updSt, setUpdSt] = useState(true);
 
   const btnExportSv1 = useRef(null);
   const btnEdit = useRef(null);
   const siStateMod = useRef<ISiObj1[]>([]);
-
   // Управление клавишами (работает, перерес в <td onClick()>) начало
 
   // useEffect(() => {
@@ -835,9 +835,12 @@ export function MonitoringSi({
                   param === 'gr')
                   ? true
                   : false;
+              let isContentEditable2 = false;
+              if (param === 'naimTiSop' && appState.isEdit2)
+                isContentEditable2 = item[param].status4 || false;
               return (
                 <td
-                  contentEditable={isContenteditable}
+                  contentEditable={isContenteditable || isContentEditable2}
                   key={param + item.id}
                   colname={param}
                   className={
@@ -854,6 +857,20 @@ export function MonitoringSi({
                   }
                   onClick={(e) => {
                     tdOnClick3(e, index, param);
+                  }}
+                  onDoubleClick={() => {
+                    if (!appState.isEdit2) return;
+                    console.log('dblClick');
+                    setSiState((siArr) => {
+                      let siArrMod = structuredClone(siArr);
+                      if (param === 'naimTiSop')
+                        siArrMod[index][param].status4 = true;
+                      return siArrMod;
+                    });
+                    setAppState({
+                      ...appState,
+                      isSiStateSave: false,
+                    });
                   }}
                   tabIndex={0}
                 >
