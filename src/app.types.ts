@@ -23,6 +23,7 @@ export interface IAppState {
   isMsgOpen: boolean;
   isSuccess: boolean;
   isInfoOpen: boolean;
+  editableCell: { index: number | null; param: string | null };
 }
 
 export interface IResReadSiData1 {
@@ -43,7 +44,7 @@ export interface ISechInfo {
 export type TStatus = '' | 'warning';
 export type TStatus2 = '' | 'correct' | 'incorrect';
 export type TStatus3 = '' | 'changed' | 'selected';
-export type TStatus4 = true | false | undefined;
+// export type TStatus4 = true | false | undefined;
 
 export interface IStringObj {
   [name: string]: {
@@ -52,7 +53,7 @@ export interface IStringObj {
       | TStatus
       | TStatus2
       | TStatus3
-      | TStatus4
+      // | TStatus4
       | 'да'
       | 'нет'
       | number[]
@@ -200,7 +201,7 @@ export interface ISiObj1 extends IStringObj {
     status: TStatus;
     status2: TStatus2;
     status3: TStatus3;
-    status4?: TStatus4;
+    // status4?: TStatus4;
   };
   naimTi80: {
     v: string;

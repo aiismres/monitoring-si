@@ -23,6 +23,7 @@ function App() {
     isMsgOpen: false,
     isSuccess: true,
     isInfoOpen: false,
+    editableCell: { index: null, param: null },
   });
   const [sechInfo, setSechInfo] = useState<ISechInfo>({
     sechID: '',

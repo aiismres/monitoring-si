@@ -31,7 +31,7 @@ export function SaveBtn({
           Сохранить
         </Button>
       }
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
     />
   );
 }

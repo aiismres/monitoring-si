@@ -40,6 +40,7 @@ import { FileDropZone } from '../FileDropZone';
 import { SpeedDialNav } from '../SpeedDialNav';
 import {
   Button,
+  ButtonGroup,
   Dialog,
   DialogActions,
   DialogContent,
@@ -63,6 +64,8 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Tips } from '../Tips';
 import { keyboardKey } from '@testing-library/user-event';
 import { resetStatus3 } from '../modules/resetStatus3';
+import UndoIcon from '@mui/icons-material/Undo';
+import SaveIcon from '@mui/icons-material/Save';
 // типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -124,6 +127,7 @@ export function MonitoringSi({
     }[]
   >([]);
   const [updSt, setUpdSt] = useState(true);
+  const siArrHistory = useRef<ISiObj1[][]>([]);
 
   const btnExportSv1 = useRef(null);
   const btnEdit = useRef(null);
@@ -381,7 +385,7 @@ export function MonitoringSi({
     const { i, param } = selectedItems[0] || { i: null, param: null };
 
     const paramIndex = appState.colOrder.findIndex((item) => item === param);
-    if (e.code === 'ArrowRight') {
+    if (e.code === 'ArrowRight' && !appState.editableCell.param) {
       e.preventDefault();
       // const { i, param } = selectedItems[0];
       // const paramIndex = appState.colOrder.findIndex(
@@ -406,7 +410,7 @@ export function MonitoringSi({
           return siArr;
         }
       });
-    } else if (e.code === 'ArrowLeft') {
+    } else if (e.code === 'ArrowLeft' && !appState.editableCell.param) {
       e.preventDefault();
       // const { i, param } = selectedItems[0];
       // const paramIndex = appState.colOrder.findIndex(
@@ -431,7 +435,7 @@ export function MonitoringSi({
           return siArr;
         }
       });
-    } else if (e.code === 'ArrowUp') {
+    } else if (e.code === 'ArrowUp' && !appState.editableCell.param) {
       setSelectedItems((st) => (i - 1 >= 0 ? [{ ...st[0], i: i - 1 }] : st));
       setSiState((siArr) => {
         const siArrMod = resetStatus3(siArr);
@@ -442,7 +446,11 @@ export function MonitoringSi({
           return siArr;
         }
       });
-    } else if (e.code === 'ArrowDown' && !e.shiftKey) {
+    } else if (
+      e.code === 'ArrowDown' &&
+      !e.shiftKey &&
+      !appState.editableCell.param
+    ) {
       setSelectedItems((st) =>
         siState[i + 1] ? [{ ...st[0], i: i + 1 }] : st
       );
@@ -455,7 +463,11 @@ export function MonitoringSi({
           return siArr;
         }
       });
-    } else if (e.code === 'ArrowDown' && e.shiftKey) {
+    } else if (
+      e.code === 'ArrowDown' &&
+      e.shiftKey &&
+      !appState.editableCell.param
+    ) {
       const lastI = selectedItems.at(-1)?.i || selectedItems[0].i;
       setSelectedItems((st) =>
         siState[lastI + 1] ? st.concat([{ ...st[0], i: lastI + 1 }]) : st
@@ -481,9 +493,9 @@ export function MonitoringSi({
       [
         'gr',
         'numTiSop',
-        'naimTiSop',
-        'numSchSop',
-        'tipSchSop',
+        // 'naimTiSop',
+        // 'numSchSop',
+        // 'tipSchSop',
         'kttSop',
         'ktnSop',
       ].includes(param)
@@ -518,6 +530,8 @@ export function MonitoringSi({
           siArrMod[i][param].v = String(Number(kttKtn[0]) / Number(kttKtn[1]));
           setSiState(siArrMod);
           setAppState({ ...appState, isSiStateSave: false });
+        } else if (['naimTiSop', 'numSchSop', 'tipSchSop'].includes(param)) {
+          console.log('!!!');
         }
       }
     }
@@ -694,6 +708,8 @@ export function MonitoringSi({
         isMsgOpen: true,
         isSuccess: false,
       }));
+    } finally {
+      siArrHistory.current = [siStateMod.current];
     }
   };
 
@@ -760,6 +776,7 @@ export function MonitoringSi({
           if (e.clipboardData) {
             console.log(e.clipboardData.getData('text'), selectedItems);
             if (!selectedItems[0]) return;
+            siArrHistory.current.push(siState);
             setSiState((siArr) => {
               let siArrMod = [...siArr];
               selectedItems.forEach(({ i, param }) => {
@@ -836,8 +853,16 @@ export function MonitoringSi({
                   ? true
                   : false;
               let isContentEditable2 = false;
-              if (param === 'naimTiSop' && appState.isEdit2)
-                isContentEditable2 = item[param].status4 || false;
+              // if (param === 'naimTiSop' && appState.isEdit2)
+              //   isContentEditable2 = item[param].status4 || false;
+              if (
+                index === appState.editableCell.index &&
+                param === appState.editableCell.param
+              ) {
+                isContentEditable2 = true;
+              } else {
+                isContentEditable2 = false;
+              }
               return (
                 <td
                   contentEditable={isContenteditable || isContentEditable2}
@@ -860,17 +885,40 @@ export function MonitoringSi({
                   }}
                   onDoubleClick={() => {
                     if (!appState.isEdit2) return;
-                    console.log('dblClick');
-                    setSiState((siArr) => {
-                      let siArrMod = structuredClone(siArr);
-                      if (param === 'naimTiSop')
-                        siArrMod[index][param].status4 = true;
-                      return siArrMod;
-                    });
+                    if (
+                      ['naimTiSop', 'numSchSop', 'tipSchSop'].includes(param)
+                    ) {
+                      console.log('dblClick');
+                      // setSiState((siArr) => {
+                      //   let siArrMod = structuredClone(siArr);
+                      //   if (param === 'naimTiSop')
+                      //     siArrMod[index][param].status4 = true;
+                      //   return siArrMod;
+                      // });
+                      setAppState({
+                        ...appState,
+                        isSiStateSave: false,
+                        editableCell: { index, param },
+                      });
+                    }
+                  }}
+                  onBlur={(e) => {
+                    if (
+                      index === appState.editableCell.index &&
+                      param === appState.editableCell.param
+                    ) {
+                      siArrHistory.current.push(siState);
+                    }
+                    console.log(e.target.innerText);
                     setAppState({
                       ...appState,
-                      isSiStateSave: false,
+                      editableCell: { index: null, param: null },
                     });
+                    setSiState(
+                      produce((draft) => {
+                        draft[index][param].v = e.target.innerText.trim();
+                      })
+                    );
                   }}
                   tabIndex={0}
                 >
@@ -930,15 +978,44 @@ export function MonitoringSi({
             only82xml={false}
           />
           <Tips />
-          <Button
-            variant="contained"
-            color={appState.isEdit2 ? 'warning' : 'secondary'}
-            onClick={() =>
-              setAppState((st) => ({ ...st, isEdit2: !st.isEdit2 }))
-            }
-          >
-            isEdit {String(appState.isEdit2)}
-          </Button>
+          <ButtonGroup>
+            <Button
+              variant="contained"
+              color={appState.isEdit2 ? 'warning' : 'secondary'}
+              onClick={() => {
+                if (!appState.isEdit2) {
+                  siArrHistory.current = [siState];
+                }
+                setAppState((st) => ({ ...st, isEdit2: !st.isEdit2 }));
+              }}
+            >
+              isEdit {String(appState.isEdit2)}
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              disabled={siArrHistory.current.length < 2}
+              onClick={(e) => {
+                // const prevIndex = siArrHistory.current.length - 2;
+                if (siArrHistory.current.length - 2 >= 0) {
+                  setSiState(
+                    siArrHistory.current[siArrHistory.current.length - 2]
+                  );
+                  siArrHistory.current.pop();
+                }
+              }}
+            >
+              <UndoIcon />
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              disabled={appState.isSiStateSave}
+              onClick={saveSiData}
+            >
+              <SaveIcon />
+            </Button>
+          </ButtonGroup>
 
           <SpeedDialNav
             actions={actions}
@@ -951,6 +1028,7 @@ export function MonitoringSi({
           />
         </Toolbar>
       </AppBar>
+      {/* <SaveBtn appState={appState} onClick={saveSiData} /> */}
       {/* <Snackbar
         open={!appState.isSiStateSave}
         ContentProps={{
@@ -972,7 +1050,6 @@ export function MonitoringSi({
         }
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       /> */}
-      <SaveBtn appState={appState} onClick={saveSiData} />
       {/* <Snackbar
         open={appState.isMsgOpen}
         autoHideDuration={3000}
