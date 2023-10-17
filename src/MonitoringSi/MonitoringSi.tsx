@@ -503,6 +503,7 @@ export function MonitoringSi({
       if (e.key.match(/\d+/) || ['/', '-'].includes(e.key)) {
         console.log('match!');
         setSiState((siArr) => {
+          siArrHistory.current.push(siArr);
           let siArrMod = [...siArr];
           selectedItems.forEach(({ i, param }) => {
             siArrMod[i][param].v += e.key || '';
@@ -569,7 +570,8 @@ export function MonitoringSi({
     if (status2 !== null) {
       setAppState({ ...appState, isSiStateSave: false });
       setSiState((siarr) => {
-        let siarrMod = [...siarr];
+        // let siarrMod = [...siarr];
+        let siarrMod = structuredClone(siarr);
         siarrMod[i][param].status2 = status2;
         if (status2 === 'incorrect') {
           siarrMod[i][param].status = 'warning';
@@ -709,7 +711,7 @@ export function MonitoringSi({
         isSuccess: false,
       }));
     } finally {
-      siArrHistory.current = [siStateMod.current];
+      siArrHistory.current = [siState];
     }
   };
 
@@ -982,6 +984,7 @@ export function MonitoringSi({
             <Button
               variant="contained"
               color={appState.isEdit2 ? 'warning' : 'secondary'}
+              sx={{ width: 80 }}
               onClick={() => {
                 if (!appState.isEdit2) {
                   siArrHistory.current = [siState];
@@ -989,7 +992,8 @@ export function MonitoringSi({
                 setAppState((st) => ({ ...st, isEdit2: !st.isEdit2 }));
               }}
             >
-              isEdit {String(appState.isEdit2)}
+              {/* isEdit {String(appState.isEdit2)} */}
+              {!appState.isEdit2 ? 'read' : 'edit'}
             </Button>
             <Button
               variant="contained"
