@@ -9,6 +9,8 @@ const mongodb = require('mongodb');
 const cookieParser = require('cookie-parser');
 const ExcelJS = require('exceljs');
 const dotenv = require('dotenv').config();
+const bodyParser = require('body-parser');
+const crypto = require('crypto');
 
 const app = express();
 // const compiler = webpack(webpackConfig);
@@ -83,6 +85,10 @@ app.get('/monitoringsi', (req, res) => {
 // тест бандла create-react-app
 app.get('/monitoringsibandle', (req, res) => {
   res.sendFile(path.resolve('./build/index.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.resolve('./planrabot/login.html'));
 });
 
 app.post('/api/savesidata', async (req, res) => {
@@ -199,7 +205,39 @@ app.post('/api/exportsv1', async (req, res) => {
 app.get('/api/downloadsv1', async (req, res) => {
   res.download('resultSv1.xlsx');
 });
-
+let sessionIDObj = {};
+app.post(
+  '/api/login',
+  bodyParser.urlencoded({ extended: false }),
+  async (req, res) => {
+    console.log('req.body', req.body);
+    const { username, password } = req.body;
+    let passwordhash = crypto
+      .createHash('sha256')
+      .update(password)
+      .digest('hex');
+    // console.log({ passwordhash });
+    let users = await usersDb.find().toArray();
+    console.log(users, username);
+    let user = users.find((item) => item.username == username);
+    console.log(user);
+    // let user = usersDb.users.find((item) => item.username == username);
+    if (!user) {
+      res.send('нет такого пользователя');
+    }
+    // let hash = toHash(password);
+    // if (hash != user.password) {
+    if (passwordhash != user.password) {
+      res.send('пароль неверный');
+    }
+    let sessionID = Math.random().toString(36).slice(2, 15);
+    sessionIDObj[sessionID] = username;
+    console.log('sessionIDs', sessionIDObj);
+    // user.sessionID = sessionID;
+    // usersDb.sessions.push(sessionID);
+    res.cookie('sessionID', sessionID).redirect('/readsech');
+  }
+);
 // const os = require("os");
 // console.log("os.hostname()", String(os.hostname()));
 // console.log("os.networkInterfaces()", os.networkInterfaces());

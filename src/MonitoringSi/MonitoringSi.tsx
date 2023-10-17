@@ -47,6 +47,7 @@ import {
   DialogContentText,
   DialogTitle,
   Snackbar,
+  TextField,
   Tooltip,
   buttonBaseClasses,
 } from '@mui/material';
@@ -66,6 +67,8 @@ import { keyboardKey } from '@testing-library/user-event';
 import { resetStatus3 } from '../modules/resetStatus3';
 import UndoIcon from '@mui/icons-material/Undo';
 import SaveIcon from '@mui/icons-material/Save';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 // типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -126,7 +129,12 @@ export function MonitoringSi({
       param: TColShortNames;
     }[]
   >([]);
-  const [updSt, setUpdSt] = useState(true);
+  const [loginDialogIsOpen, setLoginDialogIsOpen] = useState(false);
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  const [loginPassword, setLoginPassword] = useState({
+    username: '',
+    password: '',
+  });
   const siArrHistory = useRef<ISiObj1[][]>([]);
 
   const btnExportSv1 = useRef(null);
@@ -306,6 +314,14 @@ export function MonitoringSi({
       refTableWidth.current = initialTableWidth;
     }
   }, [colsWidthObjZu, tableWidthZu]);
+
+  useEffect(() => {
+    let cookie = document.cookie;
+    console.log(cookie);
+    if (cookie) {
+      setIsLoggedin(true);
+    }
+  }, []);
 
   const startX = useRef(0);
   const startColWidth = useRef(0);
@@ -980,9 +996,28 @@ export function MonitoringSi({
             only82xml={false}
           />
           <Tips />
+          {isLoggedin ? (
+            <AccountCircleIcon
+              fontSize="large"
+              sx={{ mr: 1 }}
+              // color="secondary"
+            />
+          ) : (
+            <Button
+              color="secondary"
+              variant="contained"
+              sx={{ mr: 2 }}
+              onClick={() => {
+                setLoginDialogIsOpen(true);
+              }}
+            >
+              login
+            </Button>
+          )}
           <ButtonGroup>
             <Button
               variant="contained"
+              disabled={!isLoggedin}
               color={appState.isEdit2 ? 'warning' : 'secondary'}
               sx={{ width: 80 }}
               onClick={() => {
@@ -1109,6 +1144,76 @@ export function MonitoringSi({
             // autoFocus
           >
             Закрыть
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={loginDialogIsOpen}
+        onClose={() => {
+          setLoginDialogIsOpen(false);
+        }}
+      >
+        <DialogTitle>Авторизация</DialogTitle>
+        <DialogContent>
+          {/* <DialogContentText>
+            To subscribe to this website, please enter your email address here.
+            We will send updates occasionally.
+          </DialogContentText> */}
+          <TextField
+            autoFocus
+            margin="dense"
+            id="login"
+            label="login"
+            type="text"
+            // fullWidth
+            variant="standard"
+            sx={{ marginRight: 5 }}
+            value={loginPassword.username}
+            onChange={(e) => {
+              setLoginPassword((st) => ({ ...st, username: e.target.value }));
+            }}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="password"
+            label="password"
+            type="password"
+            // fullWidth
+            variant="standard"
+            value={loginPassword.password}
+            onChange={(e) => {
+              setLoginPassword((st) => ({ ...st, password: e.target.value }));
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setLoginDialogIsOpen(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              setLoginDialogIsOpen(false);
+              fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8',
+                },
+                body: JSON.stringify(loginPassword),
+              }).then((res) => {
+                console.log(document.cookie);
+                if (document.cookie) {
+                  setIsLoggedin(true);
+                }
+              });
+            }}
+          >
+            login
           </Button>
         </DialogActions>
       </Dialog>
