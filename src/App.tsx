@@ -6,6 +6,7 @@ import { IAppState, IResReadSiData1, ISechInfo, ISiObj1 } from './app.types';
 import { colOrderObj } from './modules/constants';
 import { checkData } from './modules/checkDataMod';
 import { nanoid } from 'nanoid';
+import { Planrabot } from './Planrabot';
 
 function App() {
   const [siState, setSiState] = useState<ISiObj1[]>([]);
@@ -98,6 +99,10 @@ function App() {
               setSechInfo={setSechInfo}
             />
           }
+        />
+        <Route
+          path="/planrabot"
+          element={<Planrabot appState={appState} setAppState={setAppState} />}
         />
       </Routes>
     </BrowserRouter>
