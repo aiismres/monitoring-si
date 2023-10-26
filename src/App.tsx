@@ -14,6 +14,7 @@ function App() {
     // selectedCell: {},
     // colOrderOpt: 'opt1',
     colOrder: colOrderObj.opt1,
+    // colOrderPlanRab: colOrderPlanRabObj.opt1,
     sechID: '',
     naimSechShort: '',
     isEdit: false,

@@ -1,4 +1,9 @@
-import { IColOrderObj, IStringNumber, IStringString } from '../app.types';
+import {
+  // ColOrderPlanRabObj,
+  IColOrderObj,
+  IStringNumber,
+  IStringString,
+} from '../app.types';
 
 export const sameCharEn = [
   'A',
@@ -282,3 +287,17 @@ export const timePeriods = [
   '23:00 - 23:30',
   '23:30 - 24:00',
 ];
+
+// export const colOrderPlanRabObj: ColOrderPlanRabObj = {
+//   opt1: [
+//     'naimSechShort',
+//     'vidRabot',
+//     'soglGtp',
+//     'dopusk',
+//     'sdAs',
+//     'krSrokPodachi',
+//     'planPodachi',
+//     'metrologyKomm',
+//     'gr',
+//   ],
+// };

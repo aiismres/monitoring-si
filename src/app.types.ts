@@ -15,6 +15,7 @@ export interface IAppState {
   sechID: string;
   naimSechShort: string;
   colOrder: TColShortNames[];
+  // colOrderPlanRab: ColPlanRab[];
   // classSSDBtn: string;
   // classEditBtn: string;
   isEdit: boolean;
@@ -351,4 +352,105 @@ export type TColShortNames =
 
 export interface IColOrderObj {
   [N: string]: TColShortNames[];
+}
+
+// export type ColPlanRab =
+//   | '_id'
+//   | 'kodGtp'
+//   | 'kodSech'
+//   | 'naimSechShort'
+//   | 'vidRabot'
+//   | 'soglGtp'
+//   | 'dopusk'
+//   | 'sdAs'
+//   | 'sdPas'
+//   | 'krSrokPodachi'
+//   | 'planPodachi'
+//   | 'metrologyKomm'
+//   | 'codirovkaActual'
+//   | 'tipIzmCodirovki'
+//   | 'sogl60Dku'
+//   | 'sogl60SmezhOtpr'
+//   | 'sogl60SmezhSogl'
+//   | 'otprav4v'
+//   | 'sogl4v'
+//   | 'sverkiKomm'
+//   | 'sv1'
+//   | 'sv2'
+//   | 'sv3'
+//   | 'pi'
+//   | 'textOt'
+//   | 'gotovnostUs'
+//   | 'zakluchenie'
+//   | 'osobenAiis'
+//   | 'kolTi'
+//   | 'sobstvAiis'
+//   | 'metrology'
+//   | 'gr'
+//   | 'zaprosPerecod';
+
+// export interface ColOrderPlanRabObj {
+//   [N: string]: ColPlanRab[];
+// }
+
+export interface SechArr {
+  _id: string;
+  kodGtp: string;
+  kodSech: string;
+  naimSechShort: string;
+  vidRabot: string;
+  soglGtp: string;
+  dopusk: string;
+  sdAs: string;
+  sdPas: string;
+  krSrokPodachi: string;
+  planPodachi: string;
+  metrologyKomm: string;
+  codirovkaActual: string;
+  tipIzmCodirovki: string;
+  sogl60Dku: string;
+  sogl60SmezhOtpr: string;
+  sogl60SmezhSogl: string;
+  otprav4v: string;
+  sogl4v: string;
+  sverkiKomm: string;
+  sv1: string;
+  sv2: string;
+  sv3: string;
+  pi: string;
+  textOt: string;
+  gotovnostUs: string;
+  zakluchenie: string;
+  osobenAiis: string;
+  kolTi: string;
+  sobstvAiis: string;
+  metrology: string[];
+  zaprosPerecod: string;
+}
+
+export interface Ot {
+  _id: string;
+  gr: string;
+  sdSop: string;
+  naimAiis1: string;
+  naimAiis2: string;
+  izmAiis: string;
+  tipIzmOt: string;
+  neobhRab: string;
+  rabZaplan: string;
+  dogPlan: string;
+  dogFact: string;
+  smrPlan: string;
+  smrFact: string;
+  vyezdPlan: string;
+  vyezdFact: string;
+  vniimsPlan: string;
+  vniimsFact: string;
+  rstPlan: string;
+  rstFact: string;
+  prikazPlan: string;
+  prikazFact: string;
+  oforSopPlan: string;
+  oforSopFact: string;
+  kommOt: string;
 }
