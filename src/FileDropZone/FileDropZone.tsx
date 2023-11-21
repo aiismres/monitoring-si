@@ -11,6 +11,7 @@ import { checkData } from '../modules/checkDataMod';
 import { IAppState, ISechInfo, ISiObj1 } from '../app.types';
 import { read82xmlMod } from '../modules/read82xmlMod';
 import { readDbMirxlsxMod } from '../modules/readDbMirXlsxMod';
+import { readDbSalavatXlsxMod } from '../modules/readDbSalavatXlsxMod';
 
 interface IProps {
   siState: ISiObj1[];
@@ -116,6 +117,18 @@ export function FileDropZone({
             isSiStateSave: false,
           }));
           setSechInfo((sechInfo) => ({ ...sechInfo, sourceDB }));
+        } else if (file.name.includes('БД ГН Салават') && !only82xml) {
+          let [data, sourceDB] = (await readDbSalavatXlsxMod(
+            file,
+            siState
+          )) as [ISiObj1[], string];
+          // data = checkData(data);
+          setSiState(data);
+          setAppState((appState) => ({
+            ...appState,
+            isSiStateSave: false,
+          }));
+          setSechInfo((sechInfo) => ({ ...sechInfo, sourceDB }));
         } else if (file.name.includes('80020_') && only82xml) {
           console.log('import 80020');
           let [data, areaCode, areaName] = (await read82xmlMod(
@@ -154,4 +167,10 @@ export function FileDropZone({
       )}
     </div>
   );
+}
+function readDbSalavetXlsxMod(
+  file: File,
+  siState: ISiObj1[]
+): [ISiObj1[], string] | PromiseLike<[ISiObj1[], string]> {
+  throw new Error('Function not implemented.');
 }

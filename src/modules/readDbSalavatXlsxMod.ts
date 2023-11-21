@@ -3,10 +3,7 @@ import ExcelJS from 'exceljs';
 import { sameChar } from './constants';
 import { ISiObj1 } from '../app.types.js';
 
-export const readDbACSalavatXlsxMod = async (
-  file: File,
-  siArray: ISiObj1[]
-) => {
+export const readDbSalavatXlsxMod = async (file: File, siArray: ISiObj1[]) => {
   // let file = e.target.files.item(0);
   console.log(file.name);
   alert(`
@@ -22,7 +19,7 @@ export const readDbACSalavatXlsxMod = async (
     reader.onload = async function () {
       if (reader.result instanceof ArrayBuffer)
         await workbook.xlsx.load(reader.result);
-      const worksheet = workbook.getWorksheet('Отчет');
+      const worksheet = workbook.getWorksheet('Лист1');
       // let row = worksheet.getRow(5).values;
       // console.log(row[17])
       console.log(siArray);
@@ -44,11 +41,11 @@ export const readDbACSalavatXlsxMod = async (
 
       // while (String(row) !== '') {
       while (row.length !== 0) {
-        let kodTiDb = String(row[16]);
-        let numSchDB = row[6];
-        let tipSchDB = row[4] && sameChar(String(row[4]));
-        let kttDB = row[7];
-        let ktnDB = row[8];
+        let kodTiDb = '0' + String(row[32]);
+        let numSchDB = row[13];
+        let tipSchDB = row[14] && sameChar(String(row[14]));
+        let kttDB = row[19];
+        let ktnDB = row[20];
         console.log(kodTiDb, numSchDB, tipSchDB, kttDB, ktnDB);
         siArrayMod = siArrayMod.map((siObj) => {
           if (kodTiDb === siObj.kodTi80.v || kodTiDb === siObj.kodTi60.v) {
