@@ -7,6 +7,7 @@ import { colOrderObj } from './modules/constants';
 import { checkData } from './modules/checkDataMod';
 import { nanoid } from 'nanoid';
 import { Planrabot } from './Planrabot';
+import { TextEditor } from './TextEditor';
 
 function App() {
   const [siState, setSiState] = useState<ISiObj1[]>([]);
@@ -105,6 +106,7 @@ function App() {
           path="/planrabot"
           element={<Planrabot appState={appState} setAppState={setAppState} />}
         />
+        <Route path="/texteditor" element={<TextEditor />} />
       </Routes>
     </BrowserRouter>
   );

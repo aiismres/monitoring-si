@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './planrabot.css';
 import { IAppState, Ot, SechArr } from '../app.types';
+import { TextEditor } from '../TextEditor';
 
 interface Props {
   appState: IAppState;
@@ -37,6 +38,7 @@ export function Planrabot({ appState, setAppState }: Props) {
   return (
     <>
       <h2>План работ</h2>
+      <TextEditor />
       <table>
         <tbody>
           {sechArr.map((sechData, sechIndex) => {
