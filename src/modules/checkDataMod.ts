@@ -10,7 +10,10 @@ export function checkData(siArray: ISiObj1[]) {
     if (siObj.tipSchSch.v) siObj.tipSchSch.status = 'warning';
     if (siObj.tipSchDB.v) siObj.tipSchDB.status = 'warning';
   }
-  siArray.forEach((siObj) => {
+
+  const siArrayMod = structuredClone(siArray);
+
+  siArrayMod.forEach((siObj: ISiObj1) => {
     siObj.tipSchSop.status = '';
     siObj.tipSch80.status = '';
     siObj.tipSch60.status = '';
@@ -161,5 +164,5 @@ export function checkData(siArray: ISiObj1[]) {
       siObj.ktnDB.status = 'warning';
     }
   });
-  return siArray;
+  return siArrayMod;
 }

@@ -122,7 +122,7 @@ export function FileDropZone({
             file,
             siState
           )) as [ISiObj1[], string];
-          // data = checkData(data);
+          data = checkData(data);
           setSiState(data);
           setAppState((appState) => ({
             ...appState,
