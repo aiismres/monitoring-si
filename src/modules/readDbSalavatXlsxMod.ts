@@ -34,7 +34,7 @@ export const readDbSalavatXlsxMod = async (file: File, siArray: ISiObj1[]) => {
       });
       console.log(siArrayMod);
 
-      let i = 4;
+      let i = 1;
       let row = worksheet.getRow(i).values as ExcelJS.CellValue[];
       // let siArrayMod = [];
       let siObj = {};
