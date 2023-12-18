@@ -12,6 +12,7 @@ import {
   IPowProfSch,
   ISechInfo,
   ISiObj1,
+  Sv2,
   TStatus,
   TStatus2,
 } from '../app.types';
@@ -323,6 +324,22 @@ export function Sverka2({
     }
   }
 
+  function handleToggleBtn(
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: Sv2 | null,
+    i: number
+  ) {
+    if (newAlignment !== null) {
+      // setAlignment(newAlignment);
+      setSiState(
+        produce((draft) => {
+          draft[i].sv2 = newAlignment;
+        })
+      );
+      console.log('hndlToggleBtn', newAlignment, i);
+    }
+  }
+
   return (
     <>
       {siState.map((siObj, i) => {
@@ -622,9 +639,11 @@ export function Sverka2({
                   <th rowSpan={4} className={styles.thBtnGroup}>
                     <ToggleButtonGroup
                       color="primary"
-                      value={'noCarryOut'}
+                      value={siObj.sv2 || 'noCarryOut'}
                       exclusive
-                      // onChange={handleChange}
+                      onChange={(e, newAlignment) => {
+                        handleToggleBtn(e, newAlignment, i);
+                      }}
                       aria-label="Platform"
                     >
                       <ToggleButton value="ok">ok</ToggleButton>
