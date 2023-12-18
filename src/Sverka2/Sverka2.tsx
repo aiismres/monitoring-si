@@ -29,6 +29,7 @@ import { ReactComponent as IconInfo } from '../Icons/IconInfo.svg';
 import { SaveBtn } from '../SaveBtn';
 import { AlertSucErr } from '../AlertSucErr';
 import { FileDropZone } from '../FileDropZone';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 
 interface IProps {
   siState: ISiObj1[];
@@ -618,6 +619,22 @@ export function Sverka2({
                   <th colSpan={4}>Пересчет</th>
                   <th colSpan={4}>80020</th>
                   <th colSpan={4}>Расхождения</th>
+                  <th rowSpan={4} className={styles.thBtnGroup}>
+                    <ToggleButtonGroup
+                      color="primary"
+                      value={'noCarryOut'}
+                      exclusive
+                      // onChange={handleChange}
+                      aria-label="Platform"
+                    >
+                      <ToggleButton value="ok">ok</ToggleButton>
+                      <ToggleButton value="error">ошибки</ToggleButton>
+                      <ToggleButton value="warning">вопросы</ToggleButton>
+                      <ToggleButton value="noCarryOut">
+                        не проводилась
+                      </ToggleButton>
+                    </ToggleButtonGroup>
+                  </th>
                 </tr>
                 <tr>
                   <th>Москва</th>
