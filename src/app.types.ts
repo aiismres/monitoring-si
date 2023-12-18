@@ -45,22 +45,23 @@ export interface ISechInfo {
 export type TStatus = '' | 'warning';
 export type TStatus2 = '' | 'correct' | 'incorrect';
 export type TStatus3 = '' | 'changed' | 'selected';
+export type Sv2 = 'ok' | 'error' | 'warning' | 'noCarryOut';
 // export type TStatus4 = true | false | undefined;
 
-export interface IStringObj {
-  [name: string]: {
-    [name: string]:
-      | string
-      | TStatus
-      | TStatus2
-      | TStatus3
-      // | TStatus4
-      | 'да'
-      | 'нет'
-      | number[]
-      | { v: number; status: TStatus | TStatus2 }[];
-  };
-}
+// export interface IStringObj {
+//   [name: string]: {
+//     [name: string]:
+//       | string
+//       | TStatus
+//       | TStatus2
+//       | TStatus3
+//       // | TStatus4
+//       | 'да'
+//       | 'нет'
+//       | number[]
+//       | { v: number; status: TStatus | TStatus2 }[];
+//   };
+// }
 
 interface IStringStringNumber {
   [N: string]: string | number[];
@@ -91,8 +92,9 @@ interface BigObject<I1, I2> {
   [index: string]: I1 | I2;
 }
 
-export interface ISiObj1 extends IStringObj {
-  // id?: string;
+// export interface ISiObj1 extends IStringObj {
+export interface ISiObj1 {
+  id?: string;
   // tiAiis: {
   //   v: 'да' | 'нет';
   // };
@@ -297,6 +299,7 @@ export interface ISiObj1 extends IStringObj {
     status2: TStatus2;
     status3: TStatus3;
   };
+  sv2: Sv2;
 }
 
 export interface IMesPoint60 {

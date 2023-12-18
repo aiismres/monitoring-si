@@ -356,7 +356,7 @@ export function MonitoringSi({
 
   // end block for table head
 
-  function sortBy(param: string) {
+  function sortBy(param: TColShortNames) {
     console.log(siState, param);
     setSiState((state: ISiObj1[]) => {
       let stateMod = structuredClone(state);
@@ -648,15 +648,15 @@ export function MonitoringSi({
             td.attributes.getNamedItem('colname')!.value.indexOf('tipSch') >= 0
           ) {
             siStateMod.current[indexRow][
-              td.attributes.getNamedItem('colname')!.value
+              td.attributes.getNamedItem('colname')!.value as TColShortNames
             ]['v'] = sameChar(td.textContent!.trim());
           } else {
             siStateMod.current[indexRow][
-              td.attributes.getNamedItem('colname')!.value
+              td.attributes.getNamedItem('colname')!.value as TColShortNames
             ]['v'] = td.textContent!.trim();
           }
           siStateMod.current[indexRow][
-            td.attributes.getNamedItem('colname')!.value
+            td.attributes.getNamedItem('colname')!.value as TColShortNames
           ]['status3'] = '';
         }
 
@@ -884,7 +884,7 @@ export function MonitoringSi({
               return (
                 <td
                   contentEditable={isContenteditable || isContentEditable2}
-                  key={param + item.id}
+                  // key={param + item.id}
                   colname={param}
                   className={
                     styles[param] +
