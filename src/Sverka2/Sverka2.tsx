@@ -680,9 +680,6 @@ export function Sverka2({
                             siObj.sv2.v === 'noCheck'
                           ? 'warning'
                           : siObj.sv2.v
-                        // siObj.sv2?.v === 'noCheck'
-                        //   ? 'warning'
-                        //   : siObj.sv2?.v || 'warning'
                       }
                       value={siObj.sv2?.v || 'noCheck'}
                       exclusive
@@ -691,10 +688,44 @@ export function Sverka2({
                       }}
                       aria-label="Platform"
                     >
-                      <ToggleButton value="success">ok</ToggleButton>
-                      <ToggleButton value="error">ошибки</ToggleButton>
-                      <ToggleButton value="warning">вопросы</ToggleButton>
-                      <ToggleButton value="noCheck">
+                      <ToggleButton
+                        sx={{
+                          '&.MuiToggleButton-root.Mui-selected': {
+                            backgroundColor: 'rgba(46, 125, 50, 0.2)', //use the color you want
+                          },
+                        }}
+                        value="success"
+                      >
+                        ok
+                      </ToggleButton>
+                      <ToggleButton
+                        sx={{
+                          '&.MuiToggleButton-root.Mui-selected': {
+                            backgroundColor: 'rgba(211, 47, 47,  0.2)', //use the color you want
+                          },
+                        }}
+                        value="error"
+                      >
+                        ошибки
+                      </ToggleButton>
+                      <ToggleButton
+                        sx={{
+                          '&.MuiToggleButton-root.Mui-selected': {
+                            backgroundColor: 'rgba(237, 108, 2, 0.2)', //use the color you want
+                          },
+                        }}
+                        value="warning"
+                      >
+                        вопросы
+                      </ToggleButton>
+                      <ToggleButton
+                        sx={{
+                          '&.MuiToggleButton-root.Mui-selected': {
+                            backgroundColor: 'rgba(237, 108, 2, 0.2)', //use the color you want
+                          },
+                        }}
+                        value="noCheck"
+                      >
                         не проводилась
                       </ToggleButton>
                     </ToggleButtonGroup>
