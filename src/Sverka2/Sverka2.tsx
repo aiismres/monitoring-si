@@ -673,12 +673,11 @@ export function Sverka2({
                   <th colSpan={4}>Расхождения</th>
                   <th rowSpan={4} className={styles.thBtnGroup}>
                     <ToggleButtonGroup
-                      /* @ts-ignore */
                       color={
                         !siObj.sv2
-                          ? 'noCheck'
-                          : /* @ts-ignore */
-                          siObj.sv2.v === 'noCarryOut'
+                          ? 'warning'
+                          : siObj.sv2.v === 'noCarryOut' ||
+                            siObj.sv2.v === 'noCheck'
                           ? 'warning'
                           : siObj.sv2.v
                         // siObj.sv2?.v === 'noCheck'
