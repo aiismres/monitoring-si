@@ -487,7 +487,7 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
             ke: {
               v: '1',
             },
-            sv2: { v: 'noCarryOut', status: '', status2: '', status3: '' },
+            sv2: { v: 'noCheck', status: '', status2: '', status3: '' },
           };
           siArMod.push(siObj);
         }

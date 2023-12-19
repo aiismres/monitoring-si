@@ -45,7 +45,7 @@ export interface ISechInfo {
 export type TStatus = '' | 'warning';
 export type TStatus2 = '' | 'correct' | 'incorrect';
 export type TStatus3 = '' | 'changed' | 'selected';
-export type Sv2V = 'success' | 'error' | 'warning' | 'noCarryOut';
+export type Sv2V = 'success' | 'error' | 'warning' | 'noCheck';
 // export type TStatus4 = true | false | undefined;
 
 // export interface IStringObj {

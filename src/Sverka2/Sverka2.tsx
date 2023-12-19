@@ -284,7 +284,7 @@ export function Sverka2({
         : {
             ...siObj,
             sv2: {
-              v: 'noCarryOut',
+              v: 'noCheck',
               status: 'warning',
               status2: '',
               status3: '',
@@ -354,7 +354,7 @@ export function Sverka2({
         status2 = 'incorrect';
       } else if (newAlignment === 'warning') {
         status = 'warning';
-      } else if (newAlignment === 'noCarryOut') {
+      } else if (newAlignment === 'noCheck') {
         status = 'warning';
       }
       setSiState(
@@ -673,10 +673,19 @@ export function Sverka2({
                   <th colSpan={4}>Расхождения</th>
                   <th rowSpan={4} className={styles.thBtnGroup}>
                     <ToggleButtonGroup
+                      /* @ts-ignore */
                       color={
-                        siObj.sv2?.v === 'noCarryOut' ? 'warning' : siObj.sv2?.v
+                        !siObj.sv2
+                          ? 'noCheck'
+                          : /* @ts-ignore */
+                          siObj.sv2.v === 'noCarryOut'
+                          ? 'warning'
+                          : siObj.sv2.v
+                        // siObj.sv2?.v === 'noCheck'
+                        //   ? 'warning'
+                        //   : siObj.sv2?.v || 'warning'
                       }
-                      value={siObj.sv2?.v || 'noCarryOut'}
+                      value={siObj.sv2?.v || 'noCheck'}
                       exclusive
                       onChange={(e, newAlignment) => {
                         handleToggleBtn(e, newAlignment, i);
@@ -686,7 +695,7 @@ export function Sverka2({
                       <ToggleButton value="success">ok</ToggleButton>
                       <ToggleButton value="error">ошибки</ToggleButton>
                       <ToggleButton value="warning">вопросы</ToggleButton>
-                      <ToggleButton value="noCarryOut">
+                      <ToggleButton value="noCheck">
                         не проводилась
                       </ToggleButton>
                     </ToggleButtonGroup>
