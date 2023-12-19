@@ -82,6 +82,7 @@ export const colOrderObj: IColOrderObj = {
     'numSchDB',
     'kttDB',
     'ktnDB',
+    'sv2',
   ],
   opt2: [
     'numTiShem60',
@@ -172,6 +173,7 @@ export const colFullName: IStringString = {
   ktnDB: 'Ктн БД',
   kodTi80: 'кодТИ80',
   kanaly80: 'каналы 80',
+  sv2: 'Св-2',
 };
 
 export interface IColsWidth extends IStringNumber {

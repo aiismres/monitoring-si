@@ -45,7 +45,7 @@ export interface ISechInfo {
 export type TStatus = '' | 'warning';
 export type TStatus2 = '' | 'correct' | 'incorrect';
 export type TStatus3 = '' | 'changed' | 'selected';
-export type Sv2 = 'ok' | 'error' | 'warning' | 'noCarryOut';
+export type Sv2V = 'success' | 'error' | 'warning' | 'noCarryOut';
 // export type TStatus4 = true | false | undefined;
 
 // export interface IStringObj {
@@ -299,7 +299,12 @@ export interface ISiObj1 {
     status2: TStatus2;
     status3: TStatus3;
   };
-  sv2: Sv2;
+  sv2: {
+    v: Sv2V;
+    status: TStatus;
+    status2: TStatus2;
+    status3: TStatus3;
+  };
 }
 
 export interface IMesPoint60 {
@@ -351,7 +356,8 @@ export type TColShortNames =
   | 'tipSchDB'
   | 'numSchDB'
   | 'kttDB'
-  | 'ktnDB';
+  | 'ktnDB'
+  | 'sv2';
 
 export interface IColOrderObj {
   [N: string]: TColShortNames[];

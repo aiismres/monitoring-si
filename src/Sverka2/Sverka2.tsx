@@ -12,7 +12,7 @@ import {
   IPowProfSch,
   ISechInfo,
   ISiObj1,
-  Sv2,
+  Sv2V,
   TStatus,
   TStatus2,
 } from '../app.types';
@@ -278,6 +278,20 @@ export function Sverka2({
   ];
 
   async function saveSiData() {
+    const siStateMod = siState.map((siObj) =>
+      siObj.sv2?.v
+        ? siObj
+        : {
+            ...siObj,
+            sv2: {
+              v: 'noCarryOut',
+              status: 'warning',
+              status2: '',
+              status3: '',
+            },
+          }
+    );
+    console.log(siStateMod);
     try {
       // if (!siStateMod.current[0]) {
       //   siStateMod.current = siState;
@@ -289,7 +303,7 @@ export function Sverka2({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          siState: siState,
+          siState: siStateMod,
           sechInfo,
           sechID: appState.sechID,
         }),
@@ -326,15 +340,36 @@ export function Sverka2({
 
   function handleToggleBtn(
     event: React.MouseEvent<HTMLElement>,
-    newAlignment: Sv2 | null,
+    newAlignment: Sv2V | null,
     i: number
   ) {
     if (newAlignment !== null) {
       // setAlignment(newAlignment);
+      let status: TStatus = '';
+      let status2: TStatus2 = '';
+      if (newAlignment === 'success') {
+        status2 = 'correct';
+      } else if (newAlignment === 'error') {
+        status = 'warning';
+        status2 = 'incorrect';
+      } else if (newAlignment === 'warning') {
+        status = 'warning';
+      } else if (newAlignment === 'noCarryOut') {
+        status = 'warning';
+      }
       setSiState(
-        produce((draft) => {
-          draft[i].sv2 = newAlignment;
-        })
+        (siSt) =>
+          siSt.map((siObj, i2) =>
+            i2 === i
+              ? {
+                  ...siObj,
+                  sv2: { v: newAlignment, status, status2, status3: '' },
+                }
+              : siObj
+          )
+        // produce((draft) => {
+        //   draft[i].sv2 = { v: newAlignment, status, status2, status3: '' };
+        // })
       );
       console.log('hndlToggleBtn', newAlignment, i);
     }
@@ -638,15 +673,17 @@ export function Sverka2({
                   <th colSpan={4}>Расхождения</th>
                   <th rowSpan={4} className={styles.thBtnGroup}>
                     <ToggleButtonGroup
-                      color="primary"
-                      value={siObj.sv2 || 'noCarryOut'}
+                      color={
+                        siObj.sv2?.v === 'noCarryOut' ? 'warning' : siObj.sv2?.v
+                      }
+                      value={siObj.sv2?.v || 'noCarryOut'}
                       exclusive
                       onChange={(e, newAlignment) => {
                         handleToggleBtn(e, newAlignment, i);
                       }}
                       aria-label="Platform"
                     >
-                      <ToggleButton value="ok">ok</ToggleButton>
+                      <ToggleButton value="success">ok</ToggleButton>
                       <ToggleButton value="error">ошибки</ToggleButton>
                       <ToggleButton value="warning">вопросы</ToggleButton>
                       <ToggleButton value="noCarryOut">
