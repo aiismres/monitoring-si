@@ -907,7 +907,7 @@ export function MonitoringSi({
                       ['naimTiSop', 'numSchSop', 'tipSchSop'].includes(param)
                     ) {
                       console.log('dblClick');
-                      // setSiState((siArr) => {
+                      // setSiState((siArr) =>  {
                       //   let siArrMod = structuredClone(siArr);
                       //   if (param === 'naimTiSop')
                       //     siArrMod[index][param].status4 = true;
