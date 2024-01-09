@@ -10,7 +10,12 @@ export function resetStatus3(siArray: ISiObj1[]) {
     //     siObj[key].status3 = '';
     //   }
     // }
-    colOrderObj.opt3.forEach((colName) => (siObj[colName].status3 = ''));
+    console.log('siArray', siArray);
+    colOrderObj.opt3.forEach((colName) => {
+      if (siObj[colName]) {
+        siObj[colName].status3 = '';
+      }
+    });
   });
   return siArrayMod;
 }
