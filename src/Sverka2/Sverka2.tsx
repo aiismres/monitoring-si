@@ -51,7 +51,7 @@ export function Sverka2({
 }: IProps) {
   // const siArrMutable: ISiObj1[] = structuredClone(siState);
   // console.log(siArrMutable);
-  useLayoutEffect(() => {
+  useEffect(() => {
     setSiState(
       produce((draft) => {
         draft.forEach((item, i) => {

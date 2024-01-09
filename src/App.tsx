@@ -82,6 +82,7 @@ function App() {
       if (data.sechInfo) {
         setSechInfo(data.sechInfo);
       }
+      document.title = data.naimSechShort || 'noName';
     }
   }, [data]);
 
@@ -92,13 +93,13 @@ function App() {
 
       const naimSechShort =
         url.searchParams.get('naimsechshort') ?? 'defaultNaimSech';
-      document.title = naimSechShort;
+      // document.title = naimSechShort;
 
       const sechID = url.searchParams.get('sechID') ?? 'defaultSechID';
       setAppState({
         ...appState,
         sechID,
-        naimSechShort,
+        // naimSechShort,
       });
 
       // let res = await fetch('/api/readsidata', {

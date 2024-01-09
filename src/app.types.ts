@@ -28,6 +28,7 @@ export interface IAppState {
 }
 
 export interface IResReadSiData1 {
+  naimSechShort: string;
   si: ISiObj1[];
   sechInfo?: ISechInfo;
 }
