@@ -673,6 +673,7 @@ export function Sverka2({
                   <th colSpan={4}>Расхождения</th>
                   <th rowSpan={4} className={styles.thBtnGroup}>
                     <ToggleButtonGroup
+                      disabled={!appState.isEdit}
                       color={
                         !siObj.sv2
                           ? 'warning'

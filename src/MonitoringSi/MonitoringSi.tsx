@@ -1019,7 +1019,7 @@ export function MonitoringSi({
             <Button
               variant="contained"
               disabled={!isLoggedin}
-              color={appState.isEdit2 ? 'warning' : 'secondary'}
+              color={appState.isEdit2 ? 'warning' : 'primary'}
               sx={{ width: 80 }}
               onClick={() => {
                 if (!appState.isEdit2) {
