@@ -754,7 +754,8 @@ export function MonitoringSi({
       icon: <IconSverka2 />,
       name: '',
       do: () => {
-        navigate(`sverka2?sechID=${appState.sechID}`);
+        // navigate(`sverka2?sechID=${appState.sechID}`);
+        window.open(`monitoringsi/sverka2?sechID=${appState.sechID}`);
       },
     },
     {
