@@ -1,0 +1,52 @@
+:root {
+  --first-col-width: 200px;
+}
+
+.table tr:nth-child(2n) {
+  background: rgba(16, 16, 16, 0.05);
+}
+
+.thead {
+  z-index: 2;
+}
+
+
+.firstCellTh {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width: 200px; */
+  width: var(--first-col-width);
+  height: 41.5px;
+  z-index: 3;
+}
+
+/* .firstCellDiv {
+  display: flex;
+  height: 100%;
+  vertical-align: bottom;
+} */
+
+.naimSechShort {
+  position: sticky;
+  /* top: 0; */
+  left: 0;
+  /* width: 2000px; */
+}
+
+.naimSechShortDiv {
+  /* width: 200px; */
+  width: var(--first-col-width);
+  z-index: 0;
+}
+
+.noWrap {
+  white-space: nowrap;
+}
+
+.tr {
+  border-bottom: 1px solid grey;
+}

@@ -97,7 +97,7 @@ th {
   line-height: 40px;
  } */
 
-table tr:nth-child(2n) {
+.table tr:nth-child(2n) {
   background: rgba(16, 16, 16, 0.05);
 }
 

@@ -8,6 +8,10 @@
   z-index: 100; */
 }
 
+.pivotTable tr:nth-child(2n) {
+  background: rgba(16, 16, 16, 0.05);
+}
+
 .warning {
   background-color: orange;
 }
@@ -63,4 +67,8 @@
 .thBtnGroup {
   background-color: #fff;
   border: 1px solid white;
+}
+
+.table tr:nth-child(2n) {
+  background: rgba(16, 16, 16, 0.05);
 }

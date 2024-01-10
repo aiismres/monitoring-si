@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import styles from './planrabot.css';
+import styles from './planrabot.module.css';
 import { IAppState, Ot, SechArr } from '../app.types';
 import { TextEditor } from '../TextEditor';
+import classNames from 'classnames';
 
 interface Props {
   appState: IAppState;
@@ -37,9 +38,43 @@ export function Planrabot({ appState, setAppState }: Props) {
   }, []);
   return (
     <>
-      <h2>План работ</h2>
       {/* <TextEditor /> */}
-      <table>
+      <table className={styles.table}>
+        <thead className={styles.thead}>
+          <tr>
+            <th className={styles.firstCellTh}>
+              <div className={styles.firstCellDiv}>Сечение</div>
+            </th>
+            <th>вид работ</th>
+            <th>Согл ГТП</th>
+            <th>Допуск</th>
+            <th>СД АС</th>
+            <th>Кр-й срок подачи док</th>
+            <th>План. дата подачи</th>
+            <th>Комментарии</th>
+            <th>№ ГР</th>
+            <th>Наим. АИИС</th>
+            <th>СД СОП</th>
+            <th>Изм. АИИС</th>
+            <th>Тип изм. АИИС</th>
+            <th>Необх. работы</th>
+            <th>Раб. запл.?</th>
+            <th>Договор</th>
+            <th>СМР</th>
+            <th>Выезд</th>
+            <th>ВНИИМС</th>
+            <th>РСТ</th>
+            <th>Приказ</th>
+            <th>Оформл. СОП</th>
+            <th>Комм. ОТ</th>
+            <th>Кодировка актуал-а?</th>
+            <th>Вид изм. код-и</th>
+            <th>Св-2</th>
+            <th>ПИ</th>
+            <th>Готовность УС</th>
+            <th>Заключ-е</th>
+          </tr>
+        </thead>
         <tbody>
           {sechArr.map((sechData, sechIndex) => {
             const otAmount = sechData.metrology.length;
@@ -47,27 +82,45 @@ export function Planrabot({ appState, setAppState }: Props) {
               const ot = otArr.find((item) => item._id === otId);
               // if (otIndex === 0) {
               return (
-                <tr>
+                <tr
+                  className={classNames({
+                    [styles.tr]: otIndex === sechData.metrology.length - 1,
+                  })}
+                >
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount} width={200}>
-                      {sechData.naimSechShort}
-                    </td>
+                    <th rowSpan={otAmount} className={styles.naimSechShort}>
+                      <div className={styles.naimSechShortDiv}>
+                        {sechData.naimSechShort}
+                      </div>
+                    </th>
                   )}
                   {otIndex === 0 && (
                     <td rowSpan={otAmount}>{sechData.vidRabot}</td>
                   )}
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount}>{sechData.soglGtp}</td>
+                    <td rowSpan={otAmount} className={styles.noWrap}>
+                      {sechData.soglGtp}
+                    </td>
                   )}
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount}>{sechData.dopusk}</td>
-                  )}
-                  {otIndex === 0 && <td rowSpan={otAmount}>{sechData.sdAs}</td>}
-                  {otIndex === 0 && (
-                    <td rowSpan={otAmount}>{sechData.krSrokPodachi}</td>
+                    <td rowSpan={otAmount} className={styles.noWrap}>
+                      {sechData.dopusk}
+                    </td>
                   )}
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount}>{sechData.planPodachi}</td>
+                    <td rowSpan={otAmount} className={styles.noWrap}>
+                      {sechData.sdAs}
+                    </td>
+                  )}
+                  {otIndex === 0 && (
+                    <td rowSpan={otAmount} className={styles.noWrap}>
+                      {sechData.krSrokPodachi}
+                    </td>
+                  )}
+                  {otIndex === 0 && (
+                    <td rowSpan={otAmount} className={styles.noWrap}>
+                      {sechData.planPodachi}
+                    </td>
                   )}
                   {/* {otIndex === 0 && (
                     <td rowSpan={otAmount}>{sechData.metrologyKomm}</td>
@@ -81,20 +134,34 @@ export function Planrabot({ appState, setAppState }: Props) {
                       }}
                     ></td>
                   )}
-                  <td>{ot?.gr}</td>
+                  <td className={styles.noWrap}>{ot?.gr}</td>
                   <td>{ot?.naimAiis2}</td>
-                  <td>{ot?.sdSop}</td>
+                  <td className={styles.noWrap}>{ot?.sdSop}</td>
                   <td>{ot?.izmAiis}</td>
                   <td>{ot?.tipIzmOt}</td>
                   <td>{ot?.neobhRab}</td>
                   <td>{ot?.rabZaplan}</td>
-                  <td>{ot?.dogFact ? ot?.dogFact : ot?.dogPlan}</td>
-                  <td>{ot?.smrFact ? ot?.smrFact : ot?.smrPlan}</td>
-                  <td>{ot?.vyezdFact ? ot?.vyezdFact : ot?.vyezdPlan}</td>
-                  <td>{ot?.vniimsFact ? ot?.vniimsFact : ot?.vniimsPlan}</td>
-                  <td>{ot?.rstFact ? ot?.rstFact : ot?.rstPlan}</td>
-                  <td>{ot?.prikazFact ? ot?.prikazFact : ot?.prikazPlan}</td>
-                  <td>{ot?.oforSopFact ? ot?.oforSopFact : ot?.oforSopPlan}</td>
+                  <td className={styles.noWrap}>
+                    {ot?.dogFact ? ot?.dogFact : ot?.dogPlan}
+                  </td>
+                  <td className={styles.noWrap}>
+                    {ot?.smrFact ? ot?.smrFact : ot?.smrPlan}
+                  </td>
+                  <td className={styles.noWrap}>
+                    {ot?.vyezdFact ? ot?.vyezdFact : ot?.vyezdPlan}
+                  </td>
+                  <td className={styles.noWrap}>
+                    {ot?.vniimsFact ? ot?.vniimsFact : ot?.vniimsPlan}
+                  </td>
+                  <td className={styles.noWrap}>
+                    {ot?.rstFact ? ot?.rstFact : ot?.rstPlan}
+                  </td>
+                  <td className={styles.noWrap}>
+                    {ot?.prikazFact ? ot?.prikazFact : ot?.prikazPlan}
+                  </td>
+                  <td className={styles.noWrap}>
+                    {ot?.oforSopFact ? ot?.oforSopFact : ot?.oforSopPlan}
+                  </td>
                   {/* <td>{ot?.kommOt}</td> */}
                   <td
                     dangerouslySetInnerHTML={{

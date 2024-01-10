@@ -669,7 +669,7 @@ export function Sverka2({
                 kodTi={siObj.kodTi80.v || siObj.kodTi60.v}
               />
             </div>
-            <table>
+            <table className={styles.table}>
               <thead>
                 <tr>
                   <th>Время</th>

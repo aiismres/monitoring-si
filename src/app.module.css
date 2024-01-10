@@ -54,7 +54,11 @@ code {
 
 table {
   margin-bottom: 60px;
-  border-bottom: 1px solid rgb(225, 225, 225);
+  border-bottom: 1px solid rgb(216, 14, 14);
+}
+
+table {
+  height: 100%;
 }
 
 table,
@@ -83,6 +87,10 @@ th {
   font-weight: 500;
 }
 
+th {
+  position: relative;
+}
+
 .resize {
   height: 40px;
   padding: 2px 7px;
@@ -97,9 +105,9 @@ th {
   line-height: 40px;
  } */
 
-table tr:nth-child(2n) {
+/* table tr:nth-child(2n) {
   background: rgba(16, 16, 16, 0.05);
-}
+} */
 
 .warning {
   /* color: orange; */
@@ -180,9 +188,6 @@ table tr:nth-child(2n) {
   border-radius: 7px;
 }
 
-table {
-  height: 100%;
-}
 
 /* input {
   height:100%;
@@ -252,15 +257,8 @@ textarea {
   display: none;
 }
 
-/* tableHead */
-.attention {
-  color: #fff;
-  background-color: #ff8c00;
-}
 
-th {
-  position: relative;
-}
+
 
 .resizer {
   /* Displayed at the right side of column */

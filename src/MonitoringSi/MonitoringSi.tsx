@@ -798,6 +798,7 @@ export function MonitoringSi({
         style={{
           minWidth: refTableWidth.current,
         }}
+        className={styles.table}
         onPaste={(e) => {
           if (e.clipboardData) {
             console.log(e.clipboardData.getData('text'), selectedItems);
