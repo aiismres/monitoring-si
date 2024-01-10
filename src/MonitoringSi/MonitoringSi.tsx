@@ -69,6 +69,8 @@ import { resetStatus3 } from '../modules/resetStatus3';
 import UndoIcon from '@mui/icons-material/Undo';
 import SaveIcon from '@mui/icons-material/Save';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import useSWR from 'swr';
+import { useSiData } from '../hooks/useSiData';
 
 // типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {
@@ -78,8 +80,8 @@ declare module 'react' {
 }
 
 interface IProps {
-  siState: ISiObj1[];
-  setSiState: Dispatch<SetStateAction<ISiObj1[]>>;
+  siState?: ISiObj1[];
+  setSiState?: Dispatch<SetStateAction<ISiObj1[]>>;
   appState: IAppState;
   setAppState: Dispatch<SetStateAction<IAppState>>;
   sechInfo: ISechInfo;
@@ -87,8 +89,8 @@ interface IProps {
 }
 
 export function MonitoringSi({
-  siState,
-  setSiState,
+  // siState,
+  // setSiState,
   appState,
   setAppState,
   sechInfo,
@@ -120,6 +122,10 @@ export function MonitoringSi({
   type Params = keyof ISiObj1;
   const navigate = useNavigate();
 
+  const [data, siState, setSiState] = useSiData(
+    new URL(document.URL).searchParams.get('sechID') ?? 'defaultSechID'
+  );
+
   const [status2, setStatus2] = useState<'' | 'correct' | 'incorrect' | null>(
     null
   );
@@ -137,10 +143,10 @@ export function MonitoringSi({
     password: '',
   });
   const siArrHistory = useRef<ISiObj1[][]>([]);
-
   const btnExportSv1 = useRef(null);
   const btnEdit = useRef(null);
   const siStateMod = useRef<ISiObj1[]>([]);
+
   // Управление клавишами (работает, перерес в <td onClick()>) начало
 
   // useEffect(() => {

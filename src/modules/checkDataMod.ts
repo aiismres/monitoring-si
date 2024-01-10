@@ -13,7 +13,7 @@ export function checkData(siArray: ISiObj1[]) {
 
   const siArrayMod = structuredClone(siArray);
 
-  siArrayMod.forEach((siObj: ISiObj1) => {
+  siArrayMod?.forEach((siObj: ISiObj1) => {
     siObj.tipSchSop.status = '';
     siObj.tipSch80.status = '';
     siObj.tipSch60.status = '';

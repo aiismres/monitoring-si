@@ -38,7 +38,7 @@ export function Planrabot({ appState, setAppState }: Props) {
   return (
     <>
       <h2>План работ</h2>
-      <TextEditor />
+      {/* <TextEditor /> */}
       <table>
         <tbody>
           {sechArr.map((sechData, sechIndex) => {

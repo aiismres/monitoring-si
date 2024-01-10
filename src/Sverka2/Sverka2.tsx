@@ -31,10 +31,11 @@ import { SaveBtn } from '../SaveBtn';
 import { AlertSucErr } from '../AlertSucErr';
 import { FileDropZone } from '../FileDropZone';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { useSiData } from '../hooks/useSiData';
 
 interface IProps {
-  siState: ISiObj1[];
-  setSiState: Dispatch<SetStateAction<ISiObj1[]>>;
+  siState?: ISiObj1[];
+  setSiState?: Dispatch<SetStateAction<ISiObj1[]>>;
   appState: IAppState;
   setAppState: Dispatch<SetStateAction<IAppState>>;
   sechInfo: ISechInfo;
@@ -42,8 +43,8 @@ interface IProps {
 }
 
 export function Sverka2({
-  siState,
-  setSiState,
+  // siState,
+  // setSiState,
   appState,
   setAppState,
   sechInfo,
@@ -51,6 +52,11 @@ export function Sverka2({
 }: IProps) {
   // const siArrMutable: ISiObj1[] = structuredClone(siState);
   // console.log(siArrMutable);
+
+  const [data, siState, setSiState] = useSiData(
+    new URL(document.URL).searchParams.get('sechID') ?? 'defaultSechID'
+  );
+
   useEffect(() => {
     setSiState(
       produce((draft) => {
