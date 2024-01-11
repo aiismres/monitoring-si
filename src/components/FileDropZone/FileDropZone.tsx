@@ -2,16 +2,16 @@ import React, { SetStateAction, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import styles from './filedropzone.module.css';
 import { nanoid } from 'nanoid';
-import { colFullName, colOrderObj, sameChar } from '../../modules/constants';
-import { read60xmlMod } from '../../modules/read60xmlMod';
-import { read80xmlMod } from '../../modules/read80xmlMod';
-import { readSv1xlsx } from '../../modules/readSv1xlsx';
-import { readDBxlsxMod } from '../../modules/readDBxlsxMod';
-import { checkData } from '../../modules/checkDataMod';
+import { colFullName, colOrderObj, sameChar } from '../../lib/constants';
+import { read60xmlMod } from '../../lib/read60xmlMod';
+import { read80xmlMod } from '../../lib/read80xmlMod';
+import { readSv1xlsx } from '../../lib/readSv1xlsx';
+import { readDBxlsxMod } from '../../lib/readDBxlsxMod';
+import { checkData } from '../../lib/checkDataMod';
 import { IAppState, ISechInfo, ISiObj1 } from '../../app.types';
-import { read82xmlMod } from '../../modules/read82xmlMod';
-import { readDbMirxlsxMod } from '../../modules/readDbMirXlsxMod';
-import { readDbSalavatXlsxMod } from '../../modules/readDbSalavatXlsxMod';
+import { read82xmlMod } from '../../lib/read82xmlMod';
+import { readDbMirxlsxMod } from '../../lib/readDbMirXlsxMod';
+import { readDbSalavatXlsxMod } from '../../lib/readDbSalavatXlsxMod';
 
 interface IProps {
   siState: ISiObj1[];

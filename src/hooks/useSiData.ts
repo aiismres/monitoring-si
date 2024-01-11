@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IResReadSiData1, ISechInfo, ISiObj1 } from '../app.types';
 import useSWR from 'swr';
-import { checkData } from '../modules/checkDataMod';
+import { checkData } from '../lib/checkDataMod';
 import { nanoid } from 'nanoid';
 
 const fetcher = (url: string) =>

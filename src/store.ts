@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { IColsWidth, colsWidthInit } from './modules/constants';
+import { IColsWidth, colsWidthInit } from './lib/constants';
 import produce from 'immer';
 
 interface IAppStore {

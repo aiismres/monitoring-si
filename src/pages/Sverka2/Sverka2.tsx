@@ -18,7 +18,7 @@ import {
 } from '../../app.types';
 import styles from './sverka2.module.css';
 import { table } from 'console';
-import { sameChar, timePeriods } from '../../modules/constants';
+import { sameChar, timePeriods } from '../../lib/constants';
 import Button from '@mui/material/Button';
 import { produce } from 'immer';
 import AppBar from '@mui/material/AppBar';

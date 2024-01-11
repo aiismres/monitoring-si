@@ -10,7 +10,7 @@ import { ReactComponent as IconEdit } from '../Icons/IconEdit.svg';
 import { ReactComponent as IconInfo } from '../Icons/IconInfo.svg';
 import { ReactComponent as IconSverka2 } from '../Icons/IconSverka2.svg';
 import { useNavigate } from 'react-router-dom';
-import { exportSv1Mod } from '../../modules/exportSv1Mod';
+import { exportSv1Mod } from '../../lib/exportSv1Mod';
 
 interface IActions {
   icon: JSX.Element;

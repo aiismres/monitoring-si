@@ -17,7 +17,7 @@ import {
   colsWidthInit,
   sameChar,
   colFullName,
-} from '../../modules/constants';
+} from '../../lib/constants';
 import {
   IAppState,
   // IResReadSiData,
@@ -28,10 +28,10 @@ import {
   TColShortNames,
   // ISiObj2,
 } from '../../app.types';
-import { checkData } from '../../modules/checkDataMod';
+import { checkData } from '../../lib/checkDataMod';
 import produce from 'immer';
 import { nanoid } from 'nanoid';
-import { exportSv1Mod } from '../../modules/exportSv1Mod';
+import { exportSv1Mod } from '../../lib/exportSv1Mod';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import Switch from '@mui/material/Switch';
@@ -65,7 +65,7 @@ import { AlertSucErr } from '../../components/AlertSucErr';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Tips } from '../../components/Tips';
 import { keyboardKey } from '@testing-library/user-event';
-import { resetStatus3 } from '../../modules/resetStatus3';
+import { resetStatus3 } from '../../lib/resetStatus3';
 import UndoIcon from '@mui/icons-material/Undo';
 import SaveIcon from '@mui/icons-material/Save';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
