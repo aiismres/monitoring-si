@@ -34,7 +34,13 @@ export function Planrabot() {
   const [isCalOpen, setIsCalOpen] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const updDateOnClick = (
+    event: React.MouseEvent<HTMLElement>,
+    sechData: SechArr,
+    sechIndex: number,
+    otIndex: number
+  ) => {
+    console.log(sechData, sechIndex, otIndex);
     setAnchorEl(anchorEl ? null : event.currentTarget);
     setIsCalOpen((ico) => !ico);
   };
@@ -105,6 +111,9 @@ export function Planrabot() {
                     <td
                       rowSpan={otAmount}
                       className={classNames(styles.noWrap, styles.bgcWhite)}
+                      onClick={(e) => {
+                        updDateOnClick(e, sechData, sechIndex, otIndex);
+                      }}
                     >
                       {sechData.soglGtp}
                     </td>
@@ -113,6 +122,9 @@ export function Planrabot() {
                     <td
                       rowSpan={otAmount}
                       className={classNames(styles.noWrap, styles.bgcWhite)}
+                      onClick={(e) => {
+                        updDateOnClick(e, sechData, sechIndex, otIndex);
+                      }}
                     >
                       {sechData.dopusk}
                     </td>
@@ -121,7 +133,9 @@ export function Planrabot() {
                     <td
                       rowSpan={otAmount}
                       className={classNames(styles.noWrap, styles.bgcWhite)}
-                      onClick={handleClick}
+                      onClick={(e) => {
+                        updDateOnClick(e, sechData, sechIndex, otIndex);
+                      }}
                     >
                       {sechData.sdAs}
                     </td>
@@ -320,18 +334,6 @@ export function Planrabot() {
           // defaultValue={dayjs('2022-04-17')}
           // sx={{ display: 'none' }}
           /> */}
-          {/* <Button
-            color="secondary"
-            variant="contained"
-            onClick={
-              handleClick
-              //   () => {
-              //   setIsCalOpen(!isCalOpen);
-              // }
-            }
-          >
-            calendar
-          </Button> */}
         </Toolbar>
       </AppBar>
       <Popper
