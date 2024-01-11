@@ -32,30 +32,16 @@ import { AlertSucErr } from '../AlertSucErr';
 import { FileDropZone } from '../FileDropZone';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useSiData } from '../hooks/useSiData';
+import { InfoDialog } from '../InfoDialog';
 
 interface IProps {
-  siState?: ISiObj1[];
-  setSiState?: Dispatch<SetStateAction<ISiObj1[]>>;
   appState: IAppState;
   setAppState: Dispatch<SetStateAction<IAppState>>;
-  sechInfo: ISechInfo;
-  setSechInfo: Dispatch<SetStateAction<ISechInfo>>;
 }
 
-export function Sverka2({
-  // siState,
-  // setSiState,
-  appState,
-  setAppState,
-  sechInfo,
-  setSechInfo,
-}: IProps) {
-  // const siArrMutable: ISiObj1[] = structuredClone(siState);
-  // console.log(siArrMutable);
-
-  const [data, siState, setSiState] = useSiData(
-    new URL(document.URL).searchParams.get('sechID') ?? 'defaultSechID'
-  );
+export function Sverka2({ appState, setAppState }: IProps) {
+  const [data, sechID, siState, setSiState, sechInfo, setSechInfo] =
+    useSiData();
 
   useEffect(() => {
     setSiState(
@@ -86,18 +72,6 @@ export function Sverka2({
     return String(ke);
   }
 
-  // function addStatus(v: number) {
-  //   let status: TStatus | TStatus2;
-  //   if (isNaN(v)) {
-  //     status = 'warning';
-  //   } else if (-1 <= v && v <= 1) {
-  //     status = 'correct';
-  //   } else {
-  //     status = 'incorrect';
-  //   }
-  //   return { v, status };
-  // }
-
   function defineStatus(v: number) {
     let status: TStatus | TStatus2;
     if (isNaN(v)) {
@@ -119,20 +93,6 @@ export function Sverka2({
       k04: [],
     };
 
-    // const powProfSchKttne: IPowProfSch = {
-    //   k01: [],
-    //   k02: [],
-    //   k03: [],
-    //   k04: [],
-    // };
-
-    // const powProfDiff: IPowProfDiff = {
-    //   k01: [],
-    //   k02: [],
-    //   k03: [],
-    //   k04: [],
-    // };
-
     navigator.clipboard
       .readText()
       .then((text) => {
@@ -147,46 +107,6 @@ export function Sverka2({
           powProfSch.k02.push(Number(arr30[1]));
           powProfSch.k03.push(Number(arr30[2]));
           powProfSch.k04.push(Number(arr30[3]));
-
-          // const kttne =
-          //   Number(siObj.kttDB.v || siObj.kttSop.v) *
-          //   Number(siObj.ktnDB.v || siObj.ktnSop.v) *
-          //   Number(siObj.ke.v);
-
-          // powProfSchKttne.k01.push(
-          //   Math.round(Number(arr30[0]) * kttne * 10) / 10
-          // );
-          // powProfSchKttne.k02.push(
-          //   Math.round(Number(arr30[1]) * kttne * 10) / 10
-          // );
-          // powProfSchKttne.k03.push(
-          //   Math.round(Number(arr30[2]) * kttne * 10) / 10
-          // );
-          // powProfSchKttne.k04.push(
-          //   Math.round(Number(arr30[3]) * kttne * 10) / 10
-          // );
-          // let v =
-          //   Math.round(
-          //     (Number(siObj.powProf82.k01[i30]) - Number(arr30[0]) * kttne) * 10
-          //   ) / 10;
-          // powProfDiff.k01.push(addStatus(v));
-
-          // v =
-          //   Math.round(
-          //     (Number(siObj.powProf82.k02[i30]) - Number(arr30[1]) * kttne) * 10
-          //   ) / 10;
-
-          // powProfDiff.k02.push(addStatus(v));
-          // v =
-          //   Math.round(
-          //     (Number(siObj.powProf82.k03[i30]) - Number(arr30[2]) * kttne) * 10
-          //   ) / 10;
-          // powProfDiff.k03.push(addStatus(v));
-          // v =
-          //   Math.round(
-          //     (Number(siObj.powProf82.k04[i30]) - Number(arr30[3]) * kttne) * 10
-          //   ) / 10;
-          // powProfDiff.k04.push(addStatus(v));
         });
         // siObj = { ...siObj, powProfSch, powProfSchKttne, powProfDiff };
         siObj = { ...siObj, powProfSch };
@@ -198,69 +118,6 @@ export function Sverka2({
         console.error('Failed to read clipboard contents: ', err);
       });
   }
-
-  // function changeKe(
-  //   e: ChangeEvent<HTMLInputElement>,
-  //   siObj: ISiObj1,
-  //   i: number
-  // ) {
-  //   const kttne =
-  //     Number(siObj.kttDB.v || siObj.kttSop.v) *
-  //     Number(siObj.ktnDB.v || siObj.ktnSop.v) *
-  //     Number(e.target.value);
-  //   setSiState(
-  //     produce((draft) => {
-  //       draft[i].ke.v = e.target.value;
-  //       if (draft[i].powProfSchKttne) {
-  //         draft[i].powProfSchKttne.k01 = siObj.powProfSch.k01.map(
-  //           (item) => Math.round(item * kttne * 10) / 10
-  //         );
-  //         draft[i].powProfSchKttne.k02 = siObj.powProfSch.k02.map(
-  //           (item) => Math.round(item * kttne * 10) / 10
-  //         );
-  //         draft[i].powProfSchKttne.k03 = siObj.powProfSch.k03.map(
-  //           (item) => Math.round(item * kttne * 10) / 10
-  //         );
-  //         draft[i].powProfSchKttne.k04 = siObj.powProfSch.k04.map(
-  //           (item) => Math.round(item * kttne * 10) / 10
-  //         );
-
-  //         draft[i].powProfDiff.k01 = siObj.powProfDiff.k01.map((item, i30) => {
-  //           const v =
-  //             Math.round(
-  //               (draft[i].powProfSchKttne.k01[i30] - siObj.powProf82.k01[i30]) *
-  //                 10
-  //             ) / 10;
-  //           return addStatus(v);
-  //         });
-  //         draft[i].powProfDiff.k02 = siObj.powProfDiff.k02.map((item, i30) => {
-  //           const v =
-  //             Math.round(
-  //               (draft[i].powProfSchKttne.k02[i30] - siObj.powProf82.k02[i30]) *
-  //                 10
-  //             ) / 10;
-  //           return addStatus(v);
-  //         });
-  //         draft[i].powProfDiff.k03 = siObj.powProfDiff.k03.map((item, i30) => {
-  //           const v =
-  //             Math.round(
-  //               (draft[i].powProfSchKttne.k03[i30] - siObj.powProf82.k03[i30]) *
-  //                 10
-  //             ) / 10;
-  //           return addStatus(v);
-  //         });
-  //         draft[i].powProfDiff.k04 = siObj.powProfDiff.k04.map((item, i30) => {
-  //           const v =
-  //             Math.round(
-  //               (draft[i].powProfSchKttne.k04[i30] - siObj.powProf82.k04[i30]) *
-  //                 10
-  //             ) / 10;
-  //           return addStatus(v);
-  //         });
-  //       }
-  //     })
-  //   );
-  // }
 
   const actions = [
     {
@@ -843,16 +700,7 @@ export function Sverka2({
           </>
         );
       })}
-      {/* <button onClick={pastPowProfSch}>paste Профиль сч</button> */}
-      {/* <input
-            type="text"
-            onPaste={(e) => {
-              console.log(e.clipboardData.getData('Text'));
-              console.log(e.clipboardData.getData('text/plain'));
-              console.log(e.clipboardData.getData('text/html'));
-              console.log(e.clipboardData.getData('text/rtf'));
-            }}
-          /> */}
+
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
           <Typography variant="h6" sx={{ mr: 5 }}>
@@ -870,6 +718,11 @@ export function Sverka2({
       </AppBar>
       <SaveBtn appState={appState} onClick={saveSiData} />
       <AlertSucErr appState={appState} setAppState={setAppState} />
+      <InfoDialog
+        appState={appState}
+        setAppState={setAppState}
+        sechInfo={sechInfo}
+      />
     </>
   );
 }

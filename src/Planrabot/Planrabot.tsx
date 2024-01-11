@@ -3,6 +3,9 @@ import styles from './planrabot.module.css';
 import { IAppState, Ot, SechArr } from '../app.types';
 import { TextEditor } from '../TextEditor';
 import classNames from 'classnames';
+import { AppBar, Button, ButtonGroup, Toolbar } from '@mui/material';
+import UndoIcon from '@mui/icons-material/Undo';
+import SaveIcon from '@mui/icons-material/Save';
 
 interface Props {
   appState: IAppState;
@@ -238,6 +241,50 @@ export function Planrabot({ appState, setAppState }: Props) {
           })}
         </tbody>
       </table>
+      <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
+        <Toolbar>
+          <ButtonGroup>
+            <Button
+              variant="contained"
+              // disabled={!isLoggedin}
+              color={appState.isEdit2 ? 'warning' : 'primary'}
+              sx={{ width: 80 }}
+              // onClick={() => {
+              //   if (!appState.isEdit2) {
+              //     siArrHistory.current = [siState];
+              //   }
+              //   setAppState((st) => ({ ...st, isEdit2: !st.isEdit2 }));
+              // }}
+            >
+              {!appState.isEdit2 ? 'read' : 'edit'}
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              // disabled={siArrHistory.current.length < 2}
+              // onClick={(e) => {
+              //   // const prevIndex = siArrHistory.current.length - 2;
+              //   if (siArrHistory.current.length - 2 >= 0) {
+              //     setSiState(
+              //       siArrHistory.current[siArrHistory.current.length - 2]
+              //     );
+              //     siArrHistory.current.pop();
+              //   }
+              // }}
+            >
+              <UndoIcon />
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              disabled={appState.isSiStateSave}
+              // onClick={saveSiData}
+            >
+              <SaveIcon />
+            </Button>
+          </ButtonGroup>
+        </Toolbar>
+      </AppBar>
     </>
   );
 }

@@ -71,6 +71,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useSWR from 'swr';
 import { useSiData } from '../hooks/useSiData';
+import { InfoDialog } from '../InfoDialog';
 
 // типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {
@@ -80,22 +81,11 @@ declare module 'react' {
 }
 
 interface IProps {
-  siState?: ISiObj1[];
-  setSiState?: Dispatch<SetStateAction<ISiObj1[]>>;
   appState: IAppState;
   setAppState: Dispatch<SetStateAction<IAppState>>;
-  sechInfo: ISechInfo;
-  setSechInfo: Dispatch<SetStateAction<ISechInfo>>;
 }
 
-export function MonitoringSi({
-  // siState,
-  // setSiState,
-  appState,
-  setAppState,
-  sechInfo,
-  setSechInfo,
-}: IProps) {
+export function MonitoringSi({ appState, setAppState }: IProps) {
   // const [appState, setAppState] = useState<IAppState>({
   //   // selectedCell: {},
   //   // colOrderOpt: 'opt1',
@@ -110,21 +100,12 @@ export function MonitoringSi({
   //   isSuccess: true,
   //   isInfoOpen: false,
   // });
-  // const [sechInfo, setSechInfo] = useState<ISechInfo>({
-  //   sechID: '',
-  //   naimSechShort: '',
-  //   areaCode: '',
-  //   areaName: '',
-  //   sourceDB: '',
-  //   source60: '',
-  //   amountTi: 0,
-  // });
+
   type Params = keyof ISiObj1;
   const navigate = useNavigate();
 
-  const [data, siState, setSiState] = useSiData(
-    new URL(document.URL).searchParams.get('sechID') ?? 'defaultSechID'
-  );
+  const [data, sechID, siState, setSiState, sechInfo, setSechInfo] =
+    useSiData();
 
   const [status2, setStatus2] = useState<'' | 'correct' | 'incorrect' | null>(
     null
@@ -146,158 +127,6 @@ export function MonitoringSi({
   const btnExportSv1 = useRef(null);
   const btnEdit = useRef(null);
   const siStateMod = useRef<ISiObj1[]>([]);
-
-  // Управление клавишами (работает, перерес в <td onClick()>) начало
-
-  // useEffect(() => {
-  //   function handlekeydownEvent(e: keyboardKey) {
-  //     if (e.key === 'Control') return;
-  //     const { key, keyCode, code } = e;
-  //     console.log(key, keyCode, code);
-  //     if (code === 'KeyQ') {
-  //       setStatus2('correct');
-  //     } else if (code === 'KeyW') {
-  //       setStatus2('incorrect');
-  //     } else if (code === 'KeyE') {
-  //       setStatus2('');
-  //     }
-  //     // else if (code === 'KeyS') {
-  //     //   setStatus3('selected');
-  //     // }
-
-  //     if (!selectedItems[0]) {
-  //       return;
-  //     } else if (e.key === 'Alt' || e.key === 'Control') {
-  //       return;
-  //     } else if (e.code === 'Delete') {
-  //       setSiState((siArr) => {
-  //         let siArrMod = [...siArr];
-  //         selectedItems.forEach(({ i, param }) => {
-  //           siArrMod[i][param].v = '';
-  //         });
-  //         return siArrMod;
-  //       });
-  //       setAppState({ ...appState, isSiStateSave: false });
-  //     } else if (e.code === 'Backspace') {
-  //       setSiState((siArr) => {
-  //         let siArrMod = [...siArr];
-  //         selectedItems.forEach(({ i, param }) => {
-  //           siArrMod[i][param].v = siArrMod[i][param].v.slice(0, -1);
-  //         });
-  //         return siArrMod;
-  //       });
-  //       setAppState({ ...appState, isSiStateSave: false });
-  //     } else if (e.code === 'ArrowRight') {
-  //       const { i, param } = selectedItems[0];
-  //       const paramIndex = appState.colOrder.findIndex(
-  //         (item) => item === param
-  //       );
-  //       setSelectedItems((st) => [
-  //         { ...st[0], param: appState.colOrder[paramIndex + 1] },
-  //       ]);
-  //       setSiState((siArr) => {
-  //         const siArrMod = resetStatus3(siArr);
-  //         siArrMod[i][appState.colOrder[paramIndex + 1]].status3 = 'selected';
-  //         return siArrMod;
-  //       });
-  //     } else {
-  //       setSiState((siArr) => {
-  //         let siArrMod = [...siArr];
-  //         selectedItems.forEach(({ i, param }) => {
-  //           siArrMod[i][param].v += e.key || '';
-  //         });
-  //         return siArrMod;
-  //       });
-  //       setAppState({ ...appState, isSiStateSave: false });
-  //     }
-  //   }
-
-  //   document.addEventListener('keydown', handlekeydownEvent);
-  //   return () => {
-  //     document.removeEventListener('keydown', handlekeydownEvent);
-  //   };
-  // }, [selectedItems, setSiState]);
-
-  // useEffect(() => {
-  //   function handlekeyupEvent() {
-  //     setStatus2(null);
-  //     setStatus3(null);
-  //   }
-  //   document.addEventListener('keyup', handlekeyupEvent);
-  //   return () => {
-  //     document.removeEventListener('keyup', handlekeyupEvent);
-  //   };
-  // }, []);
-
-  // конец управление клавишами (работает)
-
-  // копирование ctrl+v (перенес в table onPaste) начало
-  // useEffect(() => {
-  //   function handlePasteEvent(e: ClipboardEvent) {
-  //     if (e.clipboardData) {
-  //       console.log(e.clipboardData.getData('text'), selectedItems);
-  //       if (!selectedItems[0]) return;
-  //       setSiState((siArr) => {
-  //         let siArrMod = [...siArr];
-  //         selectedItems.forEach(({ i, param }) => {
-  //           siArrMod[i][param].v = e.clipboardData
-  //             ? e.clipboardData.getData('text')
-  //             : '';
-  //         });
-  //         return siArrMod;
-  //       });
-  //       setAppState({ ...appState, isSiStateSave: false });
-  //     }
-  //   }
-  //   document.addEventListener('paste', handlePasteEvent);
-  //   return () => {
-  //     document.removeEventListener('paste', handlePasteEvent);
-  //   };
-  // }, [selectedItems, appState]);
-
-  // конец копирование ctrl+v (перенес в table onPaste)
-
-  // useEffect(() => {
-  //   if (appState.isSiStateSave) {
-  //     // setAppState({ ...appState, classSSDBtn: '' });
-  //   } else {
-  //     // setAppState({ ...appState, classSSDBtn: 'attention' });
-  //   }
-  // }, [appState.isSiStateSave]);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     console.log(document.URL, window.location.search);
-  //     let url = new URL(document.URL);
-
-  //     const naimSechShort =
-  //       url.searchParams.get('naimsechshort') ?? 'defaultNaimSech';
-  //     document.title = naimSechShort;
-
-  //     const sechID = url.searchParams.get('sechID') ?? 'defaultSechID';
-  //     setAppState({
-  //       ...appState,
-  //       sechID,
-  //       naimSechShort,
-  //     });
-
-  //     let res = await fetch('/api/readsidata', {
-  //       method: 'post',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ id: url.searchParams.get('sechID') }),
-  //     });
-  //     let resJson: IResReadSiData1 = await res.json();
-  //     console.log('res /api/readsidata', resJson);
-
-  //     resJson.si = checkData(resJson.si);
-  //     setSiState(resJson.si);
-  //     if (resJson.sechInfo) {
-  //       setSechInfo(resJson.sechInfo);
-  //     }
-  //   })();
-  // }, []);
 
   const [rerender, setRerender] = useState(0); // для ререндера при изм ширины столбцов таблицы
 
@@ -761,7 +590,7 @@ export function MonitoringSi({
       name: '',
       do: () => {
         // navigate(`sverka2?sechID=${appState.sechID}`);
-        window.open(`monitoringsi/sverka2?sechID=${appState.sechID}`);
+        window.open(`monitoringsi/sverka2?sechID=${sechID}`);
       },
     },
     {
@@ -957,40 +786,7 @@ export function MonitoringSi({
           })}
         </tbody>
       </table>
-      {/* <div id="control-panel" className={styles.dpnone}> */}
-      {/* <div>{appState.naimSechShort}</div> */}
-      {/* <button
-          onClick={() =>
-            setAppState({
-              ...appState,
-              isEdit: !appState.isEdit,
-              isSiStateSave: !appState.isSiStateSave,
-            })
-          }
-          // className={appState.classEditBtn}
-          ref={btnEdit}
-        >
-          ред-ть
-        </button> */}
 
-      {/* <button
-          onClick={saveSiData}
-          className={appState.isSiStateSave ? '' : styles.attention}
-        >
-          сохранить изм-я
-        </button> */}
-
-      {/* <button
-          ref={btnExportSv1}
-          onClick={() => {
-            console.log(siState);
-            exportSv1Mod(siState);
-          }}
-          className={styles.dpnone}
-        >
-          экспорт св-1
-        </button> */}
-      {/* </div> */}
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
           <Switch color="default" onChange={handleSwitch} />
@@ -1065,97 +861,17 @@ export function MonitoringSi({
             </Button>
           </ButtonGroup>
 
-          <SpeedDialNav
-            actions={actions}
-            // btnExportSv1={btnExportSv1}
-            // inputFileSv2={inputFileSv2}
-            // btnEdit={btnEdit}
-            // siState={siState}
-            // appState={appState}
-            // setAppState={setAppState}
-          />
+          <SpeedDialNav actions={actions} />
         </Toolbar>
       </AppBar>
-      {/* <SaveBtn appState={appState} onClick={saveSiData} /> */}
-      {/* <Snackbar
-        open={!appState.isSiStateSave}
-        ContentProps={{
-          sx: {
-            background: '#ff8c00',
-          },
-        }}
-        message="Режим редактирования"
-        action={
-          <Button
-            color="error"
-            size="small"
-            onClick={saveSiData}
-            variant="contained"
-            sx={{ paddingTop: '8px' }}
-          >
-            Сохранить
-          </Button>
-        }
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      /> */}
-      {/* <Snackbar
-        open={appState.isMsgOpen}
-        autoHideDuration={3000}
-        onClose={() => {
-          setAppState((st) => ({ ...st, isMsgOpen: false }));
-        }}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert
-          elevation={6}
-          variant="filled"
-          severity={appState.isSuccess ? 'success' : 'error'}
-          sx={{ width: '100%' }}
-        >
-          {appState.isSuccess
-            ? 'Данные успешно сохранены.'
-            : 'Ошибка, изменения НЕ сохранены!'}
-        </Alert>
-      </Snackbar> */}
+
       <AlertSucErr appState={appState} setAppState={setAppState} />
-      <Dialog
-        open={appState.isInfoOpen}
-        onClose={() => {
-          setAppState({ ...appState, isInfoOpen: false });
-        }}
-        maxWidth={'md'}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {appState.naimSechShort}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            80000xml area: {sechInfo?.areaCode}
-          </DialogContentText>
-          <DialogContentText>
-            80000xml name: {sechInfo?.areaName}
-          </DialogContentText>
-          <DialogContentText>60000xml: {sechInfo?.source60}</DialogContentText>
-          <DialogContentText>БД: {sechInfo?.sourceDB}</DialogContentText>
-          <DialogContentText>Кол-во ТИ: {sechInfo?.amountTi}</DialogContentText>
-          <DialogContentText>ОТ: {'asdfasdfasdfs'}</DialogContentText>
-          <DialogContentText>СОП: {'asdfasdfasdfs'}</DialogContentText>
-          <DialogContentText>Сверка-1: {'asdfasdfasdfs'}</DialogContentText>
-          <DialogContentText>Сверка-2: {'asdfasdfasdfs'}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setAppState({ ...appState, isInfoOpen: false });
-            }}
-            // autoFocus
-          >
-            Закрыть
-          </Button>
-        </DialogActions>
-      </Dialog>
+
+      <InfoDialog
+        appState={appState}
+        setAppState={setAppState}
+        sechInfo={sechInfo}
+      />
 
       <Dialog
         open={loginDialogIsOpen}
@@ -1165,10 +881,6 @@ export function MonitoringSi({
       >
         <DialogTitle>Авторизация</DialogTitle>
         <DialogContent>
-          {/* <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
-          </DialogContentText> */}
           <TextField
             autoFocus
             margin="dense"
