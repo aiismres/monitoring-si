@@ -168,7 +168,7 @@ export function Sverka2({ appState, setAppState }: IProps) {
         body: JSON.stringify({
           siState: siStateMod,
           sechInfo,
-          sechID: appState.sechID,
+          sechID: sechID,
         }),
       });
       // siStateMod.current = [];

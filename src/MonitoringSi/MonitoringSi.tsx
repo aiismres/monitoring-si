@@ -130,8 +130,8 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
 
   const [rerender, setRerender] = useState(0); // для ререндера при изм ширины столбцов таблицы
 
-  const colsWidthObjZu = useAppStore((st) => st.colsWidth[appState.sechID]);
-  const tableWidthZu = useAppStore((st) => st.tableWidth[appState.sechID]);
+  const colsWidthObjZu = useAppStore((st) => st.colsWidth[sechID]);
+  const tableWidthZu = useAppStore((st) => st.tableWidth[sechID]);
   const setZuColsWidth = useAppStore((st) => st.setZuColsWidth);
   const setZuTableWidth = useAppStore((st) => st.setZuTableWidth);
   const refColsWidth = useRef<IColsWidth>({ ...colsWidthInit });
@@ -186,8 +186,8 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
   }
 
   function onDragEndTh(e: React.DragEvent, i: number, param: string) {
-    setZuColsWidth(appState.sechID, { ...refColsWidth.current });
-    setZuTableWidth(appState.sechID, refTableWidth.current);
+    setZuColsWidth(sechID, { ...refColsWidth.current });
+    setZuTableWidth(sechID, refTableWidth.current);
   }
 
   // end block for table head
@@ -518,7 +518,7 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
       setSelectedItems([]);
       // console.log(siStateMod.current, resetStatus3(siStateMod.current));
     }
-    console.log('sechID:', appState.sechID);
+    console.log('sechID:', sechID);
     try {
       if (!siStateMod.current[0]) {
         siStateMod.current = siState;
@@ -532,7 +532,7 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
         body: JSON.stringify({
           siState: siStateMod.current,
           sechInfo,
-          sechID: appState.sechID,
+          sechID: sechID,
         }),
       });
       siStateMod.current = [];

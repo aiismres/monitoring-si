@@ -133,10 +133,7 @@ function App() {
             />
           }
         />
-        <Route
-          path="/planrabot"
-          element={<Planrabot appState={appState} setAppState={setAppState} />}
-        />
+        <Route path="/planrabot" element={<Planrabot />} />
         <Route path="/texteditor" element={<TextEditor />} />
       </Routes>
     </BrowserRouter>

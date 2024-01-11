@@ -1,44 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import styles from './planrabot.module.css';
-import { IAppState, Ot, SechArr } from '../app.types';
+import { Ot, SechArr } from '../app.types';
 import { TextEditor } from '../TextEditor';
 import classNames from 'classnames';
 import { AppBar, Button, ButtonGroup, Toolbar } from '@mui/material';
 import UndoIcon from '@mui/icons-material/Undo';
 import SaveIcon from '@mui/icons-material/Save';
+import { useSechData } from '../hooks/useSechData';
 
-interface Props {
-  appState: IAppState;
-  setAppState: (arg: IAppState) => void;
-}
+interface Props {}
 
-export function Planrabot({ appState, setAppState }: Props) {
-  const [sechArr, setSechArr] = useState<SechArr[]>([]);
-  const [otArr, setOtArr] = useState<Ot[]>([]);
+export function Planrabot() {
+  const [sechArr, setSechArr, otArr, setOtArr] = useSechData();
 
-  useEffect(() => {
-    (async () => {
-      let responseSech = await fetch('/api/readsech');
-
-      if (responseSech.ok) {
-        const secheniya = await responseSech.json();
-        console.log('secheniya', secheniya);
-        setSechArr(secheniya);
-      } else {
-        alert('Ошибка HTTP: ' + responseSech.status);
-      }
-
-      let responseOt = await fetch('/api/readot');
-
-      if (responseOt.ok) {
-        const ot = await responseOt.json();
-        console.log('ot', ot);
-        setOtArr(ot);
-      } else {
-        alert('Ошибка HTTP: ' + responseOt.status);
-      }
-    })();
-  }, []);
   return (
     <>
       {/* <TextEditor /> */}
@@ -247,7 +221,7 @@ export function Planrabot({ appState, setAppState }: Props) {
             <Button
               variant="contained"
               // disabled={!isLoggedin}
-              color={appState.isEdit2 ? 'warning' : 'primary'}
+              // color={appState.isEdit2 ? 'warning' : 'primary'}
               sx={{ width: 80 }}
               // onClick={() => {
               //   if (!appState.isEdit2) {
@@ -256,7 +230,7 @@ export function Planrabot({ appState, setAppState }: Props) {
               //   setAppState((st) => ({ ...st, isEdit2: !st.isEdit2 }));
               // }}
             >
-              {!appState.isEdit2 ? 'read' : 'edit'}
+              {/* {!appState.isEdit2 ? 'read' : 'edit'} */}
             </Button>
             <Button
               variant="contained"
@@ -277,7 +251,7 @@ export function Planrabot({ appState, setAppState }: Props) {
             <Button
               variant="contained"
               color="error"
-              disabled={appState.isSiStateSave}
+              // disabled={appState.isSiStateSave}
               // onClick={saveSiData}
             >
               <SaveIcon />
