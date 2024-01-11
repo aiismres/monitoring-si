@@ -3,16 +3,35 @@ import styles from './planrabot.module.css';
 import { Ot, SechArr } from '../../app.types';
 import { TextEditor } from '../../components/TextEditor';
 import classNames from 'classnames';
-import { AppBar, Button, ButtonGroup, Toolbar } from '@mui/material';
+import {
+  AppBar,
+  Button,
+  ButtonGroup,
+  Fade,
+  Paper,
+  Popper,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import UndoIcon from '@mui/icons-material/Undo';
 import SaveIcon from '@mui/icons-material/Save';
 import { useSechData } from '../../hooks/useSechData';
-
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import dayjs from 'dayjs';
+import dayjs_ru from 'dayjs/locale/ru';
+import { DateCalendar, DatePicker } from '@mui/x-date-pickers';
+dayjs.locale(dayjs_ru);
 interface Props {}
 
 export function Planrabot() {
   const [sechArr, setSechArr, otArr, setOtArr] = useSechData();
+  const [isCalOpen, setIsCalOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setIsCalOpen((ico) => !ico);
+  };
   return (
     <>
       {/* <TextEditor /> */}
@@ -65,37 +84,55 @@ export function Planrabot() {
                   })}
                 >
                   {otIndex === 0 && (
-                    <th rowSpan={otAmount} className={styles.naimSechShort}>
+                    <th rowSpan={otAmount} className={styles.naimSechShortTh}>
                       <div className={styles.naimSechShortDiv}>
                         {sechData.naimSechShort}
                       </div>
                     </th>
                   )}
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount}>{sechData.vidRabot}</td>
+                    <td rowSpan={otAmount} className={styles.bgcWhite}>
+                      {sechData.vidRabot}
+                    </td>
                   )}
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount} className={styles.noWrap}>
+                    <td
+                      rowSpan={otAmount}
+                      className={classNames(styles.noWrap, styles.bgcWhite)}
+                    >
                       {sechData.soglGtp}
                     </td>
                   )}
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount} className={styles.noWrap}>
+                    <td
+                      rowSpan={otAmount}
+                      className={classNames(styles.noWrap, styles.bgcWhite)}
+                    >
                       {sechData.dopusk}
                     </td>
                   )}
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount} className={styles.noWrap}>
+                    <td
+                      rowSpan={otAmount}
+                      className={classNames(styles.noWrap, styles.bgcWhite)}
+                      onClick={handleClick}
+                    >
                       {sechData.sdAs}
                     </td>
                   )}
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount} className={styles.noWrap}>
+                    <td
+                      rowSpan={otAmount}
+                      className={classNames(styles.noWrap, styles.bgcWhite)}
+                    >
                       {sechData.krSrokPodachi}
                     </td>
                   )}
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount} className={styles.noWrap}>
+                    <td
+                      rowSpan={otAmount}
+                      className={classNames(styles.noWrap, styles.bgcWhite)}
+                    >
                       {sechData.planPodachi}
                     </td>
                   )}
@@ -109,6 +146,7 @@ export function Planrabot() {
                       dangerouslySetInnerHTML={{
                         __html: sechData.metrologyKomm,
                       }}
+                      className={classNames(styles.bgcWhite)}
                     ></td>
                   )}
                   <td className={styles.noWrap}>{ot?.gr}</td>
@@ -146,10 +184,20 @@ export function Planrabot() {
                     }}
                   ></td>
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount}>{sechData.codirovkaActual}</td>
+                    <td
+                      rowSpan={otAmount}
+                      className={classNames(styles.bgcWhite)}
+                    >
+                      {sechData.codirovkaActual}
+                    </td>
                   )}
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount}>{sechData.tipIzmCodirovki}</td>
+                    <td
+                      rowSpan={otAmount}
+                      className={classNames(styles.noWrap, styles.bgcWhite)}
+                    >
+                      {sechData.tipIzmCodirovki}
+                    </td>
                   )}
                   {otIndex === 0 && (
                     <td
@@ -157,6 +205,7 @@ export function Planrabot() {
                       dangerouslySetInnerHTML={{
                         __html: sechData.sv2 || '',
                       }}
+                      className={classNames(styles.bgcWhite)}
                     ></td>
                   )}
                   {otIndex === 0 && (
@@ -165,6 +214,7 @@ export function Planrabot() {
                       dangerouslySetInnerHTML={{
                         __html: sechData.pi || '',
                       }}
+                      className={classNames(styles.bgcWhite)}
                     ></td>
                   )}
                   {otIndex === 0 && (
@@ -173,6 +223,7 @@ export function Planrabot() {
                       dangerouslySetInnerHTML={{
                         __html: sechData.gotovnostUs || '',
                       }}
+                      className={classNames(styles.bgcWhite)}
                     ></td>
                   )}
                   {otIndex === 0 && (
@@ -181,6 +232,7 @@ export function Planrabot() {
                       dangerouslySetInnerHTML={{
                         __html: sechData.zakluchenie || '',
                       }}
+                      className={classNames(styles.bgcWhite)}
                     ></td>
                   )}
                 </tr>
@@ -257,8 +309,61 @@ export function Planrabot() {
               <SaveIcon />
             </Button>
           </ButtonGroup>
+          {/* <DatePicker
+          // defaultValue={dayjs('2022-04-17')}
+          // sx={{ display: 'none' }}
+          /> */}
+          {/* <Button
+            color="secondary"
+            variant="contained"
+            onClick={
+              handleClick
+              //   () => {
+              //   setIsCalOpen(!isCalOpen);
+              // }
+            }
+          >
+            calendar
+          </Button> */}
         </Toolbar>
       </AppBar>
+      <Popper
+        // Note: The following zIndex style is specifically for documentation purposes and may not be necessary in your application.
+        sx={{ zIndex: 1200 }}
+        open={isCalOpen}
+        anchorEl={anchorEl}
+        placement="auto"
+        transition
+      >
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <Paper elevation={5} sx={{ p: 1, borderRadius: 2 }}>
+              <DateCalendar
+                sx={{ bgcolor: 'white' }}
+                views={['year', 'month', 'day']}
+                onYearChange={() => {
+                  setIsCalOpen(true);
+                }}
+                onMonthChange={() => {
+                  setIsCalOpen(true);
+                }}
+                onChange={(e) => {
+                  setIsCalOpen(false);
+                  setAnchorEl(null);
+                }}
+              />
+              <Button
+                onClick={() => {
+                  setIsCalOpen(false);
+                  setAnchorEl(null);
+                }}
+              >
+                cancel
+              </Button>
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
     </>
   );
 }

@@ -9,6 +9,8 @@ import { nanoid } from 'nanoid';
 import { Planrabot } from './pages/Planrabot';
 import { TextEditor } from './components/TextEditor';
 import useSWR from 'swr';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 // const fetcher = (url: string) => fetch(url).then((res) => res.json());
 // let url1 = new URL(document.URL);
@@ -105,38 +107,40 @@ function App() {
   // }, []);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/monitoringsi"
-          element={
-            <MonitoringSi
-              // siState={siState}
-              // setSiState={setSiState}
-              appState={appState}
-              setAppState={setAppState}
-              // sechInfo={sechInfo}
-              // setSechInfo={setSechInfo}
-            />
-          }
-        />
-        <Route
-          path="/monitoringsi/sverka2"
-          element={
-            <Sverka2
-              // siState={siState}
-              // setSiState={setSiState}
-              appState={appState}
-              setAppState={setAppState}
-              // sechInfo={sechInfo}
-              // setSechInfo={setSechInfo}
-            />
-          }
-        />
-        <Route path="/planrabot" element={<Planrabot />} />
-        <Route path="/texteditor" element={<TextEditor />} />
-      </Routes>
-    </BrowserRouter>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/monitoringsi"
+            element={
+              <MonitoringSi
+                // siState={siState}
+                // setSiState={setSiState}
+                appState={appState}
+                setAppState={setAppState}
+                // sechInfo={sechInfo}
+                // setSechInfo={setSechInfo}
+              />
+            }
+          />
+          <Route
+            path="/monitoringsi/sverka2"
+            element={
+              <Sverka2
+                // siState={siState}
+                // setSiState={setSiState}
+                appState={appState}
+                setAppState={setAppState}
+                // sechInfo={sechInfo}
+                // setSechInfo={setSechInfo}
+              />
+            }
+          />
+          <Route path="/planrabot" element={<Planrabot />} />
+          <Route path="/texteditor" element={<TextEditor />} />
+        </Routes>
+      </BrowserRouter>
+    </LocalizationProvider>
   );
 }
 
