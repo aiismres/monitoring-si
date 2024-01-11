@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './planrabot.module.css';
 import { Ot, SechArr } from '../../app.types';
-import { TextEditor } from '../../TextEditor';
+import { TextEditor } from '../../components/TextEditor';
 import classNames from 'classnames';
 import { AppBar, Button, ButtonGroup, Toolbar } from '@mui/material';
 import UndoIcon from '@mui/icons-material/Undo';

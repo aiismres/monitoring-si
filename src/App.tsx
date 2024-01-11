@@ -7,7 +7,7 @@ import { colOrderObj } from './lib/constants';
 import { checkData } from './lib/checkDataMod';
 import { nanoid } from 'nanoid';
 import { Planrabot } from './pages/Planrabot';
-import { TextEditor } from './TextEditor';
+import { TextEditor } from './components/TextEditor';
 import useSWR from 'swr';
 
 // const fetcher = (url: string) => fetch(url).then((res) => res.json());
