@@ -19,7 +19,13 @@ import { useSechData } from '../../hooks/useSechData';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import dayjs from 'dayjs';
 import dayjs_ru from 'dayjs/locale/ru';
-import { DateCalendar, DatePicker } from '@mui/x-date-pickers';
+import {
+  DateCalendar,
+  DatePicker,
+  StaticDatePicker,
+} from '@mui/x-date-pickers';
+import { position } from 'jodit/types/core/helpers';
+
 dayjs.locale(dayjs_ru);
 interface Props {}
 
@@ -283,6 +289,7 @@ export function Planrabot() {
               // }}
             >
               {/* {!appState.isEdit2 ? 'read' : 'edit'} */}
+              read
             </Button>
             <Button
               variant="contained"
@@ -337,7 +344,10 @@ export function Planrabot() {
       >
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
-            <Paper elevation={5} sx={{ p: 1, borderRadius: 2 }}>
+            <Paper
+              elevation={5}
+              sx={{ position: 'relative', p: 1, borderRadius: 2 }}
+            >
               <DateCalendar
                 sx={{ bgcolor: 'white' }}
                 views={['year', 'month', 'day']}
@@ -357,10 +367,15 @@ export function Planrabot() {
                   setIsCalOpen(false);
                   setAnchorEl(null);
                 }}
+                sx={{ position: 'absolute', right: '15px', bottom: '10px' }}
               >
                 cancel
               </Button>
             </Paper>
+            {/* <DatePicker /> */}
+            {/* <div>
+              <StaticDatePicker />
+            </div> */}
           </Fade>
         )}
       </Popper>
