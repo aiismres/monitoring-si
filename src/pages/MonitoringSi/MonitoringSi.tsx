@@ -17,7 +17,7 @@ import {
   colsWidthInit,
   sameChar,
   colFullName,
-} from '../modules/constants';
+} from '../../modules/constants';
 import {
   IAppState,
   // IResReadSiData,
@@ -27,17 +27,17 @@ import {
   IStringHtml,
   TColShortNames,
   // ISiObj2,
-} from '../app.types';
-import { checkData } from '../modules/checkDataMod';
+} from '../../app.types';
+import { checkData } from '../../modules/checkDataMod';
 import produce from 'immer';
 import { nanoid } from 'nanoid';
-import { exportSv1Mod } from '../modules/exportSv1Mod';
+import { exportSv1Mod } from '../../modules/exportSv1Mod';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
-import { FileDropZone } from '../FileDropZone';
-import { SpeedDialNav } from '../SpeedDialNav';
+import { FileDropZone } from '../../components/FileDropZone';
+import { SpeedDialNav } from '../../components/SpeedDialNav';
 import {
   Button,
   ButtonGroup,
@@ -53,25 +53,25 @@ import {
   buttonBaseClasses,
 } from '@mui/material';
 import Alert from '@mui/material/Alert';
-import { useAppStore } from '../store';
-import { ReactComponent as IconExpSv1 } from '../Icons/IconExpSv1.svg';
-import { ReactComponent as IconEdit } from '../Icons/IconEdit.svg';
-import { ReactComponent as IconEdit2 } from '../Icons/IconEdit2.svg';
-import { ReactComponent as IconInfo } from '../Icons/IconInfo.svg';
-import { ReactComponent as IconSverka2 } from '../Icons/IconSverka2.svg';
+import { useAppStore } from '../../store';
+import { ReactComponent as IconExpSv1 } from '../../Icons/IconExpSv1.svg';
+import { ReactComponent as IconEdit } from '../../Icons/IconEdit.svg';
+import { ReactComponent as IconEdit2 } from '../../Icons/IconEdit2.svg';
+import { ReactComponent as IconInfo } from '../../Icons/IconInfo.svg';
+import { ReactComponent as IconSverka2 } from '../../Icons/IconSverka2.svg';
 import { useNavigate } from 'react-router-dom';
-import { SaveBtn } from '../SaveBtn';
-import { AlertSucErr } from '../AlertSucErr';
+import { SaveBtn } from '../../components/SaveBtn';
+import { AlertSucErr } from '../../components/AlertSucErr';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { Tips } from '../Tips';
+import { Tips } from '../../components/Tips';
 import { keyboardKey } from '@testing-library/user-event';
-import { resetStatus3 } from '../modules/resetStatus3';
+import { resetStatus3 } from '../../modules/resetStatus3';
 import UndoIcon from '@mui/icons-material/Undo';
 import SaveIcon from '@mui/icons-material/Save';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useSWR from 'swr';
-import { useSiData } from '../hooks/useSiData';
-import { InfoDialog } from '../InfoDialog';
+import { useSiData } from '../../hooks/useSiData';
+import { InfoDialog } from '../../components/InfoDialog';
 
 // типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {

@@ -8,7 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material';
-import { IAppState, ISechInfo } from '../app.types';
+import { IAppState, ISechInfo } from '../../app.types';
 
 interface Props {
   appState: IAppState;

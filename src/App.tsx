@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { MonitoringSi } from './MonitoringSi';
-import { Sverka2 } from './Sverka2';
+import { MonitoringSi } from './pages/MonitoringSi';
+import { Sverka2 } from './pages/Sverka2';
 import { IAppState, IResReadSiData1, ISechInfo, ISiObj1 } from './app.types';
 import { colOrderObj } from './modules/constants';
 import { checkData } from './modules/checkDataMod';
 import { nanoid } from 'nanoid';
-import { Planrabot } from './Planrabot';
+import { Planrabot } from './pages/Planrabot';
 import { TextEditor } from './TextEditor';
 import useSWR from 'swr';
 

@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styles from './alertsucerr.css';
-import { IAppState } from '../app.types';
+import { IAppState } from '../../app.types';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 

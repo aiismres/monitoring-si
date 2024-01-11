@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styles from './planrabot.module.css';
-import { Ot, SechArr } from '../app.types';
-import { TextEditor } from '../TextEditor';
+import { Ot, SechArr } from '../../app.types';
+import { TextEditor } from '../../TextEditor';
 import classNames from 'classnames';
 import { AppBar, Button, ButtonGroup, Toolbar } from '@mui/material';
 import UndoIcon from '@mui/icons-material/Undo';
 import SaveIcon from '@mui/icons-material/Save';
-import { useSechData } from '../hooks/useSechData';
+import { useSechData } from '../../hooks/useSechData';
 
 interface Props {}
 

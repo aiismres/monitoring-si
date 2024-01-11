@@ -15,24 +15,24 @@ import {
   Sv2V,
   TStatus,
   TStatus2,
-} from '../app.types';
+} from '../../app.types';
 import styles from './sverka2.module.css';
 import { table } from 'console';
-import { sameChar, timePeriods } from '../modules/constants';
+import { sameChar, timePeriods } from '../../modules/constants';
 import Button from '@mui/material/Button';
 import { produce } from 'immer';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { SpeedDialNav } from '../SpeedDialNav';
-import { ReactComponent as IconEdit } from '../Icons/IconEdit.svg';
-import { ReactComponent as IconInfo } from '../Icons/IconInfo.svg';
-import { SaveBtn } from '../SaveBtn';
-import { AlertSucErr } from '../AlertSucErr';
-import { FileDropZone } from '../FileDropZone';
+import { SpeedDialNav } from '../../components/SpeedDialNav';
+import { ReactComponent as IconEdit } from '../../Icons/IconEdit.svg';
+import { ReactComponent as IconInfo } from '../../Icons/IconInfo.svg';
+import { SaveBtn } from '../../components/SaveBtn';
+import { AlertSucErr } from '../../components/AlertSucErr';
+import { FileDropZone } from '../../components/FileDropZone';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import { useSiData } from '../hooks/useSiData';
-import { InfoDialog } from '../InfoDialog';
+import { useSiData } from '../../hooks/useSiData';
+import { InfoDialog } from '../../components/InfoDialog';
 
 interface IProps {
   appState: IAppState;

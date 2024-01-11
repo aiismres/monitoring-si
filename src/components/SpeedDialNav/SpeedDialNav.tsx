@@ -4,13 +4,13 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import styles from './speeddialnav.module.css';
-import { IAppState, ISiObj1 } from '../app.types.js';
+import { IAppState, ISiObj1 } from '../../app.types.js';
 import { ReactComponent as IconExpSv1 } from '../Icons/IconExpSv1.svg';
 import { ReactComponent as IconEdit } from '../Icons/IconEdit.svg';
 import { ReactComponent as IconInfo } from '../Icons/IconInfo.svg';
 import { ReactComponent as IconSverka2 } from '../Icons/IconSverka2.svg';
 import { useNavigate } from 'react-router-dom';
-import { exportSv1Mod } from '../modules/exportSv1Mod';
+import { exportSv1Mod } from '../../modules/exportSv1Mod';
 
 interface IActions {
   icon: JSX.Element;

@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import styles from './savebtn.css';
 import Snackbar from '@mui/material/Snackbar';
 import Button from '@mui/material/Button';
-import { IAppState, ISiObj1 } from '../app.types';
+import { IAppState, ISiObj1 } from '../../app.types';
 
 export function SaveBtn({
   appState,
