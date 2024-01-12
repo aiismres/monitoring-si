@@ -25,25 +25,103 @@ import {
   StaticDatePicker,
 } from '@mui/x-date-pickers';
 import { position } from 'jodit/types/core/helpers';
+import produce from 'immer';
+import { KeyTwoTone } from '@mui/icons-material';
+import { CellPRDate } from '../../components/CellPRDate';
+import { CalendarPopSimple } from '../../components/CalendarPopSimple';
+import { CellSech } from '../../components/CellSech';
+import { CellOt } from '../../components/CellOt';
 
-dayjs.locale(dayjs_ru);
+// dayjs.locale(dayjs_ru);
 interface Props {}
+interface PageState {}
+
+export interface SelectCell {
+  sechIndex: number | null;
+  otId: string | null;
+  sechParam: keyof SechArr | null;
+  otParam: keyof Ot | null;
+  value: string;
+}
+
+export interface SechKeys {
+  [key: string]: keyof SechArr;
+}
+
+export interface OtKeys {
+  [key: string]: keyof Ot;
+}
+
+export function isKeyOfSechData(
+  val: any,
+  sechArr: SechArr
+): val is keyof SechArr {
+  if (val in sechArr) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export function isKeyOfOt(val: any, ot?: Ot): val is keyof Ot {
+  // console.log(val, ot);
+  if (!ot) {
+    return false;
+  }
+  if (val in ot) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 export function Planrabot() {
   const [sechArr, setSechArr, otArr, setOtArr] = useSechData();
   const [isCalOpen, setIsCalOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [pageState, setPageState] = useState<PageState>({});
+  const [selectCell, setSelectCell] = useState<SelectCell>({
+    sechIndex: null,
+    otId: null,
+    sechParam: null,
+    otParam: null,
+    value: '',
+  });
 
-  const updDateOnClick = (
+  const sechKeys: SechKeys = {};
+
+  for (const key in sechArr[0]) {
+    if (isKeyOfSechData(key, sechArr[0])) {
+      sechKeys[key] = key;
+    }
+  }
+
+  // console.log('sechKeys', sechKeys);
+
+  const otKeys: OtKeys = {};
+
+  for (const key in otArr[0]) {
+    if (isKeyOfOt(key, otArr[0])) {
+      otKeys[key] = key;
+    }
+  }
+
+  console.log('sechKeys', sechKeys);
+
+  function openCalendar(
     event: React.MouseEvent<HTMLElement>,
     sechData: SechArr,
     sechIndex: number,
-    otIndex: number
-  ) => {
-    console.log(sechData, sechIndex, otIndex);
+    otId: string,
+    param: keyof SechArr,
+    value: string
+  ) {
+    console.log(sechData, sechIndex, otId);
     setAnchorEl(anchorEl ? null : event.currentTarget);
     setIsCalOpen((ico) => !ico);
-  };
+    // setSelectCell({ sechIndex, otId, param, value });
+  }
+
   return (
     <>
       {/* <TextEditor /> */}
@@ -111,50 +189,120 @@ export function Planrabot() {
                     <td
                       rowSpan={otAmount}
                       className={classNames(styles.noWrap, styles.bgcWhite)}
-                      onClick={(e) => {
-                        updDateOnClick(e, sechData, sechIndex, otIndex);
-                      }}
+                      // onClick={(e) => {
+                      //   openCalendar(
+                      //     e,
+                      //     sechData,
+                      //     sechIndex,
+                      //     otIndex,
+                      //     'soglGtp'
+                      //   );
+                      // }}
                     >
                       {sechData.soglGtp}
                     </td>
                   )}
                   {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      className={classNames(styles.noWrap, styles.bgcWhite)}
-                      onClick={(e) => {
-                        updDateOnClick(e, sechData, sechIndex, otIndex);
-                      }}
-                    >
-                      {sechData.dopusk}
-                    </td>
+                    // <td
+                    //   rowSpan={otAmount}
+                    //   className={classNames(styles.noWrap, styles.bgcWhite)}
+                    //   // onClick={(e) => {
+                    //   //   openCalendar(e, sechData, sechIndex, otIndex, 'dopusk');
+                    //   // }}
+                    // >
+                    //   {sechData.dopusk}
+                    // </td>
+                    <CellSech
+                      value={sechData.dopusk}
+                      otAmount={otAmount}
+                      sechIndex={sechIndex}
+                      param={sechKeys.dopusk}
+                      anchorEl={anchorEl}
+                      setSelectCell={setSelectCell}
+                      setAnchorEl={setAnchorEl}
+                      setIsCalOpen={setIsCalOpen}
+                    />
                   )}
                   {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      className={classNames(styles.noWrap, styles.bgcWhite)}
-                      onClick={(e) => {
-                        updDateOnClick(e, sechData, sechIndex, otIndex);
-                      }}
-                    >
-                      {sechData.sdAs}
-                    </td>
+                    // <td
+                    //   rowSpan={otAmount}
+                    //   className={classNames(styles.noWrap, styles.bgcWhite)}
+                    //   onClick={(e) => {
+                    //     openCalendar(e, sechData, sechIndex, otIndex, 'sdAs');
+                    //   }}
+                    // >
+                    //   {sechData.sdAs}
+                    // </td>
+                    <CellSech
+                      value={sechData.sdAs}
+                      otAmount={otAmount}
+                      sechIndex={sechIndex}
+                      param={sechKeys.sdAs}
+                      anchorEl={anchorEl}
+                      setSelectCell={setSelectCell}
+                      setAnchorEl={setAnchorEl}
+                      setIsCalOpen={setIsCalOpen}
+                    />
+                    // <CellPRDate
+                    //   value={sechData.sdAs}
+                    //   sechData={sechData}
+                    //   ot={ot}
+                    //   otAmount={otAmount}
+                    //   sechIndex={sechIndex}
+                    //   otIndex={otIndex}
+                    //   param={otKeys.sdAs}
+                    //   anchorEl={anchorEl}
+                    //   setAnchorEl={setAnchorEl}
+                    //   setIsCalOpen={setIsCalOpen}
+                    //   setSelectCell={setSelectCell}
+                    //   setSechArr={setSechArr}
+                    //   setOtArr={setOtArr}
+                    // />
                   )}
                   {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      className={classNames(styles.noWrap, styles.bgcWhite)}
-                    >
-                      {sechData.krSrokPodachi}
-                    </td>
+                    // <td
+                    //   rowSpan={otAmount}
+                    //   className={classNames(styles.noWrap, styles.bgcWhite)}
+                    // >
+                    //   {sechData.krSrokPodachi}
+                    // </td>
+                    <CellSech
+                      value={sechData.krSrokPodachi}
+                      otAmount={otAmount}
+                      sechIndex={sechIndex}
+                      param={sechKeys.krSrokPodachi}
+                      anchorEl={anchorEl}
+                      setSelectCell={setSelectCell}
+                      setAnchorEl={setAnchorEl}
+                      setIsCalOpen={setIsCalOpen}
+                    />
                   )}
                   {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      className={classNames(styles.noWrap, styles.bgcWhite)}
-                    >
-                      {sechData.planPodachi}
-                    </td>
+                    // <td
+                    //   rowSpan={otAmount}
+                    //   className={classNames(styles.noWrap, styles.bgcWhite)}
+                    //   // onClick={(e) => {
+                    //   //   openCalendar(
+                    //   //     e,
+                    //   //     sechData,
+                    //   //     sechIndex,
+                    //   //     otIndex,
+                    //   //     'planPodachi'
+                    //   //   );
+                    //   // }}
+                    // >
+                    //   {sechData.planPodachi}
+                    // </td>
+                    <CellSech
+                      value={sechData.planPodachi}
+                      otAmount={otAmount}
+                      sechIndex={sechIndex}
+                      param={sechKeys.planPodachi}
+                      anchorEl={anchorEl}
+                      setSelectCell={setSelectCell}
+                      setAnchorEl={setAnchorEl}
+                      setIsCalOpen={setIsCalOpen}
+                    />
                   )}
                   {/* {otIndex === 0 && (
                     <td rowSpan={otAmount}>{sechData.metrologyKomm}</td>
@@ -171,7 +319,41 @@ export function Planrabot() {
                   )}
                   <td className={styles.noWrap}>{ot?.gr}</td>
                   <td>{ot?.naimAiis2}</td>
-                  <td className={styles.noWrap}>{ot?.sdSop}</td>
+                  {/* <td
+                    className={styles.noWrap}
+                    onClick={(e) => {
+                      const param = 'sdSop';
+                      if (isKeyOfSechData(param, sechData)) {
+                        openCalendar(e, sechData, sechIndex, otIndex, param);
+                      }
+                    }}
+                  >
+                    {ot?.sdSop}
+                  </td> */}
+                  <CellOt
+                    value={ot?.sdSop}
+                    param={otKeys.sdSop}
+                    otId={otId}
+                    anchorEl={anchorEl}
+                    setSelectCell={setSelectCell}
+                    setAnchorEl={setAnchorEl}
+                    setIsCalOpen={setIsCalOpen}
+                  />
+                  {/* <CellPRDate
+                    value={ot?.sdSop || ''}
+                    sechData={sechData}
+                    ot={ot}
+                    otAmount={1}
+                    sechIndex={sechIndex}
+                    otIndex={otIndex}
+                    param={sechKeys.sdSop}
+                    anchorEl={anchorEl}
+                    setAnchorEl={setAnchorEl}
+                    setIsCalOpen={setIsCalOpen}
+                    setSelectCell={setSelectCell}
+                    setSechArr={setSechArr}
+                    setOtArr={setOtArr}
+                  /> */}
                   <td>{ot?.izmAiis}</td>
                   <td>{ot?.tipIzmOt}</td>
                   <td>{ot?.neobhRab}</td>
@@ -336,7 +518,7 @@ export function Planrabot() {
           /> */}
         </Toolbar>
       </AppBar>
-      <Popper
+      {/* <Popper
         // Note: The following zIndex style is specifically for documentation purposes and may not be necessary in your application.
         sx={{ zIndex: 1200 }}
         open={isCalOpen}
@@ -362,6 +544,20 @@ export function Planrabot() {
                 onChange={(e) => {
                   setIsCalOpen(false);
                   setAnchorEl(null);
+                  setSechArr(
+                    produce((draft: SechArr[]) => {
+                      console.log('!');
+                      if (
+                        selectCell.param &&
+                        selectCell.sechIndex &&
+                        selectCell.param !== 'metrology'
+                      ) {
+                        console.log('!!');
+                        draft[selectCell.sechIndex][selectCell.param] =
+                          '9999-99-99';
+                      }
+                    })
+                  );
                 }}
               />
               <Button
@@ -374,13 +570,20 @@ export function Planrabot() {
                 cancel
               </Button>
             </Paper>
-            {/* <DatePicker /> */}
-            {/* <div>
-              <StaticDatePicker />
-            </div> */}
           </Fade>
         )}
-      </Popper>
+      </Popper> */}
+      <CalendarPopSimple
+        selectCell={selectCell}
+        isCalOpen={isCalOpen}
+        anchorEl={anchorEl}
+        sechArr={sechArr}
+        otArr={otArr}
+        setAnchorEl={setAnchorEl}
+        setIsCalOpen={setIsCalOpen}
+        setSechArr={setSechArr}
+        setOtArr={setOtArr}
+      />
     </>
   );
 }

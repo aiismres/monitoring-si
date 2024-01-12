@@ -11,6 +11,15 @@ import { TextEditor } from './components/TextEditor';
 import useSWR from 'swr';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+import dayjs_ru from 'dayjs/locale/ru';
+import updateLocale from 'dayjs/plugin/updateLocale';
+
+dayjs.locale(dayjs_ru);
+dayjs.extend(updateLocale);
+dayjs.updateLocale('en', {
+  weekStart: 1,
+});
 
 // const fetcher = (url: string) => fetch(url).then((res) => res.json());
 // let url1 = new URL(document.URL);
