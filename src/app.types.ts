@@ -403,7 +403,7 @@ export interface IColOrderObj {
 //   [N: string]: ColPlanRab[];
 // }
 
-export interface SechArr {
+export interface SechData {
   _id: string;
   kodGtp: string;
   kodSech: string;

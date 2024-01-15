@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './cellot.css';
 import classNames from 'classnames';
 import { SelectCell } from '../../pages/Planrabot';
-import { Ot, SechArr } from '../../app.types';
+import { Ot, SechData } from '../../app.types';
 
 interface Props {
   value: string | undefined;

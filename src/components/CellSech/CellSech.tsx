@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './cellsech.module.css';
 import classNames from 'classnames';
 import { SelectCell } from '../../pages/Planrabot';
-import { SechArr } from '../../app.types';
+import { SechData } from '../../app.types';
 
 interface Props {
   value: string;
   otAmount: number;
   sechIndex: number;
-  param: keyof SechArr;
+  param: keyof SechData;
   anchorEl: HTMLElement | null;
   setSelectCell: React.Dispatch<React.SetStateAction<SelectCell>>;
   setAnchorEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;

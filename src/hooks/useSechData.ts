@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Ot, SechArr } from '../app.types';
+import { Ot, SechData } from '../app.types';
 
 export function useSechData() {
-  const [sechArr, setSechArr] = useState<SechArr[]>([]);
+  const [sechArr, setSechArr] = useState<SechData[]>([]);
   const [otArr, setOtArr] = useState<Ot[]>([]);
 
   useEffect(() => {
@@ -10,8 +10,31 @@ export function useSechData() {
       let responseSech = await fetch('/api/readsech');
 
       if (responseSech.ok) {
-        const secheniya = await responseSech.json();
+        const secheniya: SechData[] = await responseSech.json();
         console.log('secheniya', secheniya);
+        secheniya.sort((a, b) => {
+          if (a.planPodachi && !b.planPodachi) {
+            return (
+              new Date(a.planPodachi).getTime() -
+              new Date(b.krSrokPodachi).getTime()
+            );
+          } else if (b.planPodachi && !a.planPodachi) {
+            return (
+              new Date(a.krSrokPodachi).getTime() -
+              new Date(b.planPodachi).getTime()
+            );
+          } else if (a.planPodachi && b.planPodachi) {
+            return (
+              new Date(a.planPodachi).getTime() -
+              new Date(b.planPodachi).getTime()
+            );
+          } else {
+            return (
+              new Date(a.krSrokPodachi).getTime() -
+              new Date(b.krSrokPodachi).getTime()
+            );
+          }
+        });
         setSechArr(secheniya);
       } else {
         alert('Ошибка HTTP: ' + responseSech.status);

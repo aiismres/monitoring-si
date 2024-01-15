@@ -3,7 +3,7 @@ import styles from './calendarpopsimple.css';
 import { Button, Fade, Paper, Popper } from '@mui/material';
 import { DateCalendar } from '@mui/x-date-pickers';
 import produce from 'immer';
-import { Ot, SechArr } from '../../app.types';
+import { Ot, SechData } from '../../app.types';
 import { SelectCell } from '../../pages/Planrabot';
 import dayjs from 'dayjs';
 import dayjs_ru from 'dayjs/locale/ru';
@@ -13,11 +13,11 @@ interface Props {
   selectCell: SelectCell;
   isCalOpen: boolean;
   anchorEl: HTMLElement | null;
-  sechArr: SechArr[];
+  sechArr: SechData[];
   otArr: Ot[];
   setAnchorEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
   setIsCalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setSechArr: React.Dispatch<React.SetStateAction<SechArr[]>>;
+  setSechArr: React.Dispatch<React.SetStateAction<SechData[]>>;
   setOtArr: React.Dispatch<React.SetStateAction<Ot[]>>;
 }
 
@@ -89,7 +89,7 @@ export function CalendarPopSimple({
                   selectCell.sechParam !== 'metrology'
                 ) {
                   setSechArr(
-                    produce((draft: SechArr[]) => {
+                    produce((draft: SechData[]) => {
                       if (
                         selectCell.sechIndex !== null &&
                         selectCell.sechParam !== null
@@ -104,14 +104,11 @@ export function CalendarPopSimple({
                   console.log('ot');
                   setOtArr(
                     produce((draft) => {
-                      if (
-                        selectCell.otId !== null &&
-                        draft.find((ot) => ot._id === selectCell.otId) !==
-                          undefined
-                      ) {
-                        //@ts-ignore
-                        draft.find((ot) => ot._id === selectCell.otId).sdSop =
-                          newValue.format('YYYY-MM-DD');
+                      const temp = draft.find(
+                        (ot) => ot._id === selectCell.otId
+                      );
+                      if (selectCell.otId !== null && temp !== undefined) {
+                        temp.sdSop = newValue.format('YYYY-MM-DD');
                       }
                     })
                   );

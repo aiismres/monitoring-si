@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './planrabot.module.css';
-import { Ot, SechArr } from '../../app.types';
+import { Ot, SechData } from '../../app.types';
 import { TextEditor } from '../../components/TextEditor';
 import classNames from 'classnames';
 import {
@@ -39,13 +39,13 @@ interface PageState {}
 export interface SelectCell {
   sechIndex: number | null;
   otId: string | null;
-  sechParam: keyof SechArr | null;
+  sechParam: keyof SechData | null;
   otParam: keyof Ot | null;
   value: string;
 }
 
 export interface SechKeys {
-  [key: string]: keyof SechArr;
+  [key: string]: keyof SechData;
 }
 
 export interface OtKeys {
@@ -54,8 +54,8 @@ export interface OtKeys {
 
 export function isKeyOfSechData(
   val: any,
-  sechArr: SechArr
-): val is keyof SechArr {
+  sechArr: SechData
+): val is keyof SechData {
   if (val in sechArr) {
     return true;
   } else {
@@ -110,10 +110,10 @@ export function Planrabot() {
 
   function openCalendar(
     event: React.MouseEvent<HTMLElement>,
-    sechData: SechArr,
+    sechData: SechData,
     sechIndex: number,
     otId: string,
-    param: keyof SechArr,
+    param: keyof SechData,
     value: string
   ) {
     console.log(sechData, sechIndex, otId);
@@ -136,6 +136,7 @@ export function Planrabot() {
             <th>Допуск</th>
             <th>СД АС</th>
             <th>Кр-й срок подачи док</th>
+            <th>Статус комплекта</th>
             <th>План. дата подачи</th>
             <th>Комментарии</th>
             <th>№ ГР</th>
@@ -278,6 +279,11 @@ export function Planrabot() {
                     />
                   )}
                   {otIndex === 0 && (
+                    <td rowSpan={otAmount} className={styles.bgcWhite}>
+                      Статус комплекта
+                    </td>
+                  )}
+                  {otIndex === 0 && (
                     // <td
                     //   rowSpan={otAmount}
                     //   className={classNames(styles.noWrap, styles.bgcWhite)}
@@ -293,6 +299,7 @@ export function Planrabot() {
                     // >
                     //   {sechData.planPodachi}
                     // </td>
+
                     <CellSech
                       value={sechData.planPodachi}
                       otAmount={otAmount}
@@ -545,7 +552,7 @@ export function Planrabot() {
                   setIsCalOpen(false);
                   setAnchorEl(null);
                   setSechArr(
-                    produce((draft: SechArr[]) => {
+                    produce((draft: SechData[]) => {
                       console.log('!');
                       if (
                         selectCell.param &&
