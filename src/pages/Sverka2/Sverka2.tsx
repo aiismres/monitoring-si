@@ -494,7 +494,15 @@ export function Sverka2({ appState, setAppState }: IProps) {
                       onChange={(e) =>
                         setSiState(
                           produce((draft) => {
-                            draft[i].ke.v = e.target.value;
+                            draft[i] = {
+                              ...draft[i],
+                              ke: { v: e.target.value },
+                            };
+                            // if ('ke' in draft[i]) {
+                            //   draft[i].ke.v = e.target.value;
+                            // } else {
+                            //   draft[i] = {...draft[]}
+                            // }
                           })
                         )
                       }
