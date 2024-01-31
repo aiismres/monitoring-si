@@ -160,6 +160,9 @@ export function Planrabot() {
             <th>ПИ</th>
             <th>Готовность УС</th>
             <th>Заключ-е</th>
+            <th>Статус комплекта</th>
+            <th>дата</th>
+            <th>№ area</th>
           </tr>
         </thead>
         <tbody>
@@ -443,6 +446,25 @@ export function Planrabot() {
                       }}
                       className={classNames(styles.bgcWhite)}
                     ></td>
+                  )}
+                  {otIndex === 0 && (
+                    <td
+                      rowSpan={otAmount}
+                      className={styles.bgcWhite}
+                      onClick={(e) => {}}
+                    >
+                      status
+                    </td>
+                  )}
+                  {otIndex === 0 && (
+                    <td rowSpan={otAmount} className={styles.bgcWhite}>
+                      date
+                    </td>
+                  )}
+                  {otIndex === 0 && (
+                    <td rowSpan={otAmount} className={styles.bgcWhite}>
+                      area
+                    </td>
                   )}
                 </tr>
               );
