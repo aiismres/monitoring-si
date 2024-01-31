@@ -472,7 +472,10 @@ export function Sverka2({ appState, setAppState }: IProps) {
                         setSiState(
                           produce((draft) => {
                             draft[i].tipSchSch.v = e.target.value.trim();
-                            draft[i].ke.v = defineKe(e.target.value);
+                            draft[i] = {
+                              ...draft[i],
+                              ke: { v: defineKe(e.target.value) },
+                            };
                           })
                         )
                       }
