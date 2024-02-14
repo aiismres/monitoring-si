@@ -14,6 +14,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import dayjs_ru from 'dayjs/locale/ru';
 import updateLocale from 'dayjs/plugin/updateLocale';
+import { Metrology } from './pages/Metrology';
 
 dayjs.locale(dayjs_ru);
 dayjs.extend(updateLocale);
@@ -147,6 +148,7 @@ function App() {
           />
           <Route path="/planrabot" element={<Planrabot />} />
           <Route path="/texteditor" element={<TextEditor />} />
+          <Route path="/metrology" element={<Metrology />} />
         </Routes>
       </BrowserRouter>
     </LocalizationProvider>

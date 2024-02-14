@@ -724,6 +724,14 @@ function openSi() {
   // );
 }
 
+function openMetr() {
+  window.open(
+    // link to create-react-app dev server
+    `http://localhost:3001/metrology`,
+    '_blank'
+  );
+}
+
 // всплывающее окно:
 let hint = document.querySelector('.hint');
 //    hint.className = "hint"; // изначально невидимый клаcc
