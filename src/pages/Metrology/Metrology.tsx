@@ -1,27 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './metrology.module.css';
 import { useOtData } from '../../hooks/useOtData';
-import { AppBar, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Button,
+  ButtonGroup,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import { SpeedDialNav } from '../../components/SpeedDialNav';
 import { ReactComponent as IconEdit } from '../../Icons/IconEdit.svg';
-import { ReactComponent as IconInfo } from '../../Icons/IconInfo.svg';
+import { ReactComponent as IconDelOt } from '../../Icons/IconDelOt.svg';
+import { ReactComponent as IconDel } from '../../Icons/IconDel.svg';
+import dayjs from 'dayjs';
+import { useSechData } from '../../hooks/useSechData';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import { OtItem } from '../../components/forMetrologyPage/OtItem';
+import UndoIcon from '@mui/icons-material/Undo';
+import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Ot } from '../../app.types';
 
-const actions = [
-  {
-    icon: <IconInfo />,
-    name: '',
-    do: () => {},
-  },
+export type PageState = {
+  deletOtSt: boolean;
+  selectedOtId: string | null;
+};
 
-  {
-    icon: <IconEdit />,
-    name: '',
-    do: () => {},
-  },
-];
+const otHistory: Ot[][] = [];
 
 export function Metrology() {
-  const [data, isLoading, error] = useOtData();
+  const [data, isLoading, error, otArr, setOtArr] = useOtData();
+  const [sechArr, setSechArr] = useSechData();
+  const [pageState, setPageState] = useState<PageState>({
+    deletOtSt: false,
+    selectedOtId: null,
+  });
+
+  const actions = [
+    {
+      icon: <IconDelOt />,
+      name: '',
+      do: () => {
+        setPageState((st) => ({ ...st, deletOtSt: true }));
+      },
+    },
+
+    {
+      icon: <IconEdit />,
+      name: '',
+      do: () => {},
+    },
+  ];
 
   if (isLoading) {
     return <p>isLoading...</p>;
@@ -50,24 +79,14 @@ export function Metrology() {
           </tr>
         </thead>
         <tbody>
-          {data.map((ot) => (
-            <tr key={ot._id}>
-              <td>{ot.gr}</td>
-              <td>{ot.naimAiis1}</td>
-              <td>{ot.naimAiis2}</td>
-              <td>{ot.sdSop}</td>
-              <td>{ot.izmAiis}</td>
-              <td>{ot.tipIzmOt}</td>
-              <td>{ot.neobhRab}</td>
-              <td>{ot.rabZaplan}</td>
-              <td>{ot.dogFact ? ot.dogFact : ot.dogPlan}</td>
-              <td>{ot.vyezdFact ? ot.vyezdFact : ot.vyezdPlan}</td>
-              <td>{ot.vniimsFact ? ot.vniimsFact : ot.vniimsPlan}</td>
-              <td>{ot.rstFact ? ot.rstFact : ot.rstPlan}</td>
-              <td>{ot.prikazFact ? ot.prikazFact : ot.prikazPlan}</td>
-              <td>{ot.oforSopFact ? ot.oforSopFact : ot.oforSopPlan}</td>
-              <td>{ot._id}</td>
-            </tr>
+          {otArr?.map((ot) => (
+            <OtItem
+              key={ot._id}
+              ot={ot}
+              pageState={pageState}
+              setPageState={setPageState}
+              sechArr={sechArr}
+            />
           ))}
         </tbody>
       </table>
@@ -76,7 +95,54 @@ export function Metrology() {
           {/* <Typography variant="h6" sx={{ mr: 5 }}>
             {appState.naimSechShort}
           </Typography> */}
-
+          {pageState.deletOtSt && (
+            <ButtonGroup>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setPageState((st) => ({ ...st, deletOtSt: false }));
+                }}
+              >
+                отмена
+              </Button>
+              <Button
+                variant="contained"
+                disabled={!pageState.selectedOtId}
+                color="error"
+                sx={{ width: 50 }}
+                onClick={() => {
+                  otHistory.push(otArr);
+                  setOtArr((st) =>
+                    st.filter((ot) => ot._id !== pageState.selectedOtId)
+                  );
+                }}
+              >
+                <DeleteIcon />
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                disabled={otHistory.length < 1}
+                onClick={(e) => {
+                  // const prevIndex = siArrHistory.current.length - 2;
+                  if (otHistory.length > 0) {
+                    setOtArr(otHistory[otHistory.length - 1]);
+                    otHistory.pop();
+                  }
+                }}
+              >
+                <UndoIcon />
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                // disabled={appState.isSiStateSave}
+                // onClick={saveSiData}
+              >
+                <SaveIcon />
+              </Button>
+            </ButtonGroup>
+          )}
           <SpeedDialNav actions={actions} />
         </Toolbar>
       </AppBar>

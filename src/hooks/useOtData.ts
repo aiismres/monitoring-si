@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { IResReadSiData1, ISechInfo, ISiObj1, Ot } from '../app.types';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { checkData } from '../lib/checkDataMod';
 import { nanoid } from 'nanoid';
 
@@ -16,7 +16,7 @@ const fetcher = (url: string) =>
   }).then((res) => res.json());
 
 export const useOtData = () => {
-  // const [siState, setSiState] = useState<ISiObj1[]>([]);
+  const [otArr, setOtArr] = useState<Ot[]>([]);
   // const [sechInfo, setSechInfo] = useState<ISechInfo>({
   //   sechID: '',
   //   naimSechShort: '',
@@ -30,18 +30,19 @@ export const useOtData = () => {
     data,
     error,
     isLoading,
-  }: { data: Ot[]; error: boolean | undefined; isLoading: boolean } = useSWR(
-    '/api/readot',
-    fetcher,
-    {
-      // revalidateOnFocus: false,
-      // revalidateOnMount: false,
-      // revalidateOnReconnect: false,
-      // refreshWhenOffline: false,
-      // refreshWhenHidden: false,
-      // refreshInterval: 10000,
-    }
-  );
+  }: {
+    data: Ot[];
+    error: boolean | undefined;
+    isLoading: boolean;
+    mutate: any;
+  } = useSWR('/api/readot', fetcher, {
+    // revalidateOnFocus: false,
+    // revalidateOnMount: false,
+    // revalidateOnReconnect: false,
+    // refreshWhenOffline: false,
+    // refreshWhenHidden: false,
+    // refreshInterval: 10000,
+  });
   if (error) {
     console.log('An error has occurred.');
   }
@@ -61,6 +62,10 @@ export const useOtData = () => {
     });
   }
 
+  useEffect(() => {
+    setOtArr(data);
+  }, [data]);
+
   // useEffect(() => {
   //   if (data !== undefined) {
   //     data.si = checkData(data.si);
@@ -73,5 +78,5 @@ export const useOtData = () => {
   //   }
   // }, [data]);
 
-  return [data, isLoading, error] as const;
+  return [data, isLoading, error, otArr, setOtArr] as const;
 };

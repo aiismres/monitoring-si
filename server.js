@@ -132,7 +132,7 @@ app.get('/api/readsech', async (req, res) => {
 
 app.get('/api/readot', async (req, res) => {
   let x = await OtDb.find().toArray();
-  //console.log('readot=', x);
+  console.log('readot=', x);
   res.send(x);
 });
 
