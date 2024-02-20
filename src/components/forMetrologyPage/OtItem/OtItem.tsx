@@ -75,8 +75,13 @@ export function OtItem({ ot, pageState, setPageState, sechArr }: Props) {
     ? ''
     : styles.warning;
 
+  const rabZaplanStatus =
+    dayjs() > dayjs(ot.sdSop).subtract(1, 'years') && ot.rabZaplan !== 'да'
+      ? styles.error
+      : '';
+
   function rowStyle() {
-    if (pageState.deletOtSt && pageState.selectedOtId === ot._id) {
+    if (pageState.editMode && pageState.selectedOtId === ot._id) {
       return styles.borderRed;
     }
   }
@@ -94,7 +99,7 @@ export function OtItem({ ot, pageState, setPageState, sechArr }: Props) {
       <td>{ot.izmAiis}</td>
       <td>{ot.tipIzmOt}</td>
       <td>{ot.neobhRab}</td>
-      <td>{ot.rabZaplan}</td>
+      <td className={rabZaplanStatus}>{ot.rabZaplan}</td>
       <td>{ot.dogFact ? ot.dogFact : ot.dogPlan}</td>
       <td className={vyezdStatus}>
         {ot.vyezdFact ? ot.vyezdFact : ot.vyezdPlan}

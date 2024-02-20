@@ -20,9 +20,10 @@ import UndoIcon from '@mui/icons-material/Undo';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Ot } from '../../app.types';
+import EditIcon from '@mui/icons-material/Edit';
 
 export type PageState = {
-  deletOtSt: boolean;
+  editMode: boolean;
   selectedOtId: string | null;
 };
 
@@ -32,7 +33,7 @@ export function Metrology() {
   const [data, isLoading, error, otArr, setOtArr] = useOtData();
   const [sechArr, setSechArr] = useSechData();
   const [pageState, setPageState] = useState<PageState>({
-    deletOtSt: false,
+    editMode: false,
     selectedOtId: null,
   });
 
@@ -40,15 +41,15 @@ export function Metrology() {
     {
       icon: <IconDelOt />,
       name: '',
-      do: () => {
-        setPageState((st) => ({ ...st, deletOtSt: true }));
-      },
+      do: () => {},
     },
 
     {
       icon: <IconEdit />,
       name: '',
-      do: () => {},
+      do: () => {
+        setPageState((st) => ({ ...st, editMode: true }));
+      },
     },
   ];
 
@@ -95,12 +96,12 @@ export function Metrology() {
           {/* <Typography variant="h6" sx={{ mr: 5 }}>
             {appState.naimSechShort}
           </Typography> */}
-          {pageState.deletOtSt && (
-            <ButtonGroup>
+          {pageState.editMode && (
+            <ButtonGroup sx={{ margin: '0 auto' }}>
               <Button
                 variant="contained"
                 onClick={() => {
-                  setPageState((st) => ({ ...st, deletOtSt: false }));
+                  setPageState((st) => ({ ...st, editMode: false }));
                 }}
               >
                 отмена
@@ -109,7 +110,6 @@ export function Metrology() {
                 variant="contained"
                 disabled={!pageState.selectedOtId}
                 color="error"
-                sx={{ width: 50 }}
                 onClick={() => {
                   otHistory.push(otArr);
                   setOtArr((st) =>
@@ -122,9 +122,15 @@ export function Metrology() {
               <Button
                 variant="contained"
                 color="secondary"
+                disabled={!pageState.selectedOtId}
+              >
+                <EditIcon />
+              </Button>
+              {/* <Button
+                variant="contained"
+                color="secondary"
                 disabled={otHistory.length < 1}
                 onClick={(e) => {
-                  // const prevIndex = siArrHistory.current.length - 2;
                   if (otHistory.length > 0) {
                     setOtArr(otHistory[otHistory.length - 1]);
                     otHistory.pop();
@@ -136,11 +142,10 @@ export function Metrology() {
               <Button
                 variant="contained"
                 color="error"
-                // disabled={appState.isSiStateSave}
-                // onClick={saveSiData}
+                disabled={otHistory.length < 1}
               >
                 <SaveIcon />
-              </Button>
+              </Button> */}
             </ButtonGroup>
           )}
           <SpeedDialNav actions={actions} />
