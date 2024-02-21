@@ -856,47 +856,49 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
               login
             </Button>
           )}
-          <ButtonGroup>
-            <Button
-              variant="contained"
-              disabled={!isLoggedin}
-              color={appState.isEdit2 ? 'warning' : 'primary'}
-              sx={{ width: 80 }}
-              onClick={() => {
-                if (!appState.isEdit2) {
-                  siArrHistory.current = [siState];
-                }
-                setAppState((st) => ({ ...st, isEdit2: !st.isEdit2 }));
-              }}
-            >
-              {/* isEdit {String(appState.isEdit2)} */}
-              {!appState.isEdit2 ? 'read' : 'edit'}
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              disabled={siArrHistory.current.length < 2}
-              onClick={(e) => {
-                // const prevIndex = siArrHistory.current.length - 2;
-                if (siArrHistory.current.length - 2 >= 0) {
-                  setSiState(
-                    siArrHistory.current[siArrHistory.current.length - 2]
-                  );
-                  siArrHistory.current.pop();
-                }
-              }}
-            >
-              <UndoIcon />
-            </Button>{' '}
-            <Button
-              variant="contained"
-              color="error"
-              disabled={appState.isSiStateSave}
-              onClick={saveSiData}
-            >
-              <SaveIcon />
-            </Button>
-          </ButtonGroup>
+          {!pageState.isDelIkMode && (
+            <ButtonGroup>
+              <Button
+                variant="contained"
+                disabled={!isLoggedin}
+                color={appState.isEdit2 ? 'warning' : 'primary'}
+                sx={{ width: 80 }}
+                onClick={() => {
+                  if (!appState.isEdit2) {
+                    siArrHistory.current = [siState];
+                  }
+                  setAppState((st) => ({ ...st, isEdit2: !st.isEdit2 }));
+                }}
+              >
+                {/* isEdit {String(appState.isEdit2)} */}
+                {!appState.isEdit2 ? 'read' : 'edit'}
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                disabled={siArrHistory.current.length < 2}
+                onClick={(e) => {
+                  // const prevIndex = siArrHistory.current.length - 2;
+                  if (siArrHistory.current.length - 2 >= 0) {
+                    setSiState(
+                      siArrHistory.current[siArrHistory.current.length - 2]
+                    );
+                    siArrHistory.current.pop();
+                  }
+                }}
+              >
+                <UndoIcon />
+              </Button>{' '}
+              <Button
+                variant="contained"
+                color="error"
+                disabled={appState.isSiStateSave}
+                onClick={saveSiData}
+              >
+                <SaveIcon />
+              </Button>
+            </ButtonGroup>
+          )}
 
           {pageState.isDelIkMode && (
             <ButtonGroup>
