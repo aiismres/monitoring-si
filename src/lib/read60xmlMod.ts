@@ -383,6 +383,7 @@ export async function read60xmlMod(file: File, siAr: ISiObj1[]) {
           console.log('else');
 
           const siObj: ISiObj1 = {
+            id: nanoid(),
             numTiShem60Pre: {
               v: '',
               status: '',

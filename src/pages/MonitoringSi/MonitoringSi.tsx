@@ -59,6 +59,7 @@ import { ReactComponent as IconEdit } from '../../Icons/IconEdit.svg';
 import { ReactComponent as IconEdit2 } from '../../Icons/IconEdit2.svg';
 import { ReactComponent as IconInfo } from '../../Icons/IconInfo.svg';
 import { ReactComponent as IconSverka2 } from '../../Icons/IconSverka2.svg';
+import { ReactComponent as IconDelIK } from '../../Icons/IconDelIK.svg';
 import { useNavigate } from 'react-router-dom';
 import { SaveBtn } from '../../components/SaveBtn';
 import { AlertSucErr } from '../../components/AlertSucErr';
@@ -72,6 +73,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useSWR from 'swr';
 import { useSiData } from '../../hooks/useSiData';
 import { InfoDialog } from '../../components/InfoDialog';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 // типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {
@@ -85,7 +87,18 @@ interface IProps {
   setAppState: Dispatch<SetStateAction<IAppState>>;
 }
 
+type PageState = {
+  isDelIkMode: boolean;
+  selectedIkId: string | null;
+};
+
+let deleteIkHistory: ISiObj1[][] = [];
+
 export function MonitoringSi({ appState, setAppState }: IProps) {
+  const [pageState, setPageState] = useState<PageState>({
+    isDelIkMode: false,
+    selectedIkId: null,
+  });
   // const [appState, setAppState] = useState<IAppState>({
   //   // selectedCell: {},
   //   // colOrderOpt: 'opt1',
@@ -513,6 +526,9 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
           const kttKtn = siObj.ktnSop.v.split('/');
           siObj.ktnSop.v = String(Number(kttKtn[0]) / Number(kttKtn[1]));
         }
+        if (!siObj.id) {
+          siObj.id = nanoid();
+        }
       });
       setSiState(siStateMod.current);
       setSelectedItems([]);
@@ -617,6 +633,13 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
       do: () => {
         console.log(siState);
         exportSv1Mod(siState);
+      },
+    },
+    {
+      icon: <IconDelIK />,
+      name: '',
+      do: () => {
+        setPageState((st) => ({ ...st, isDelIkMode: true }));
       },
     },
   ];
@@ -782,7 +805,21 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
                 </td>
               );
             });
-            return <tr key={String(item.id)}>{tdContent}</tr>;
+            return (
+              <tr
+                key={String(item.id)}
+                onClick={() => {
+                  setPageState((st) => ({ ...st, selectedIkId: item.id }));
+                }}
+                className={
+                  pageState.isDelIkMode && pageState.selectedIkId === item.id
+                    ? styles.changed
+                    : ''
+                }
+              >
+                {tdContent}
+              </tr>
+            );
           })}
         </tbody>
       </table>
@@ -850,7 +887,7 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
               }}
             >
               <UndoIcon />
-            </Button>
+            </Button>{' '}
             <Button
               variant="contained"
               color="error"
@@ -860,6 +897,62 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
               <SaveIcon />
             </Button>
           </ButtonGroup>
+
+          {pageState.isDelIkMode && (
+            <ButtonGroup>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setPageState((st) => ({
+                    ...st,
+                    isDelIkMode: false,
+                    selectedIkId: null,
+                  }));
+                }}
+              >
+                отмена
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                disabled={!pageState.isDelIkMode || !pageState.selectedIkId}
+                onClick={() => {
+                  deleteIkHistory.push(siState);
+                  setSiState((st) =>
+                    st.filter((item) => item.id !== pageState.selectedIkId)
+                  );
+                  setPageState((st) => ({ ...st, selectedIkId: null }));
+                }}
+              >
+                <DeleteIcon />
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                disabled={!deleteIkHistory.length}
+                onClick={(e) => {
+                  // const prevIndex = siArrHistory.current.length - 2;
+                  if (deleteIkHistory.length > 0) {
+                    setSiState(deleteIkHistory[deleteIkHistory.length - 1]);
+                    deleteIkHistory.pop();
+                  }
+                }}
+              >
+                <UndoIcon />
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                disabled={!deleteIkHistory.length}
+                onClick={() => {
+                  saveSiData();
+                  deleteIkHistory = [];
+                }}
+              >
+                <SaveIcon />
+              </Button>
+            </ButtonGroup>
+          )}
 
           <SpeedDialNav actions={actions} />
         </Toolbar>

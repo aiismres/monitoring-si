@@ -95,7 +95,7 @@ interface BigObject<I1, I2> {
 
 // export interface ISiObj1 extends IStringObj {
 export interface ISiObj1 {
-  id?: string;
+  id: string;
   // tiAiis: {
   //   v: 'да' | 'нет';
   // };
