@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './planrabot.module.css';
 import { Ot, SechData } from '../../app.types';
 import { TextEditor } from '../../components/TextEditor';
@@ -8,6 +8,7 @@ import {
   Button,
   ButtonGroup,
   Fade,
+  FormControlLabel,
   Paper,
   Popper,
   Toolbar,
@@ -31,10 +32,16 @@ import { CellPRDate } from '../../components/CellPRDate';
 import { CalendarPopSimple } from '../../components/CalendarPopSimple';
 import { CellSech } from '../../components/CellSech';
 import { CellOt } from '../../components/CellOt';
+import Switch from '@mui/material/Switch';
+import { SpeedDialNav } from '../../components/SpeedDialNav';
+import { ReactComponent as IconEdit } from '../../Icons/IconEdit.svg';
+import EditIcon from '@mui/icons-material/Edit';
 
 // dayjs.locale(dayjs_ru);
 interface Props {}
-interface PageState {}
+interface PageState {
+  editMode: boolean;
+}
 
 export interface SelectCell {
   sechIndex: number | null;
@@ -75,11 +82,13 @@ export function isKeyOfOt(val: any, ot?: Ot): val is keyof Ot {
   }
 }
 
+let sechArrSource: SechData[] = [];
+
 export function Planrabot() {
   const [sechArr, setSechArr, otArr, setOtArr] = useSechData();
   const [isCalOpen, setIsCalOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [pageState, setPageState] = useState<PageState>({});
+  const [pageState, setPageState] = useState<PageState>({ editMode: false });
   const [selectCell, setSelectCell] = useState<SelectCell>({
     sechIndex: null,
     otId: null,
@@ -122,6 +131,25 @@ export function Planrabot() {
     // setSelectCell({ sechIndex, otId, param, value });
   }
 
+  function aiisGpeFilter(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      sechArrSource = structuredClone(sechArr);
+      setSechArr((st) => st.filter((sech) => sech.sobstvAiis.includes('ГПЭ')));
+    } else {
+      setSechArr(sechArrSource);
+    }
+  }
+
+  const actions = [
+    {
+      icon: <IconEdit />,
+      name: '',
+      do: () => {
+        setPageState((st) => ({ ...st, editMode: true }));
+      },
+    },
+  ];
+
   return (
     <>
       {/* <TextEditor /> */}
@@ -141,9 +169,9 @@ export function Planrabot() {
             <th>Комментарии</th>
             <th>№ ГР</th>
             <th>Наим. АИИС</th>
-            <th>СД СОП</th>
+            <th>__СД&nbsp;СОП__</th>
             <th>Изм. АИИС</th>
-            <th>Тип изм. АИИС</th>
+            <th>Тип&nbsp;изм. АИИС</th>
             <th>Необх. работы</th>
             <th>Раб. запл.?</th>
             <th>Договор</th>
@@ -500,51 +528,56 @@ export function Planrabot() {
       </table>
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
-          <ButtonGroup>
-            <Button
-              variant="contained"
-              // disabled={!isLoggedin}
-              // color={appState.isEdit2 ? 'warning' : 'primary'}
-              sx={{ width: 80 }}
-              // onClick={() => {
-              //   if (!appState.isEdit2) {
-              //     siArrHistory.current = [siState];
-              //   }
-              //   setAppState((st) => ({ ...st, isEdit2: !st.isEdit2 }));
-              // }}
-            >
-              {/* {!appState.isEdit2 ? 'read' : 'edit'} */}
-              read
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              // disabled={siArrHistory.current.length < 2}
-              // onClick={(e) => {
-              //   // const prevIndex = siArrHistory.current.length - 2;
-              //   if (siArrHistory.current.length - 2 >= 0) {
-              //     setSiState(
-              //       siArrHistory.current[siArrHistory.current.length - 2]
-              //     );
-              //     siArrHistory.current.pop();
-              //   }
-              // }}
-            >
-              <UndoIcon />
-            </Button>
-            <Button
-              variant="contained"
-              color="error"
-              // disabled={appState.isSiStateSave}
-              // onClick={saveSiData}
-            >
-              <SaveIcon />
-            </Button>
-          </ButtonGroup>
+          <FormControlLabel
+            control={<Switch color="default" onChange={aiisGpeFilter} />}
+            label="ГПЭ"
+          />
+
+          {pageState.editMode && (
+            <ButtonGroup sx={{ margin: '0 auto' }}>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setPageState((st) => ({ ...st, editMode: false }));
+                }}
+              >
+                отмена
+              </Button>
+
+              <Button
+                variant="contained"
+                color="secondary"
+                // disabled={!pageState.selectedOtId}
+              >
+                <EditIcon />
+              </Button>
+              {/* <Button
+                variant="contained"
+                color="secondary"
+                disabled={otHistory.length < 1}
+                onClick={(e) => {
+                  if (otHistory.length > 0) {
+                    setOtArr(otHistory[otHistory.length - 1]);
+                    otHistory.pop();
+                  }
+                }}
+              >
+                <UndoIcon />
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                disabled={otHistory.length < 1}
+              >
+                <SaveIcon />
+              </Button> */}
+            </ButtonGroup>
+          )}
           {/* <DatePicker
           // defaultValue={dayjs('2022-04-17')}
           // sx={{ display: 'none' }}
           /> */}
+          <SpeedDialNav actions={actions} />
         </Toolbar>
       </AppBar>
       {/* <Popper
