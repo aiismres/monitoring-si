@@ -170,10 +170,10 @@ export function Planrabot() {
             <th>Кр-й срок подачи док</th>
             <th>Статус комплекта</th>
             <th>План. дата подачи</th>
-            <th>Комментарии</th>
+            <th style={{ minWidth: '200px' }}>Комментарии</th>
             <th>№ ГР</th>
             <th>Наим. АИИС</th>
-            <th>__СД&nbsp;СОП__</th>
+            <th style={{ minWidth: '90px' }}>СД&nbsp;СОП</th>
             <th>Изм. АИИС</th>
             <th>Тип&nbsp;изм. АИИС</th>
             <th>Необх. работы</th>

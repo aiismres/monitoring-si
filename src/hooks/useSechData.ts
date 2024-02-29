@@ -42,8 +42,10 @@ export function useSechData() {
           setSechArr(
             secheniya.filter((sech) => sech.sobstvAiis.includes('ГПЭ'))
           );
+          document.title = 'План работ ГПЭ';
         } else {
           setSechArr(secheniya);
+          document.title = 'План работ';
         }
       } else {
         alert('Ошибка HTTP: ' + responseSech.status);
