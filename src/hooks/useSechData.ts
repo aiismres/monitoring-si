@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Ot, SechData } from '../app.types';
+import { useParams } from 'react-router-dom';
 
 export function useSechData() {
   const [sechArr, setSechArr] = useState<SechData[]>([]);
   const [otArr, setOtArr] = useState<Ot[]>([]);
-
+  const { company } = useParams();
+  console.log(company);
   useEffect(() => {
     (async () => {
       let responseSech = await fetch('/api/readsech');
@@ -35,7 +37,14 @@ export function useSechData() {
             );
           }
         });
-        setSechArr(secheniya);
+        if (company === 'gpe') {
+          console.log(company, company === 'gpe');
+          setSechArr(
+            secheniya.filter((sech) => sech.sobstvAiis.includes('ГПЭ'))
+          );
+        } else {
+          setSechArr(secheniya);
+        }
       } else {
         alert('Ошибка HTTP: ' + responseSech.status);
       }

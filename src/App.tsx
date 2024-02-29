@@ -146,7 +146,7 @@ function App() {
               />
             }
           />
-          <Route path="/planrabot" element={<Planrabot />} />
+          <Route path="/planrabot/:company?" element={<Planrabot />} />
           <Route path="/texteditor" element={<TextEditor />} />
           <Route path="/metrology" element={<Metrology />} />
         </Routes>

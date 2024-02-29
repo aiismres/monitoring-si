@@ -36,6 +36,7 @@ import Switch from '@mui/material/Switch';
 import { SpeedDialNav } from '../../components/SpeedDialNav';
 import { ReactComponent as IconEdit } from '../../Icons/IconEdit.svg';
 import EditIcon from '@mui/icons-material/Edit';
+import { useParams } from 'react-router-dom';
 
 // dayjs.locale(dayjs_ru);
 interface Props {}
@@ -96,6 +97,7 @@ export function Planrabot() {
     otParam: null,
     value: '',
   });
+  const { company } = useParams();
 
   const sechKeys: SechKeys = {};
 
@@ -135,8 +137,10 @@ export function Planrabot() {
     if (e.target.checked) {
       sechArrSource = structuredClone(sechArr);
       setSechArr((st) => st.filter((sech) => sech.sobstvAiis.includes('ГПЭ')));
+      console.log(sechArr);
     } else {
       setSechArr(sechArrSource);
+      console.log(sechArr);
     }
   }
 
@@ -528,10 +532,12 @@ export function Planrabot() {
       </table>
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
-          <FormControlLabel
-            control={<Switch color="default" onChange={aiisGpeFilter} />}
-            label="ГПЭ"
-          />
+          {!company && (
+            <FormControlLabel
+              control={<Switch color="default" onChange={aiisGpeFilter} />}
+              label="ГПЭ"
+            />
+          )}
 
           {pageState.editMode && (
             <ButtonGroup sx={{ margin: '0 auto' }}>
