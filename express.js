@@ -112,7 +112,7 @@ app.get('/monitoringsi/sverka2', auth(), (req, res) => {
   res.sendFile(path.resolve('./build/index.html'));
 });
 
-app.get('/planrabot', auth(), (req, res) => {
+app.get('/planrabot/:company?', auth(), (req, res) => {
   res.sendFile(path.resolve('./build/index.html'));
 });
 
