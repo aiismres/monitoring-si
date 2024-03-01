@@ -81,14 +81,15 @@ export function OtItem({ ot, pageState, setPageState, sechArr }: Props) {
       : '';
 
   function rowStyle() {
-    if (pageState.editMode && pageState.selectedOtId === ot._id) {
+    if (pageState.editMode && pageState.selectedOt?._id === ot._id) {
       return styles.borderRed;
     }
   }
+
   return (
     <tr
       onClick={() => {
-        setPageState((st) => ({ ...st, selectedOtId: ot._id }));
+        setPageState((st) => ({ ...st, selectedOt: ot }));
       }}
       className={rowStyle()}
     >

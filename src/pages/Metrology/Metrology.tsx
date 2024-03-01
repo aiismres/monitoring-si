@@ -21,10 +21,13 @@ import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Ot } from '../../app.types';
 import EditIcon from '@mui/icons-material/Edit';
+import { EditOtDialog } from '../../components/forMetrologyPage/EditOtDialog';
 
 export type PageState = {
   editMode: boolean;
-  selectedOtId: string | null;
+  selectedOt: Ot | null;
+  // selectedOtId: string | null;
+  isEditOtDialogOpen: boolean;
 };
 
 const otHistory: Ot[][] = [];
@@ -34,7 +37,9 @@ export function Metrology() {
   const [sechArr, setSechArr] = useSechData();
   const [pageState, setPageState] = useState<PageState>({
     editMode: false,
-    selectedOtId: null,
+    selectedOt: null,
+    // selectedOtId: null,
+    isEditOtDialogOpen: false,
   });
 
   const actions = [
@@ -108,12 +113,12 @@ export function Metrology() {
               </Button>
               <Button
                 variant="contained"
-                disabled={!pageState.selectedOtId}
+                disabled={!pageState.selectedOt}
                 color="error"
                 onClick={() => {
                   otHistory.push(otArr);
                   setOtArr((st) =>
-                    st.filter((ot) => ot._id !== pageState.selectedOtId)
+                    st.filter((ot) => ot._id !== pageState.selectedOt?._id)
                   );
                 }}
               >
@@ -122,7 +127,10 @@ export function Metrology() {
               <Button
                 variant="contained"
                 color="secondary"
-                disabled={!pageState.selectedOtId}
+                disabled={!pageState.selectedOt}
+                onClick={() => {
+                  setPageState((st) => ({ ...st, isEditOtDialogOpen: true }));
+                }}
               >
                 <EditIcon />
               </Button>
@@ -151,6 +159,7 @@ export function Metrology() {
           <SpeedDialNav actions={actions} />
         </Toolbar>
       </AppBar>
+      <EditOtDialog pageState={pageState} setPageState={setPageState} />
     </>
   );
 }
