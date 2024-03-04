@@ -99,6 +99,14 @@ export function Planrabot() {
   });
   const { company } = useParams();
 
+  useEffect(() => {
+    if (company === 'gpe') {
+      document.title = 'План работ ГПЭ';
+    } else {
+      document.title = 'План работ';
+    }
+  }, []);
+
   const sechKeys: SechKeys = {};
 
   for (const key in sechArr[0]) {
@@ -535,7 +543,7 @@ export function Planrabot() {
           {!company && (
             <FormControlLabel
               control={<Switch color="default" onChange={aiisGpeFilter} />}
-              label="ГПЭ"
+              label="Все / ГПЭ"
             />
           )}
           {company === 'gpe' && (

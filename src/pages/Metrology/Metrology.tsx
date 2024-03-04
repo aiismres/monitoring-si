@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './metrology.module.css';
 import { useOtData } from '../../hooks/useOtData';
 import {
@@ -45,6 +45,10 @@ export function Metrology() {
     isEditOtDialogOpen: false,
     isDeleteOtDialogOpen: false,
   });
+
+  useEffect(() => {
+    document.title = 'ОТ Мониторинг';
+  }, []);
 
   const actions = [
     {

@@ -38,14 +38,11 @@ export function useSechData() {
           }
         });
         if (company === 'gpe') {
-          console.log(company, company === 'gpe');
           setSechArr(
             secheniya.filter((sech) => sech.sobstvAiis.includes('ГПЭ'))
           );
-          document.title = 'План работ ГПЭ';
         } else {
           setSechArr(secheniya);
-          document.title = 'План работ';
         }
       } else {
         alert('Ошибка HTTP: ' + responseSech.status);
