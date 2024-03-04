@@ -50,13 +50,15 @@ export function DeleteOtDialog({ pageState, setPageState, sechArr }: Props) {
             <OtTableHead />
 
             <tbody>
-              <OtItem
-                key={selectedOt?._id}
-                ot={selectedOt!}
-                pageState={pageState}
-                setPageState={setPageState}
-                sechArr={sechArr}
-              />
+              {selectedOt && (
+                <OtItem
+                  key={selectedOt?._id}
+                  ot={selectedOt}
+                  pageState={pageState}
+                  setPageState={setPageState}
+                  sechArr={sechArr}
+                />
+              )}
             </tbody>
           </table>
         </Box>
@@ -79,6 +81,7 @@ export function DeleteOtDialog({ pageState, setPageState, sechArr }: Props) {
             });
             console.log('x6', x6);
             mutate('/api/readot');
+            setPageState((st) => ({ ...st, selectedOt: null }));
           }}
         >
           да, удалить

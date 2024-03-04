@@ -538,7 +538,9 @@ export function Planrabot() {
               label="ГПЭ"
             />
           )}
-
+          {company === 'gpe' && (
+            <Typography>План работ Газпром энерго</Typography>
+          )}
           {pageState.editMode && (
             <ButtonGroup sx={{ margin: '0 auto' }}>
               <Button
