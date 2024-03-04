@@ -15,12 +15,16 @@ import {
   TextField,
 } from '@mui/material';
 import { PageState } from '../../../pages/Metrology';
+import { SechData } from '../../../app.types';
+import { OtItem } from '../OtItem';
+import { OtTableHead } from '../OtTableHead';
 
 type Props = {
   pageState: PageState;
   setPageState: React.Dispatch<React.SetStateAction<PageState>>;
+  sechArr: SechData[];
 };
-export function EditOtDialog({ pageState, setPageState }: Props) {
+export function EditOtDialog({ pageState, setPageState, sechArr }: Props) {
   const { selectedOt } = pageState;
   function handleClose() {
     setPageState((st) => ({ ...st, isEditOtDialogOpen: false }));
@@ -32,7 +36,8 @@ export function EditOtDialog({ pageState, setPageState }: Props) {
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
-      maxWidth={'lg'}
+      maxWidth={'xl'}
+      // fullWidth={true}
     >
       <DialogTitle id="alert-dialog-title">
         {'Редактирование ' +
@@ -44,7 +49,7 @@ export function EditOtDialog({ pageState, setPageState }: Props) {
       </DialogTitle>
       <DialogContent>
         <Box sx={{ paddingTop: 1 }}>
-          <TextField
+          {/* <TextField
             type="text"
             variant="outlined"
             defaultValue={selectedOt?.gr}
@@ -72,7 +77,39 @@ export function EditOtDialog({ pageState, setPageState }: Props) {
               <MenuItem value={'да'}>да</MenuItem>
               <MenuItem value={'нет'}>нет</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
+          <table>
+            <OtTableHead />
+
+            {/* <thead>
+              <tr>
+                <th>ГР</th>
+                <th>Наим 1</th>
+                <th>Наим 2</th>
+                <th>СД СОП</th>
+                <th>изм</th>
+                <th>тип изм</th>
+                <th>Необх раб</th>
+                <th>раб заплан</th>
+                <th>Договор</th>
+                <th>Выезд</th>
+                <th>ВНИИМС</th>
+                <th>РСТ</th>
+                <th>Приказ</th>
+                <th>Оформ СОП</th>
+                <th>id</th>
+              </tr>
+            </thead> */}
+            <tbody>
+              <OtItem
+                key={selectedOt?._id}
+                ot={selectedOt!}
+                pageState={pageState}
+                setPageState={setPageState}
+                sechArr={sechArr}
+              />
+            </tbody>
+          </table>
         </Box>
       </DialogContent>
       <DialogActions>

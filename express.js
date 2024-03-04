@@ -232,6 +232,15 @@ app.get('/api/readot', async (req, res) => {
   res.send(x);
 });
 
+app.delete('/api/delot', auth(), async (req, res) => {
+  console.log('/api/delot', req.body._id);
+  let id = req.body._id;
+  let o_id = new ObjectId(id);
+  let result = await OtDb.deleteOne({ _id: o_id });
+  console.log('/api/delot', result);
+  res.send(result);
+});
+
 app.post('/api/delsech', async (req, res) => {
   console.log('/api/delsech', req.body.id);
 

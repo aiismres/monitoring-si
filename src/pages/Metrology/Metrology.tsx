@@ -22,12 +22,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Ot } from '../../app.types';
 import EditIcon from '@mui/icons-material/Edit';
 import { EditOtDialog } from '../../components/forMetrologyPage/EditOtDialog';
+import { OtTableHead } from '../../components/forMetrologyPage/OtTableHead';
+import { DeleteOtDialog } from '../../components/forMetrologyPage/DeleteOtDialog';
 
 export type PageState = {
   editMode: boolean;
   selectedOt: Ot | null;
   // selectedOtId: string | null;
   isEditOtDialogOpen: boolean;
+  isDeleteOtDialogOpen: boolean;
 };
 
 const otHistory: Ot[][] = [];
@@ -40,6 +43,7 @@ export function Metrology() {
     selectedOt: null,
     // selectedOtId: null,
     isEditOtDialogOpen: false,
+    isDeleteOtDialogOpen: false,
   });
 
   const actions = [
@@ -65,25 +69,7 @@ export function Metrology() {
   return (
     <>
       <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>ГР</th>
-            <th>Наим 1</th>
-            <th>Наим 2</th>
-            <th>СД СОП</th>
-            <th>изм</th>
-            <th>тип изм</th>
-            <th>Необх раб</th>
-            <th>раб заплан</th>
-            <th>Договор</th>
-            <th>Выезд</th>
-            <th>ВНИИМС</th>
-            <th>РСТ</th>
-            <th>Приказ</th>
-            <th>Оформ СОП</th>
-            <th>id</th>
-          </tr>
-        </thead>
+        <OtTableHead />
         <tbody>
           {otArr?.map((ot) => (
             <OtItem
@@ -113,13 +99,19 @@ export function Metrology() {
               </Button>
               <Button
                 variant="contained"
-                disabled={!pageState.selectedOt}
+                disabled={
+                  !pageState.selectedOt ||
+                  sechArr.some((sech) =>
+                    sech.metrology.includes(pageState.selectedOt?._id || '')
+                  )
+                }
                 color="error"
                 onClick={() => {
-                  otHistory.push(otArr);
-                  setOtArr((st) =>
-                    st.filter((ot) => ot._id !== pageState.selectedOt?._id)
-                  );
+                  // otHistory.push(otArr);
+                  // setOtArr((st) =>
+                  //   st.filter((ot) => ot._id !== pageState.selectedOt?._id)
+                  // );
+                  setPageState((st) => ({ ...st, isDeleteOtDialogOpen: true }));
                 }}
               >
                 <DeleteIcon />
@@ -134,32 +126,21 @@ export function Metrology() {
               >
                 <EditIcon />
               </Button>
-              {/* <Button
-                variant="contained"
-                color="secondary"
-                disabled={otHistory.length < 1}
-                onClick={(e) => {
-                  if (otHistory.length > 0) {
-                    setOtArr(otHistory[otHistory.length - 1]);
-                    otHistory.pop();
-                  }
-                }}
-              >
-                <UndoIcon />
-              </Button>
-              <Button
-                variant="contained"
-                color="error"
-                disabled={otHistory.length < 1}
-              >
-                <SaveIcon />
-              </Button> */}
             </ButtonGroup>
           )}
           <SpeedDialNav actions={actions} />
         </Toolbar>
       </AppBar>
-      <EditOtDialog pageState={pageState} setPageState={setPageState} />
+      <EditOtDialog
+        pageState={pageState}
+        setPageState={setPageState}
+        sechArr={sechArr}
+      />
+      <DeleteOtDialog
+        pageState={pageState}
+        setPageState={setPageState}
+        sechArr={sechArr}
+      />
     </>
   );
 }
