@@ -36,3 +36,7 @@
   /* min-width: 90px; */
   white-space: nowrap
 }
+
+.minWidth150 {
+  min-width: 150px;
+}

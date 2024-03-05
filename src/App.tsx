@@ -8,19 +8,20 @@ import { checkData } from './lib/checkDataMod';
 import { nanoid } from 'nanoid';
 import { Planrabot } from './pages/Planrabot';
 import { TextEditor } from './components/TextEditor';
+import { Metrology } from './pages/Metrology';
 import useSWR from 'swr';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import dayjs_ru from 'dayjs/locale/ru';
+// import dayjs_ru from 'dayjs/locale/ru';
+import 'dayjs/locale/ru';
 import updateLocale from 'dayjs/plugin/updateLocale';
-import { Metrology } from './pages/Metrology';
 
-dayjs.locale(dayjs_ru);
-dayjs.extend(updateLocale);
-dayjs.updateLocale('en', {
-  weekStart: 1,
-});
+// dayjs.locale(dayjs_ru);
+// dayjs.extend(updateLocale);
+// dayjs.updateLocale('en', {
+//   weekStart: 1,
+// });
 
 // const fetcher = (url: string) => fetch(url).then((res) => res.json());
 // let url1 = new URL(document.URL);
@@ -117,7 +118,7 @@ function App() {
   // }, []);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
       <BrowserRouter>
         <Routes>
           <Route

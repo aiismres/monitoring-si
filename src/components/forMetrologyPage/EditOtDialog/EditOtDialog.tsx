@@ -18,6 +18,7 @@ import { PageState } from '../../../pages/Metrology';
 import { SechData } from '../../../app.types';
 import { OtItem } from '../OtItem';
 import { OtTableHead } from '../OtTableHead';
+import { OtEditItem } from '../OtEditItem';
 
 type Props = {
   pageState: PageState;
@@ -49,61 +50,13 @@ export function EditOtDialog({ pageState, setPageState, sechArr }: Props) {
       </DialogTitle>
       <DialogContent>
         <Box sx={{ paddingTop: 1 }}>
-          {/* <TextField
-            type="text"
-            variant="outlined"
-            defaultValue={selectedOt?.gr}
-          />
-          <TextField
-            type="text"
-            variant="outlined"
-            defaultValue={selectedOt?.naimAiis1}
-          />
-
-          <TextField
-            type="text"
-            variant="outlined"
-            label="Наим. АИИС 2"
-            defaultValue={selectedOt?.naimAiis2}
-          />
-          <FormControl sx={{ width: '100px' }}>
-            <InputLabel id="izmAiis-select-label">изм. аиис</InputLabel>
-            <Select
-              labelId="izmAiis-select-label"
-              id="demo-simple-select"
-              label="изм. аиис"
-              defaultValue={selectedOt?.izmAiis}
-            >
-              <MenuItem value={'да'}>да</MenuItem>
-              <MenuItem value={'нет'}>нет</MenuItem>
-            </Select>
-          </FormControl> */}
           <table>
             <OtTableHead />
 
-            {/* <thead>
-              <tr>
-                <th>ГР</th>
-                <th>Наим 1</th>
-                <th>Наим 2</th>
-                <th>СД СОП</th>
-                <th>изм</th>
-                <th>тип изм</th>
-                <th>Необх раб</th>
-                <th>раб заплан</th>
-                <th>Договор</th>
-                <th>Выезд</th>
-                <th>ВНИИМС</th>
-                <th>РСТ</th>
-                <th>Приказ</th>
-                <th>Оформ СОП</th>
-                <th>id</th>
-              </tr>
-            </thead> */}
             <tbody>
-              <OtItem
+              <OtEditItem
                 key={selectedOt?._id}
-                ot={selectedOt!}
+                selectedOt={selectedOt!}
                 pageState={pageState}
                 setPageState={setPageState}
                 sechArr={sechArr}

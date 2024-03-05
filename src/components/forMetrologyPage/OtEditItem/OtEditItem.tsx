@@ -1,18 +1,25 @@
-import React from 'react';
-import styles from './otitem.module.css';
+import React, { useState } from 'react';
+import styles from './otedititem.module.css';
 import { Ot, SechData } from '../../../app.types';
-import dayjs from 'dayjs';
-import { useSechData } from '../../../hooks/useSechData';
 import { PageState } from '../../../pages/Metrology';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import dayjs from 'dayjs';
+import dayjs_ru from 'dayjs/locale/ru';
+import { DatePicker } from '@mui/x-date-pickers';
 
 type Props = {
-  ot: Ot;
+  selectedOt: Ot;
   pageState: PageState;
   setPageState: React.Dispatch<React.SetStateAction<PageState>>;
   sechArr: SechData[];
 };
-export function OtItem({ ot, pageState, setPageState, sechArr }: Props) {
+
+export function OtEditItem({
+  selectedOt,
+  pageState,
+  setPageState,
+  sechArr,
+}: Props) {
+  const [ot, setOt] = useState<Ot>(selectedOt);
   const dogovorDate = ot.dogFact || ot.dogPlan;
 
   const dogovorStatus = ot.dogFact
@@ -96,15 +103,28 @@ export function OtItem({ ot, pageState, setPageState, sechArr }: Props) {
 
   return (
     <tr
-      onClick={() => {
-        setPageState((st) => ({ ...st, selectedOt: ot }));
-      }}
-      className={rowStyle()}
+    // onClick={() => {
+    //   setPageState((st) => ({ ...st, selectedOt: ot }));
+    // }}
+    // className={rowStyle()}
     >
       <td className={styles.noWrap}>{ot.gr}</td>
       <td>{ot.naimAiis1}</td>
       <td>{ot.naimAiis2}</td>
-      <td className={styles.noWrap}>{ot.sdSop}</td>
+      <td className={styles.minWidth150}>
+        <DatePicker
+          // label="Controlled picker"
+          views={['year', 'month', 'day']}
+          value={dayjs(ot.sdSop)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              sdSop: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        />
+        {/* {ot.sdSop} */}
+      </td>
       <td>{ot.izmAiis}</td>
       <td>{ot.tipIzmOt}</td>
       <td>{ot.neobhRab}</td>
