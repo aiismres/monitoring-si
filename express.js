@@ -62,8 +62,8 @@ const auth = () => (req, res, next) => {
   console.log('req.cookies', req.cookies);
   if (!req.cookies?.['sessionID']) {
     console.log('нет req.cookies?.[sessionID]');
-    res.status(401).send('no auth');
-    return;
+    // res.status(401).send('no auth');
+    return next();
   } else {
     console.log('req.cookies.sessionID', req.cookies.sessionID, sessionIDObj);
     // let user = DB.users.find(
