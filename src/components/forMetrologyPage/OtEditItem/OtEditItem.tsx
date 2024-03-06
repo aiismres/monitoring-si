@@ -10,16 +10,20 @@ type Props = {
   selectedOt: Ot;
   pageState: PageState;
   setPageState: React.Dispatch<React.SetStateAction<PageState>>;
-  sechArr: SechData[];
+  // sechArr: SechData[];
+  ot: Ot;
+  setOt: React.Dispatch<React.SetStateAction<Ot>>;
 };
 
 export function OtEditItem({
   selectedOt,
   pageState,
   setPageState,
-  sechArr,
+  // sechArr,
+  ot,
+  setOt,
 }: Props) {
-  const [ot, setOt] = useState<Ot>(selectedOt);
+  // const [ot, setOt] = useState<Ot>(selectedOt);
   const dogovorDate = ot.dogFact || ot.dogPlan;
 
   const dogovorStatus = ot.dogFact
@@ -86,9 +90,9 @@ export function OtEditItem({
     ? styles.warning + ' ' + styles.noWrap
     : styles.noWrap;
 
-  const idStatus = sechArr.some((sech) => sech.metrology.includes(ot._id))
-    ? ''
-    : styles.warning;
+  // const idStatus = sechArr.some((sech) => sech.metrology.includes(ot._id))
+  //   ? ''
+  //   : styles.warning;
 
   const rabZaplanStatus =
     dayjs() > dayjs(ot.sdSop).subtract(1, 'years') && ot.rabZaplan !== 'да'
@@ -102,18 +106,12 @@ export function OtEditItem({
   }
 
   return (
-    <tr
-    // onClick={() => {
-    //   setPageState((st) => ({ ...st, selectedOt: ot }));
-    // }}
-    // className={rowStyle()}
-    >
+    <tr>
       <td className={styles.noWrap}>{ot.gr}</td>
       <td>{ot.naimAiis1}</td>
       <td>{ot.naimAiis2}</td>
       <td className={styles.minWidth150}>
         <DatePicker
-          // label="Controlled picker"
           views={['year', 'month', 'day']}
           value={dayjs(ot.sdSop)}
           onChange={(newValue) =>
@@ -123,24 +121,161 @@ export function OtEditItem({
             }))
           }
         />
-        {/* {ot.sdSop} */}
       </td>
       <td>{ot.izmAiis}</td>
       <td>{ot.tipIzmOt}</td>
       <td>{ot.neobhRab}</td>
       <td className={rabZaplanStatus}>{ot.rabZaplan}</td>
-      <td className={dogovorStatus}>{dogovorDate}</td>
-      <td className={vyezdStatus}>{vyezdDate}</td>
-      <td className={vniimsStatus}>{vniimsDate}</td>
-      <td className={rstStatus}>{rstDate}</td>
-      <td className={prikazStatus}>{prikazDate}</td>
-      <td className={oforSopStatus}>{oforSopDate}</td>
-      <td className={idStatus}>{ot._id}</td>
-      {/* {pageState.deletOt && (
-        <td>
-          <RadioButtonUncheckedIcon fontSize="small" />
-        </td>
-      )} */}
+      <td className={styles.minWidth150}>
+        <DatePicker
+          label="план"
+          sx={{ mt: 1, mb: 2 }}
+          views={['year', 'month', 'day']}
+          value={dayjs(ot.dogPlan)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              dogPlan: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        />
+        <DatePicker
+          label="факт"
+          views={['year', 'month', 'day']}
+          value={dayjs(ot.dogFact)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              dogFact: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        />
+      </td>
+      <td className={styles.minWidth150}>
+        <DatePicker
+          label="план"
+          sx={{ mt: 1, mb: 2 }}
+          views={['year', 'month', 'day']}
+          value={dayjs(ot.vyezdPlan)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              vyezdPlan: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        />
+        <DatePicker
+          label="факт"
+          views={['year', 'month', 'day']}
+          value={dayjs(ot.vyezdFact)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              vyezdFact: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        />
+      </td>
+      <td className={styles.minWidth150}>
+        {/* <DatePicker
+          label="план"
+          sx={{ mt: 1, mb: 2 }}
+          views={['year', 'month', 'day']}
+          value={dayjs(vniimsDate)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              vniimsPlan: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        /> */}
+        <DatePicker
+          label="факт"
+          views={['year', 'month', 'day']}
+          value={dayjs(vniimsDate)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              vniimsFact: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        />
+      </td>
+      <td className={styles.minWidth150}>
+        {/* <DatePicker
+          label="план"
+          sx={{ mt: 1, mb: 2 }}
+          views={['year', 'month', 'day']}
+          value={dayjs(rstDate)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              rstPlan: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        /> */}
+        <DatePicker
+          label="факт"
+          views={['year', 'month', 'day']}
+          value={dayjs(rstDate)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              rstFact: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        />
+      </td>
+      <td className={styles.minWidth150}>
+        {/* <DatePicker
+          label="план"
+          sx={{ mt: 1, mb: 2 }}
+          views={['year', 'month', 'day']}
+          value={dayjs(prikazDate)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              prikazPlan: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        /> */}
+        <DatePicker
+          label="факт"
+          views={['year', 'month', 'day']}
+          value={dayjs(prikazDate)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              prikazFact: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        />
+      </td>
+      <td className={styles.minWidth150}>
+        {/* <DatePicker
+          label="план"
+          sx={{ mt: 1, mb: 2 }}
+          views={['year', 'month', 'day']}
+          value={dayjs(oforSopDate)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              prikazPlan: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        /> */}
+        <DatePicker
+          label="факт"
+          views={['year', 'month', 'day']}
+          value={dayjs(oforSopDate)}
+          onChange={(newValue) =>
+            setOt((st) => ({
+              ...st,
+              prikazFact: newValue?.format('YYYY-MM-DD') || '',
+            }))
+          }
+        />
+      </td>
     </tr>
   );
 }

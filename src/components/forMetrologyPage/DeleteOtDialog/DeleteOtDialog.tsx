@@ -13,6 +13,7 @@ import { OtTableHead } from '../OtTableHead';
 import { OtItem } from '../OtItem';
 import { SechData } from '../../../app.types';
 import { useSWRConfig } from 'swr';
+import { deleteOt } from '../../../api/deleteOt';
 
 type Props = {
   pageState: PageState;
@@ -72,14 +73,15 @@ export function DeleteOtDialog({ pageState, setPageState, sechArr }: Props) {
           color="error"
           onClick={async () => {
             handleClose();
-            let x6 = await fetch(`/api/delot`, {
-              method: 'delete',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(selectedOt),
-            });
-            console.log('x6', x6);
+            // let x6 = await fetch(`/api/delot`, {
+            //   method: 'delete',
+            //   headers: {
+            //     'Content-Type': 'application/json',
+            //   },
+            //   body: JSON.stringify(selectedOt),
+            // });
+            // console.log('x6', x6);
+            await deleteOt(selectedOt);
             mutate('/api/readot');
             setPageState((st) => ({ ...st, selectedOt: null }));
           }}

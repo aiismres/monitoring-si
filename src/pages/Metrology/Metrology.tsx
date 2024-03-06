@@ -21,7 +21,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Ot } from '../../app.types';
 import EditIcon from '@mui/icons-material/Edit';
-import { EditOtDialog } from '../../components/forMetrologyPage/EditOtDialog';
+import { EditOtDialog } from '../../components/forMetrologyPage/OtEditDialog';
 import { OtTableHead } from '../../components/forMetrologyPage/OtTableHead';
 import { DeleteOtDialog } from '../../components/forMetrologyPage/DeleteOtDialog';
 
@@ -75,7 +75,7 @@ export function Metrology() {
       <table className={styles.table}>
         <OtTableHead />
         <tbody>
-          {otArr?.map((ot) => (
+          {data?.map((ot) => (
             <OtItem
               key={ot._id}
               ot={ot}
