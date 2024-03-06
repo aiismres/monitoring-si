@@ -131,7 +131,7 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
     }[]
   >([]);
   const [loginDialogIsOpen, setLoginDialogIsOpen] = useState(false);
-  const [isLoggedin, setIsLoggedin] = useState(false);
+  // const [isLoggedin, setIsLoggedin] = useState(false);
   const [loginPassword, setLoginPassword] = useState({
     username: '',
     password: '',
@@ -164,13 +164,13 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
     }
   }, [colsWidthObjZu, tableWidthZu]);
 
-  useEffect(() => {
-    let cookie = document.cookie;
-    console.log(cookie);
-    if (cookie) {
-      setIsLoggedin(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   let cookie = document.cookie;
+  //   console.log(cookie);
+  //   if (cookie) {
+  //     setIsLoggedin(true);
+  //   }
+  // }, []);
 
   const startX = useRef(0);
   const startColWidth = useRef(0);
@@ -838,7 +838,7 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
             only82xml={false}
           />
           <Tips />
-          {isLoggedin ? (
+          {appState.isLoggedin ? (
             <AccountCircleIcon
               fontSize="large"
               sx={{ mr: 1 }}
@@ -860,7 +860,7 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
             <ButtonGroup>
               <Button
                 variant="contained"
-                disabled={!isLoggedin}
+                disabled={!appState.isLoggedin}
                 color={appState.isEdit2 ? 'warning' : 'primary'}
                 sx={{ width: 80 }}
                 onClick={() => {
@@ -1024,7 +1024,7 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
               }).then((res) => {
                 console.log(document.cookie);
                 if (document.cookie) {
-                  setIsLoggedin(true);
+                  setAppState((st) => ({ ...st, isLoggedin: true }));
                 }
               });
             }}

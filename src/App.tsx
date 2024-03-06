@@ -55,67 +55,16 @@ function App() {
     isSuccess: true,
     isInfoOpen: false,
     editableCell: { index: null, param: null },
-  });
-  const [sechInfo, setSechInfo] = useState<ISechInfo>({
-    sechID: '',
-    naimSechShort: '',
-    areaCode: '',
-    areaName: '',
-    sourceDB: '',
-    source60: '',
-    amountTi: 0,
+    isLoggedin: false,
   });
 
-  // const {
-  //   data,
-  //   error,
-  //   isLoading,
-  // }: { data: IResReadSiData1; error: boolean | undefined; isLoading: boolean } =
-  //   useSWR('/api/readsidata', fetcherPost, {
-  //     // revalidateOnFocus: false,
-  //     // revalidateOnMount: false,
-  //     // revalidateOnReconnect: false,
-  //     // refreshWhenOffline: false,
-  //     // refreshWhenHidden: false,
-  //     // refreshInterval: 10000,
-  //   });
-
-  // if (error) {
-  //   console.log('An error has occurred.');
-  // }
-  // if (isLoading) {
-  //   console.log('Loading...');
-  // }
-
-  // useEffect(() => {
-  //   if (data !== undefined) {
-  //     data.si = checkData(data.si);
-  //     data.si.map((item) => (item.id ? item : { ...item, id: nanoid() }));
-  //     setSiState(data.si);
-  //     if (data.sechInfo) {
-  //       setSechInfo(data.sechInfo);
-  //     }
-  //     document.title = data.naimSechShort || 'noName';
-  //   }
-  // }, [data]);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     console.log(document.URL, window.location.search);
-  //     let url = new URL(document.URL);
-
-  //     const naimSechShort =
-  //       url.searchParams.get('naimsechshort') ?? 'defaultNaimSech';
-  //     // document.title = naimSechShort;
-
-  //     const sechID = url.searchParams.get('sechID') ?? 'defaultSechID';
-  //     setAppState({
-  //       ...appState,
-  //       sechID,
-  //       // naimSechShort,
-  //     });
-  //   })();
-  // }, []);
+  useEffect(() => {
+    let cookie = document.cookie;
+    console.log(cookie);
+    if (cookie) {
+      setAppState((st) => ({ ...st, isLoggedin: true }));
+    }
+  }, []);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">

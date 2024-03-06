@@ -25,6 +25,7 @@ export interface IAppState {
   isSuccess: boolean;
   isInfoOpen: boolean;
   editableCell: { index: number | null; param: string | null };
+  isLoggedin: boolean;
 }
 
 export interface IResReadSiData1 {

@@ -27,10 +27,10 @@ type Props = {
   setPageState: React.Dispatch<React.SetStateAction<PageState>>;
   sechArr: SechData[];
 };
-export function EditOtDialog({ pageState, setPageState, sechArr }: Props) {
+export function OtEditDialog({ pageState, setPageState, sechArr }: Props) {
   const { mutate } = useSWRConfig();
+  const [ot, setOt] = useState<Ot>(pageState.selectedOt!);
   const { selectedOt } = pageState;
-  const [ot, setOt] = useState<Ot>(selectedOt!);
 
   function handleClose() {
     setPageState((st) => ({ ...st, isEditOtDialogOpen: false }));

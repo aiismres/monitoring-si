@@ -21,7 +21,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Ot } from '../../app.types';
 import EditIcon from '@mui/icons-material/Edit';
-import { EditOtDialog } from '../../components/forMetrologyPage/OtEditDialog';
+import { OtEditDialog } from '../../components/forMetrologyPage/OtEditDialog';
 import { OtTableHead } from '../../components/forMetrologyPage/OtTableHead';
 import { DeleteOtDialog } from '../../components/forMetrologyPage/DeleteOtDialog';
 
@@ -51,11 +51,11 @@ export function Metrology() {
   }, []);
 
   const actions = [
-    {
-      icon: <IconDelOt />,
-      name: '',
-      do: () => {},
-    },
+    // {
+    //   icon: <IconDelOt />,
+    //   name: '',
+    //   do: () => {},
+    // },
 
     {
       icon: <IconEdit />,
@@ -135,11 +135,13 @@ export function Metrology() {
           <SpeedDialNav actions={actions} />
         </Toolbar>
       </AppBar>
-      <EditOtDialog
-        pageState={pageState}
-        setPageState={setPageState}
-        sechArr={sechArr}
-      />
+      {pageState.selectedOt && (
+        <OtEditDialog
+          pageState={pageState}
+          setPageState={setPageState}
+          sechArr={sechArr}
+        />
+      )}
       <DeleteOtDialog
         pageState={pageState}
         setPageState={setPageState}
