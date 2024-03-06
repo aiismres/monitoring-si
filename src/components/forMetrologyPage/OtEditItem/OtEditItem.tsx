@@ -120,6 +120,11 @@ export function OtEditItem({
               sdSop: newValue?.format('YYYY-MM-DD') || '',
             }))
           }
+          slotProps={{
+            actionBar: {
+              actions: ['clear'],
+            },
+          }}
         />
       </td>
       <td>{ot.izmAiis}</td>
@@ -138,6 +143,11 @@ export function OtEditItem({
               dogPlan: newValue?.format('YYYY-MM-DD') || '',
             }))
           }
+          slotProps={{
+            actionBar: {
+              actions: ['clear'],
+            },
+          }}
         />
         <DatePicker
           label="факт"
@@ -149,6 +159,11 @@ export function OtEditItem({
               dogFact: newValue?.format('YYYY-MM-DD') || '',
             }))
           }
+          slotProps={{
+            actionBar: {
+              actions: ['clear'],
+            },
+          }}
         />
       </td>
       <td className={styles.minWidth150}>
@@ -163,6 +178,11 @@ export function OtEditItem({
               vyezdPlan: newValue?.format('YYYY-MM-DD') || '',
             }))
           }
+          slotProps={{
+            actionBar: {
+              actions: ['clear'],
+            },
+          }}
         />
         <DatePicker
           label="факт"
@@ -174,6 +194,11 @@ export function OtEditItem({
               vyezdFact: newValue?.format('YYYY-MM-DD') || '',
             }))
           }
+          slotProps={{
+            actionBar: {
+              actions: ['clear'],
+            },
+          }}
         />
       </td>
       <td className={styles.minWidth150}>
@@ -199,6 +224,11 @@ export function OtEditItem({
               vniimsFact: newValue?.format('YYYY-MM-DD') || '',
             }))
           }
+          slotProps={{
+            actionBar: {
+              actions: ['clear'],
+            },
+          }}
         />
       </td>
       <td className={styles.minWidth150}>
@@ -224,6 +254,11 @@ export function OtEditItem({
               rstFact: newValue?.format('YYYY-MM-DD') || '',
             }))
           }
+          slotProps={{
+            actionBar: {
+              actions: ['clear'],
+            },
+          }}
         />
       </td>
       <td className={styles.minWidth150}>
@@ -249,6 +284,11 @@ export function OtEditItem({
               prikazFact: newValue?.format('YYYY-MM-DD') || '',
             }))
           }
+          slotProps={{
+            actionBar: {
+              actions: ['clear'],
+            },
+          }}
         />
       </td>
       <td className={styles.minWidth150}>
@@ -271,9 +311,14 @@ export function OtEditItem({
           onChange={(newValue) =>
             setOt((st) => ({
               ...st,
-              prikazFact: newValue?.format('YYYY-MM-DD') || '',
+              oforSopFact: newValue?.format('YYYY-MM-DD') || '',
             }))
           }
+          slotProps={{
+            actionBar: {
+              actions: ['clear'],
+            },
+          }}
         />
       </td>
     </tr>

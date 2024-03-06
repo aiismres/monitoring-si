@@ -160,7 +160,7 @@ export function Metrology({ appState, setAppState }: Props) {
         <OtEditDialog
           pageState={pageState}
           setPageState={setPageState}
-          sechArr={sechArr}
+          // sechArr={sechArr}
         />
       )}
       <DeleteOtDialog

@@ -25,9 +25,9 @@ import { useSWRConfig } from 'swr';
 type Props = {
   pageState: PageState;
   setPageState: React.Dispatch<React.SetStateAction<PageState>>;
-  sechArr: SechData[];
+  // sechArr: SechData[];
 };
-export function OtEditDialog({ pageState, setPageState, sechArr }: Props) {
+export function OtEditDialog({ pageState, setPageState }: Props) {
   const { mutate } = useSWRConfig();
   const [ot, setOt] = useState<Ot>(pageState.selectedOt!);
   const { selectedOt } = pageState;
