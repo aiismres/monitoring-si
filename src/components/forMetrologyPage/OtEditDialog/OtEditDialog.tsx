@@ -29,7 +29,7 @@ type Props = {
 };
 export function OtEditDialog({ pageState, setPageState }: Props) {
   const { mutate } = useSWRConfig();
-  const [ot, setOt] = useState<Ot>(pageState.selectedOt!);
+  // const [ot, setOt] = useState<Ot>(pageState.selectedOt!);
   const { selectedOt } = pageState;
 
   function handleClose() {
@@ -84,15 +84,15 @@ export function OtEditDialog({ pageState, setPageState }: Props) {
             </thead>
 
             <tbody>
-              {ot && selectedOt && (
+              {pageState.selectedOt && (
                 <OtEditItem
-                  key={selectedOt._id}
-                  selectedOt={selectedOt!}
+                  key={pageState.selectedOt._id}
+                  // selectedOt={selectedOt!}
                   pageState={pageState}
                   setPageState={setPageState}
                   // sechArr={sechArr}
-                  ot={ot}
-                  setOt={setOt}
+                  // ot={ot}
+                  // setOt={setOt}
                 />
               )}
             </tbody>
@@ -106,7 +106,7 @@ export function OtEditDialog({ pageState, setPageState }: Props) {
         <Button
           variant="contained"
           onClick={async () => {
-            await updOt(ot);
+            await updOt(pageState.selectedOt);
             mutate('/api/readot');
             handleClose();
           }}
