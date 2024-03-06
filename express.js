@@ -62,7 +62,8 @@ const auth = () => (req, res, next) => {
   console.log('req.cookies', req.cookies);
   if (!req.cookies?.['sessionID']) {
     console.log('нет req.cookies?.[sessionID]');
-    return next();
+    res.status(401).send('no auth');
+    return;
   } else {
     console.log('req.cookies.sessionID', req.cookies.sessionID, sessionIDObj);
     // let user = DB.users.find(
@@ -317,8 +318,8 @@ app.post('/api/editcell', async (req, res) => {
   res.send(y2);
 });
 
-app.post('/api/editot', async (req, res) => {
-  console.log('/api/editot req.body', req.body._id);
+app.post('/api/editot', auth(), async (req, res) => {
+  console.log('/api/editot req.body', req.body);
   let id = req.body._id;
   let o_id = new ObjectId(id);
   //req.body._id = o_id;
