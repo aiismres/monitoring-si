@@ -26,6 +26,8 @@ export interface IAppState {
   isInfoOpen: boolean;
   editableCell: { index: number | null; param: string | null };
   isLoggedin: boolean;
+  isLoginDialogOpen: boolean;
+  loginPassword: { username: string; password: string };
 }
 
 export interface IResReadSiData1 {

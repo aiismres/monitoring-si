@@ -846,11 +846,11 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
             />
           ) : (
             <Button
-              color="secondary"
-              variant="contained"
+              color="inherit"
+              // variant="outlined"
               sx={{ mr: 2 }}
               onClick={() => {
-                setLoginDialogIsOpen(true);
+                setAppState((st) => ({ ...st, isLoginDialogOpen: true }));
               }}
             >
               login
@@ -968,7 +968,7 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
         sechInfo={sechInfo}
       />
 
-      <Dialog
+      {/* <Dialog
         open={loginDialogIsOpen}
         onClose={() => {
           setLoginDialogIsOpen(false);
@@ -1032,7 +1032,7 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
             login
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 }

@@ -16,26 +16,13 @@ import dayjs from 'dayjs';
 // import dayjs_ru from 'dayjs/locale/ru';
 import 'dayjs/locale/ru';
 import updateLocale from 'dayjs/plugin/updateLocale';
+import { LoginDialog } from './components/LoginDialog';
 
 // dayjs.locale(dayjs_ru);
 // dayjs.extend(updateLocale);
 // dayjs.updateLocale('en', {
 //   weekStart: 1,
 // });
-
-// const fetcher = (url: string) => fetch(url).then((res) => res.json());
-// let url1 = new URL(document.URL);
-
-// const fetcherPost = (url: string) =>
-//   fetch(url, {
-//     method: 'post',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({
-//       id: new URL(document.URL).searchParams.get('sechID'),
-//     }),
-//   }).then((res) => res.json());
 
 function App() {
   const [siState, setSiState] = useState<ISiObj1[]>([]);
@@ -56,6 +43,8 @@ function App() {
     isInfoOpen: false,
     editableCell: { index: null, param: null },
     isLoggedin: false,
+    isLoginDialogOpen: false,
+    loginPassword: { username: '', password: '' },
   });
 
   useEffect(() => {
@@ -98,9 +87,15 @@ function App() {
           />
           <Route path="/planrabot/:company?" element={<Planrabot />} />
           <Route path="/texteditor" element={<TextEditor />} />
-          <Route path="/metrology" element={<Metrology />} />
+          <Route
+            path="/metrology"
+            element={
+              <Metrology appState={appState} setAppState={setAppState} />
+            }
+          />
         </Routes>
       </BrowserRouter>
+      <LoginDialog appState={appState} setAppState={setAppState} />
     </LocalizationProvider>
   );
 }

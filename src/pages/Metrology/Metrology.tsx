@@ -19,11 +19,12 @@ import { OtItem } from '../../components/forMetrologyPage/OtItem';
 import UndoIcon from '@mui/icons-material/Undo';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Ot } from '../../app.types';
+import { IAppState, Ot } from '../../app.types';
 import EditIcon from '@mui/icons-material/Edit';
 import { OtEditDialog } from '../../components/forMetrologyPage/OtEditDialog';
 import { OtTableHead } from '../../components/forMetrologyPage/OtTableHead';
 import { DeleteOtDialog } from '../../components/forMetrologyPage/DeleteOtDialog';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export type PageState = {
   editMode: boolean;
@@ -33,9 +34,14 @@ export type PageState = {
   isDeleteOtDialogOpen: boolean;
 };
 
+type Props = {
+  appState: IAppState;
+  setAppState: React.Dispatch<React.SetStateAction<IAppState>>;
+};
+
 const otHistory: Ot[][] = [];
 
-export function Metrology() {
+export function Metrology({ appState, setAppState }: Props) {
   const [data, isLoading, error, otArr, setOtArr] = useOtData();
   const [sechArr, setSechArr] = useSechData();
   const [pageState, setPageState] = useState<PageState>({
@@ -88,10 +94,25 @@ export function Metrology() {
       </table>
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
-          {/* <Typography variant="h6" sx={{ mr: 5 }}>
-            {appState.naimSechShort}
-          </Typography> */}
-          {pageState.editMode && (
+          {appState.isLoggedin ? (
+            <AccountCircleIcon
+              fontSize="large"
+              sx={{ mr: 1 }}
+              // color="secondary"
+            />
+          ) : (
+            <Button
+              color="inherit"
+              // variant="outlined"
+              sx={{ mr: 2 }}
+              onClick={() => {
+                setAppState((st) => ({ ...st, isLoginDialogOpen: true }));
+              }}
+            >
+              login
+            </Button>
+          )}
+          {pageState.editMode && appState.isLoggedin && (
             <ButtonGroup sx={{ margin: '0 auto' }}>
               <Button
                 variant="contained"
