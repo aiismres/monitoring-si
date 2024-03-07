@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './ottablehead.css';
+import styles from './ottablehead.module.css';
 
 export function OtTableHead() {
   return (
-    <thead>
+    <thead className={styles.table}>
       <tr>
         <th>ГР</th>
         <th>Наим 1</th>

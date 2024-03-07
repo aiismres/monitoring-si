@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { LegacyRef, forwardRef } from 'react';
 import styles from './otitem.module.css';
 import { Ot, SechData } from '../../../app.types';
 import dayjs from 'dayjs';
@@ -12,7 +12,10 @@ type Props = {
   setPageState: React.Dispatch<React.SetStateAction<PageState>>;
   sechArr: SechData[];
 };
-export function OtItem({ ot, pageState, setPageState, sechArr }: Props) {
+export const OtItem = forwardRef(function OtItem(
+  { ot, pageState, setPageState, sechArr }: Props,
+  ref: LegacyRef<HTMLTableRowElement>
+) {
   const dogovorDate = ot.dogFact || ot.dogPlan;
 
   const dogovorStatus = ot.dogFact
@@ -100,6 +103,7 @@ export function OtItem({ ot, pageState, setPageState, sechArr }: Props) {
         setPageState((st) => ({ ...st, selectedOt: ot }));
       }}
       className={rowStyle()}
+      ref={ref}
     >
       <td className={styles.noWrap}>{ot.gr}</td>
       <td>{ot.naimAiis1}</td>
@@ -123,4 +127,4 @@ export function OtItem({ ot, pageState, setPageState, sechArr }: Props) {
       )} */}
     </tr>
   );
-}
+});

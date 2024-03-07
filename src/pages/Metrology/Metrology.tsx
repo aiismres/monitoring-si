@@ -25,6 +25,7 @@ import { OtEditDialog } from '../../components/forMetrologyPage/OtEditDialog';
 import { OtTableHead } from '../../components/forMetrologyPage/OtTableHead';
 import { DeleteOtDialog } from '../../components/forMetrologyPage/DeleteOtDialog';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import FlipMove from 'react-flip-move';
 
 export type PageState = {
   editMode: boolean;
@@ -51,9 +52,11 @@ export function Metrology({ appState, setAppState }: Props) {
     isEditOtDialogOpen: false,
     isDeleteOtDialogOpen: false,
   });
+  // const [testOtArr, setTestOtArr] = useState<Ot[]>();
 
   useEffect(() => {
     document.title = 'ОТ Мониторинг';
+    // setTestOtArr(data);
   }, []);
 
   const actions = [
@@ -80,7 +83,8 @@ export function Metrology({ appState, setAppState }: Props) {
     <>
       <table className={styles.table}>
         <OtTableHead />
-        <tbody>
+        {/* <tbody> */}
+        <FlipMove typeName="tbody">
           {data?.map((ot) => (
             <OtItem
               key={ot._id}
@@ -90,7 +94,8 @@ export function Metrology({ appState, setAppState }: Props) {
               sechArr={sechArr}
             />
           ))}
-        </tbody>
+        </FlipMove>
+        {/* </tbody> */}
       </table>
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
@@ -153,6 +158,23 @@ export function Metrology({ appState, setAppState }: Props) {
               </Button>
             </ButtonGroup>
           )}
+          {/* <Button
+            variant="contained"
+            disabled={
+              !pageState.selectedOt ||
+              sechArr.some((sech) =>
+                sech.metrology.includes(pageState.selectedOt?._id || '')
+              )
+            }
+            color="error"
+            onClick={() => {
+              setTestOtArr((st) =>
+                st?.filter((ot) => ot._id !== pageState.selectedOt?._id)
+              );
+            }}
+          >
+            <DeleteIcon />
+          </Button> */}
           <SpeedDialNav actions={actions} />
         </Toolbar>
       </AppBar>
