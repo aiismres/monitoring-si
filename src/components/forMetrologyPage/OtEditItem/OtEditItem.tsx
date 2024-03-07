@@ -6,6 +6,14 @@ import dayjs from 'dayjs';
 import dayjs_ru from 'dayjs/locale/ru';
 import { DatePicker } from '@mui/x-date-pickers';
 import { produce } from 'immer';
+import {
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material';
 
 type Props = {
   // selectedOt: Ot;
@@ -109,12 +117,55 @@ Props) {
 
   return (
     <tr>
-      <td className={styles.noWrap}>{selectedOt?.gr}</td>
-      <td>{selectedOt?.naimAiis1}</td>
-      <td>{selectedOt?.naimAiis2}</td>
+      <td className={styles.minWidth150}>
+        <TextField
+          // id="standard-basic"
+          label="№ ГР"
+          // variant="standard"
+          value={selectedOt?.gr}
+          onChange={(e) => {
+            setPageState(
+              produce((draft) => {
+                draft.selectedOt!.gr = e.target.value || '';
+              })
+            );
+          }}
+        />
+      </td>
+      <td className={styles.minWidth150}>
+        <TextField
+          // id="standard-basic"
+          label="Наим 1"
+          // variant="standard"
+          value={selectedOt?.naimAiis1}
+          onChange={(e) => {
+            setPageState(
+              produce((draft) => {
+                draft.selectedOt!.naimAiis1 = e.target.value || '';
+              })
+            );
+          }}
+        />
+      </td>
+      <td className={styles.minWidth150}>
+        <TextField
+          // id="standard-basic"
+          label="Наим 2"
+          // variant="standard"
+          value={selectedOt?.naimAiis2}
+          onChange={(e) => {
+            setPageState(
+              produce((draft) => {
+                draft.selectedOt!.naimAiis2 = e.target.value || '';
+              })
+            );
+          }}
+        />
+      </td>
       <td className={styles.minWidth150}>
         <DatePicker
           views={['year', 'month', 'day']}
+          label="СД СОП"
           value={dayjs(selectedOt?.sdSop)}
           onChange={(newValue) =>
             // setOt((st) => ({
@@ -134,10 +185,88 @@ Props) {
           }}
         />
       </td>
-      <td>{selectedOt?.izmAiis}</td>
-      <td>{selectedOt?.tipIzmOt}</td>
-      <td>{selectedOt?.neobhRab}</td>
-      <td className={rabZaplanStatus}>{selectedOt?.rabZaplan}</td>
+      <td>
+        <FormControl sx={{ minWidth: 75 }}>
+          <InputLabel id="demo-simple-select-label">Изм.</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={selectedOt?.izmAiis}
+            label="Изм."
+            onChange={(e) => {
+              setPageState(
+                produce((draft) => {
+                  draft.selectedOt!.izmAiis = e.target.value || '';
+                })
+              );
+            }}
+          >
+            <MenuItem value={'да'}>да</MenuItem>
+            <MenuItem value={'нет'}>нет</MenuItem>
+          </Select>
+        </FormControl>
+      </td>
+      <td>
+        <TextField
+          sx={{ minWidth: 200 }}
+          // id="standard-basic"
+          label="тип изм"
+          // variant="standard"
+          value={selectedOt?.tipIzmOt}
+          onChange={(e) => {
+            setPageState(
+              produce((draft) => {
+                draft.selectedOt!.tipIzmOt = e.target.value || '';
+              })
+            );
+          }}
+        />
+      </td>
+      <td>
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel id="demo-simple-select-label">Необх. раб.</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={selectedOt?.neobhRab}
+            label="Необх. раб."
+            onChange={(e) => {
+              setPageState(
+                produce((draft) => {
+                  draft.selectedOt!.neobhRab = e.target.value || '';
+                })
+              );
+            }}
+          >
+            <MenuItem value={'переаттестация'}>переаттестация</MenuItem>
+            <MenuItem value={'поверка'}>поверка</MenuItem>
+            <MenuItem value={'не требуется'}>не требуется</MenuItem>
+          </Select>
+        </FormControl>
+      </td>
+      <td className={rabZaplanStatus}>
+        <FormControl sx={{ minWidth: 75 }}>
+          <InputLabel id="demo-simple-select-label">раб заплан</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={selectedOt?.rabZaplan}
+            label="раб заплан"
+            onChange={(e) => {
+              setPageState(
+                produce((draft) => {
+                  draft.selectedOt!.rabZaplan = e.target.value || '';
+                })
+              );
+            }}
+          >
+            <MenuItem value={'да'}>да</MenuItem>
+            <MenuItem value={'нет'}>нет</MenuItem>
+            <MenuItem value={'--'}>--</MenuItem>
+          </Select>
+        </FormControl>
+        {selectedOt?.rabZaplan}
+      </td>
       <td className={styles.minWidth150}>
         <DatePicker
           label="план"
@@ -284,7 +413,7 @@ Props) {
         <DatePicker
           label="факт"
           views={['year', 'month', 'day']}
-          value={dayjs(rstDate)}
+          value={dayjs(selectedOt?.vniimsFact)}
           onChange={(newValue) =>
             // setOt((st) => ({
             //   ...st,
@@ -320,7 +449,7 @@ Props) {
         <DatePicker
           label="факт"
           views={['year', 'month', 'day']}
-          value={dayjs(prikazDate)}
+          value={dayjs(selectedOt?.prikazFact)}
           onChange={(newValue) =>
             // setOt((st) => ({
             //   ...st,
@@ -356,7 +485,7 @@ Props) {
         <DatePicker
           label="факт"
           views={['year', 'month', 'day']}
-          value={dayjs(oforSopDate)}
+          value={dayjs(selectedOt?.oforSopFact)}
           onChange={(newValue) =>
             // setOt((st) => ({
             //   ...st,
