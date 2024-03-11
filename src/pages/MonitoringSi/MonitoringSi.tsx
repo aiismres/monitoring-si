@@ -74,6 +74,7 @@ import useSWR from 'swr';
 import { useSiData } from '../../hooks/useSiData';
 import { InfoDialog } from '../../components/InfoDialog';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FlipMove from 'react-flip-move';
 
 // типизация для работы с кастомными атрибутами html тегов (я добавляю тег colname)
 declare module 'react' {
@@ -720,107 +721,110 @@ export function MonitoringSi({ appState, setAppState }: IProps) {
           id="tbodyId1"
           onKeyDown={(e) => handleKeyDown(e)}
           onKeyUp={() => setStatus2(null)}
+          style={{ position: 'relative' }} // необх. для FlipMove
         >
-          {siState.map((item, index) => {
-            let tdContent = appState.colOrder.map((param) => {
-              // let tdContent = colOrderObj[appState.colOrderOpt].map((param) => {
-              let isContenteditable =
-                appState.isEdit &&
-                (param.includes('Sop') ||
-                  param.includes('SchSch') ||
-                  param === 'gr')
-                  ? true
-                  : false;
-              let isContentEditable2 = false;
-              // if (param === 'naimTiSop' && appState.isEdit2)
-              //   isContentEditable2 = item[param].status4 || false;
-              if (
-                index === appState.editableCell.index &&
-                param === appState.editableCell.param
-              ) {
-                isContentEditable2 = true;
-              } else {
-                isContentEditable2 = false;
-              }
-              return (
-                <td
-                  contentEditable={isContenteditable || isContentEditable2}
-                  // key={param + item.id}
-                  colname={param}
-                  className={
-                    styles[param] +
-                    ' ' +
-                    styles[item[param]?.status] +
-                    ' ' +
-                    styles[item[param]?.status2] +
-                    ' ' +
-                    styles[item[param]?.status3]
-                    // +
-                    // ' ' +
-                    // styles[item[param]?.selected]
-                  }
-                  onClick={(e) => {
-                    tdOnClick3(e, index, param);
-                  }}
-                  onDoubleClick={() => {
-                    if (!appState.isEdit2) return;
-                    if (
-                      ['naimTiSop', 'numSchSop', 'tipSchSop'].includes(param)
-                    ) {
-                      console.log('dblClick');
-                      // setSiState((siArr) =>  {
-                      //   let siArrMod = structuredClone(siArr);
-                      //   if (param === 'naimTiSop')
-                      //     siArrMod[index][param].status4 = true;
-                      //   return siArrMod;
-                      // });
+          <FlipMove typeName={null}>
+            {siState.map((item, index) => {
+              let tdContent = appState.colOrder.map((param) => {
+                // let tdContent = colOrderObj[appState.colOrderOpt].map((param) => {
+                let isContenteditable =
+                  appState.isEdit &&
+                  (param.includes('Sop') ||
+                    param.includes('SchSch') ||
+                    param === 'gr')
+                    ? true
+                    : false;
+                let isContentEditable2 = false;
+                // if (param === 'naimTiSop' && appState.isEdit2)
+                //   isContentEditable2 = item[param].status4 || false;
+                if (
+                  index === appState.editableCell.index &&
+                  param === appState.editableCell.param
+                ) {
+                  isContentEditable2 = true;
+                } else {
+                  isContentEditable2 = false;
+                }
+                return (
+                  <td
+                    contentEditable={isContenteditable || isContentEditable2}
+                    // key={param + item.id}
+                    colname={param}
+                    className={
+                      styles[param] +
+                      ' ' +
+                      styles[item[param]?.status] +
+                      ' ' +
+                      styles[item[param]?.status2] +
+                      ' ' +
+                      styles[item[param]?.status3]
+                      // +
+                      // ' ' +
+                      // styles[item[param]?.selected]
+                    }
+                    onClick={(e) => {
+                      tdOnClick3(e, index, param);
+                    }}
+                    onDoubleClick={() => {
+                      if (!appState.isEdit2) return;
+                      if (
+                        ['naimTiSop', 'numSchSop', 'tipSchSop'].includes(param)
+                      ) {
+                        console.log('dblClick');
+                        // setSiState((siArr) =>  {
+                        //   let siArrMod = structuredClone(siArr);
+                        //   if (param === 'naimTiSop')
+                        //     siArrMod[index][param].status4 = true;
+                        //   return siArrMod;
+                        // });
+                        setAppState({
+                          ...appState,
+                          isSiStateSave: false,
+                          editableCell: { index, param },
+                        });
+                      }
+                    }}
+                    onBlur={(e) => {
+                      if (
+                        index === appState.editableCell.index &&
+                        param === appState.editableCell.param
+                      ) {
+                        siArrHistory.current.push(siState);
+                      }
+                      console.log(e.target.innerText);
                       setAppState({
                         ...appState,
-                        isSiStateSave: false,
-                        editableCell: { index, param },
+                        editableCell: { index: null, param: null },
                       });
-                    }
+                      setSiState(
+                        produce((draft) => {
+                          draft[index][param].v = e.target.innerText.trim();
+                        })
+                      );
+                    }}
+                    tabIndex={0}
+                  >
+                    {item[param]?.v}
+                  </td>
+                );
+              });
+              return (
+                <tr
+                  key={String(item.id)}
+                  onClick={() => {
+                    setPageState((st) => ({ ...st, selectedIkId: item.id }));
                   }}
-                  onBlur={(e) => {
-                    if (
-                      index === appState.editableCell.index &&
-                      param === appState.editableCell.param
-                    ) {
-                      siArrHistory.current.push(siState);
-                    }
-                    console.log(e.target.innerText);
-                    setAppState({
-                      ...appState,
-                      editableCell: { index: null, param: null },
-                    });
-                    setSiState(
-                      produce((draft) => {
-                        draft[index][param].v = e.target.innerText.trim();
-                      })
-                    );
-                  }}
-                  tabIndex={0}
+                  className={
+                    pageState.isDelIkMode && pageState.selectedIkId === item.id
+                      ? styles.changed
+                      : ''
+                  }
                 >
-                  {item[param]?.v}
-                </td>
+                  {tdContent}
+                </tr>
               );
-            });
-            return (
-              <tr
-                key={String(item.id)}
-                onClick={() => {
-                  setPageState((st) => ({ ...st, selectedIkId: item.id }));
-                }}
-                className={
-                  pageState.isDelIkMode && pageState.selectedIkId === item.id
-                    ? styles.changed
-                    : ''
-                }
-              >
-                {tdContent}
-              </tr>
-            );
-          })}
+            })}
+          </FlipMove>
         </tbody>
       </table>
 
