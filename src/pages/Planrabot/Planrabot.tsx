@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import styles from './planrabot.module.css';
-import { Ot, SechData } from '../../app.types';
+import { IAppState, Ot, SechData } from '../../app.types';
 import { TextEditor } from '../../components/TextEditor';
 import classNames from 'classnames';
 import {
@@ -37,12 +37,19 @@ import { SpeedDialNav } from '../../components/SpeedDialNav';
 import { ReactComponent as IconEdit } from '../../Icons/IconEdit.svg';
 import EditIcon from '@mui/icons-material/Edit';
 import { useParams } from 'react-router-dom';
+import { CellStatusUS } from '../../components/forPlanRabot/CellStatusUS';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { AlertSucErr } from '../../components/AlertSucErr';
+import { CellDateUS } from '../../components/forPlanRabot/CellDateUS';
 
 // dayjs.locale(dayjs_ru);
-interface Props {}
-interface PageState {
-  editMode: boolean;
+interface Props {
+  appState: IAppState;
+  setAppState: React.Dispatch<React.SetStateAction<IAppState>>;
 }
+export type PagePlanrabotState = {
+  editMode: boolean;
+};
 
 export interface SelectCell {
   sechIndex: number | null;
@@ -85,11 +92,13 @@ export function isKeyOfOt(val: any, ot?: Ot): val is keyof Ot {
 
 let sechArrSource: SechData[] = [];
 
-export function Planrabot() {
+export function Planrabot({ appState, setAppState }: Props) {
   const [sechArr, setSechArr, otArr, setOtArr] = useSechData();
   const [isCalOpen, setIsCalOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [pageState, setPageState] = useState<PageState>({ editMode: false });
+  const [pageState, setPageState] = useState<PagePlanrabotState>({
+    editMode: false,
+  });
   const [selectCell, setSelectCell] = useState<SelectCell>({
     sechIndex: null,
     otId: null,
@@ -322,41 +331,37 @@ export function Planrabot() {
                     />
                   )}
                   {otIndex === 0 && (
-                    <td rowSpan={otAmount} className={styles.bgcWhite}>
-                      Статус комплекта
-                    </td>
-                  )}
-                  {otIndex === 0 && (
-                    // <td
-                    //   rowSpan={otAmount}
-                    //   className={classNames(styles.noWrap, styles.bgcWhite)}
-                    //   // onClick={(e) => {
-                    //   //   openCalendar(
-                    //   //     e,
-                    //   //     sechData,
-                    //   //     sechIndex,
-                    //   //     otIndex,
-                    //   //     'planPodachi'
-                    //   //   );
-                    //   // }}
-                    // >
-                    //   {sechData.planPodachi}
+                    // <td rowSpan={otAmount} className={styles.bgcWhite}>
+                    //   Статус комплекта
                     // </td>
-
-                    <CellSech
-                      value={sechData.planPodachi}
+                    <CellStatusUS
                       otAmount={otAmount}
-                      sechIndex={sechIndex}
-                      param={sechKeys.planPodachi}
-                      anchorEl={anchorEl}
-                      setSelectCell={setSelectCell}
-                      setAnchorEl={setAnchorEl}
-                      setIsCalOpen={setIsCalOpen}
+                      sechData={sechData}
+                      setSechArr={setSechArr}
+                      setAppState={setAppState}
+                      pageState={pageState}
                     />
                   )}
-                  {/* {otIndex === 0 && (
-                    <td rowSpan={otAmount}>{sechData.metrologyKomm}</td>
-                  )} */}
+                  {otIndex === 0 && (
+                    // <CellSech
+                    //   value={sechData.planPodachi}
+                    //   otAmount={otAmount}
+                    //   sechIndex={sechIndex}
+                    //   param={sechKeys.planPodachi}
+                    //   anchorEl={anchorEl}
+                    //   setSelectCell={setSelectCell}
+                    //   setAnchorEl={setAnchorEl}
+                    //   setIsCalOpen={setIsCalOpen}
+                    // />
+                    <CellDateUS
+                      sechData={sechData}
+                      otAmount={otAmount}
+                      pageState={pageState}
+                      setSechArr={setSechArr}
+                      setAppState={setAppState}
+                    />
+                  )}
+
                   {otIndex === 0 && (
                     <td
                       rowSpan={otAmount}
@@ -549,6 +554,24 @@ export function Planrabot() {
           {company === 'gpe' && (
             <Typography>План работ Газпром энерго</Typography>
           )}
+          {appState.isLoggedin ? (
+            <AccountCircleIcon
+              fontSize="large"
+              sx={{ mr: 1 }}
+              // color="secondary"
+            />
+          ) : (
+            <Button
+              color="inherit"
+              // variant="outlined"
+              sx={{ mr: 2 }}
+              onClick={() => {
+                setAppState((st) => ({ ...st, isLoginDialogOpen: true }));
+              }}
+            >
+              login
+            </Button>
+          )}
           {pageState.editMode && (
             <ButtonGroup sx={{ margin: '0 auto' }}>
               <Button
@@ -593,7 +616,7 @@ export function Planrabot() {
           // defaultValue={dayjs('2022-04-17')}
           // sx={{ display: 'none' }}
           /> */}
-          <SpeedDialNav actions={actions} />
+          {appState.isLoggedin && <SpeedDialNav actions={actions} />}
         </Toolbar>
       </AppBar>
       {/* <Popper
@@ -662,6 +685,8 @@ export function Planrabot() {
         setSechArr={setSechArr}
         setOtArr={setOtArr}
       />
+
+      <AlertSucErr appState={appState} setAppState={setAppState} />
     </>
   );
 }

@@ -39,7 +39,7 @@ function App() {
     // classEditBtn: '',
     isSiStateSave: true,
     isMsgOpen: false,
-    isSuccess: true,
+    isSuccess: null,
     isInfoOpen: false,
     editableCell: { index: null, param: null },
     isLoggedin: false,
@@ -85,7 +85,12 @@ function App() {
               />
             }
           />
-          <Route path="/planrabot/:company?" element={<Planrabot />} />
+          <Route
+            path="/planrabot/:company?"
+            element={
+              <Planrabot appState={appState} setAppState={setAppState} />
+            }
+          />
           <Route path="/texteditor" element={<TextEditor />} />
           <Route
             path="/metrology"

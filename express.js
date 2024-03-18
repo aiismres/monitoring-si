@@ -255,50 +255,54 @@ app.post('/api/delsech', async (req, res) => {
   res.send(result);
 });
 
-app.post('/api/editsech', async (req, res) => {
+app.post('/api/editsech', auth(), async (req, res) => {
   console.log('/api/editsech req.body', req.body._id);
-  let id = req.body._id;
-  let o_id = new ObjectId(id);
-  //req.body._id = o_id;
-  //console.log("/api/editsech req.body", req.body._id);
-  let y1 = await secheniyaDb.updateOne(
-    { _id: o_id },
-    {
-      $set: {
-        naimSechShort: req.body.naimSechShort,
-        vidRabot: req.body.vidRabot,
-        soglGtp: req.body.soglGtp,
-        dopusk: req.body.dopusk,
-        sdAs: req.body.sdAs,
-        sdPas: req.body.sdPas,
-        krSrokPodachi: req.body.krSrokPodachi,
-        planPodachi: req.body.planPodachi,
-        metrologyKomm: req.body.metrologyKomm,
-        codirovkaActual: req.body.codirovkaActual,
-        tipIzmCodirovki: req.body.tipIzmCodirovki,
-        zaprosPerecod: req.body.zaprosPerecod,
-        sogl60Dku: req.body.sogl60Dku,
-        sogl60SmezhOtpr: req.body.sogl60SmezhOtpr,
-        sogl60SmezhSogl: req.body.sogl60SmezhSogl,
-        otprav4v: req.body.otprav4v,
-        sogl4v: req.body.sogl4v,
-        sverkiKomm: req.body.sverkiKomm,
-        sv1: req.body.sv1,
-        sv2: req.body.sv2,
-        sv3: req.body.sv3,
-        pi: req.body.pi,
-        textOt: req.body.textOt,
-        gotovnostUs: req.body.gotovnostUs,
-        zakluchenie: req.body.zakluchenie,
-        osobenAiis: req.body.osobenAiis,
-        kolTi: req.body.kolTi,
-        sobstvAiis: req.body.sobstvAiis,
-        sverkiKomm: req.body.sverkiKomm,
-      },
-    }
-  );
-  console.log('сечение', y1);
-  res.send(y1);
+  if (['qqq'].includes(req.user)) {
+    let id = req.body._id;
+    let o_id = new ObjectId(id);
+    //req.body._id = o_id;
+    //console.log("/api/editsech req.body", req.body._id);
+    let y1 = await secheniyaDb.updateOne(
+      { _id: o_id },
+      {
+        $set: {
+          naimSechShort: req.body.naimSechShort,
+          vidRabot: req.body.vidRabot,
+          soglGtp: req.body.soglGtp,
+          dopusk: req.body.dopusk,
+          sdAs: req.body.sdAs,
+          sdPas: req.body.sdPas,
+          krSrokPodachi: req.body.krSrokPodachi,
+          planPodachi: req.body.planPodachi,
+          metrologyKomm: req.body.metrologyKomm,
+          codirovkaActual: req.body.codirovkaActual,
+          tipIzmCodirovki: req.body.tipIzmCodirovki,
+          zaprosPerecod: req.body.zaprosPerecod,
+          sogl60Dku: req.body.sogl60Dku,
+          sogl60SmezhOtpr: req.body.sogl60SmezhOtpr,
+          sogl60SmezhSogl: req.body.sogl60SmezhSogl,
+          otprav4v: req.body.otprav4v,
+          sogl4v: req.body.sogl4v,
+          sverkiKomm: req.body.sverkiKomm,
+          sv1: req.body.sv1,
+          sv2: req.body.sv2,
+          sv3: req.body.sv3,
+          pi: req.body.pi,
+          textOt: req.body.textOt,
+          gotovnostUs: req.body.gotovnostUs,
+          zakluchenie: req.body.zakluchenie,
+          osobenAiis: req.body.osobenAiis,
+          kolTi: req.body.kolTi,
+          sobstvAiis: req.body.sobstvAiis,
+          statusUS: req.body.statusUS,
+        },
+      }
+    );
+    console.log('сечение', y1);
+    res.send(y1);
+  } else {
+    res.status(401).send('ошибка авторизации');
+  }
 });
 
 app.post('/api/editcell', async (req, res) => {

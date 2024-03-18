@@ -22,7 +22,7 @@ export interface IAppState {
   isEdit2: boolean;
   isSiStateSave: boolean;
   isMsgOpen: boolean;
-  isSuccess: boolean;
+  isSuccess: boolean | null;
   isInfoOpen: boolean;
   editableCell: { index: number | null; param: string | null };
   isLoggedin: boolean;
@@ -405,6 +405,11 @@ export interface IColOrderObj {
 // export interface ColOrderPlanRabObj {
 //   [N: string]: ColPlanRab[];
 // }
+export type MenuItemT =
+  | 'Планируется'
+  | 'Подано в АТС'
+  | 'Испытания АТС'
+  | '---';
 
 export interface SechData {
   _id: string;
@@ -439,6 +444,7 @@ export interface SechData {
   sobstvAiis: string;
   metrology: string[];
   zaprosPerecod: string;
+  statusUS: MenuItemT;
 }
 
 export interface Ot {
