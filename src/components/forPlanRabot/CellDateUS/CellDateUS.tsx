@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import styles from './celldateus.module.css';
 import { IAppState, SechData } from '../../../app.types';
-import { ClickAwayListener, Paper, Popper } from '@mui/material';
+import { Button, ClickAwayListener, Paper, Popper } from '@mui/material';
 import { PagePlanrabotState } from '../../../pages/Planrabot';
 import { DateCalendar } from '@mui/x-date-pickers';
 import zIndex from '@mui/material/styles/zIndex';
 import { updSech } from '../../../api/updSech';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import { sortSechByDate } from '../../../lib/sortSechByDate';
 
 type Props = {
   sechData: SechData;
@@ -39,6 +40,32 @@ export function CellDateUS({
     setIsCalOpen(false);
   }
 
+  async function updSechData(val: Dayjs | null) {
+    setIsCalOpen(false);
+    setAnchorEl(null);
+    const res: Response | undefined = await updSech({
+      ...sechData,
+      planPodachi: val?.format('YYYY-MM-DD') || '',
+    });
+    if (res?.ok) {
+      setSechArr((st) =>
+        st
+          .map((sech) =>
+            sech._id === sechData._id
+              ? { ...sech, planPodachi: val?.format('YYYY-MM-DD') || '' }
+              : sech
+          )
+          .sort(sortSechByDate)
+      );
+    } else {
+      setAppState((st) => ({
+        ...st,
+        isMsgOpen: true,
+        isSuccess: false,
+      }));
+    }
+  }
+
   return (
     <>
       <td className={styles.td} rowSpan={otAmount} onClick={handleCellClick}>
@@ -51,11 +78,11 @@ export function CellDateUS({
         placement="right"
         sx={{ zIndex: 1600 }}
       >
-        <Paper elevation={3}>
-          <ClickAwayListener onClickAway={handleClickAway}>
+        <ClickAwayListener onClickAway={handleClickAway}>
+          <Paper elevation={5} sx={{ p: 1, borderRadius: 2 }}>
             <DateCalendar
               views={['year', 'month', 'day']}
-              value={dayjs(sechData.planPodachi)}
+              value={dayjs(sechData.planPodachi || new Date())}
               onYearChange={() => {
                 setIsCalOpen(true);
               }}
@@ -63,32 +90,41 @@ export function CellDateUS({
                 setIsCalOpen(true);
               }}
               onChange={async (newVal) => {
-                setIsCalOpen(false);
-                setAnchorEl(null);
-                console.log(newVal.format('YYYY-MM-DD'));
-                const res: Response | undefined = await updSech({
-                  ...sechData,
-                  planPodachi: newVal.format('YYYY-MM-DD'),
-                });
-                if (res?.ok) {
-                  setSechArr((st) =>
-                    st.map((sech) =>
-                      sech._id === sechData._id
-                        ? { ...sech, planPodachi: newVal.format('YYYY-MM-DD') }
-                        : sech
-                    )
-                  );
-                } else {
-                  setAppState((st) => ({
-                    ...st,
-                    isMsgOpen: true,
-                    isSuccess: false,
-                  }));
-                }
+                console.log(newVal);
+                updSechData(newVal);
+                // setIsCalOpen(false);
+                // setAnchorEl(null);
+                // const res: Response | undefined = await updSech({
+                //   ...sechData,
+                //   planPodachi: newVal.format('YYYY-MM-DD'),
+                // });
+                // if (res?.ok) {
+                //   setSechArr((st) =>
+                //     st.map((sech) =>
+                //       sech._id === sechData._id
+                //         ? { ...sech, planPodachi: newVal.format('YYYY-MM-DD') }
+                //         : sech
+                //     )
+                //   );
+                // } else {
+                //   setAppState((st) => ({
+                //     ...st,
+                //     isMsgOpen: true,
+                //     isSuccess: false,
+                //   }));
+                // }
               }}
             />
-          </ClickAwayListener>
-        </Paper>
+            <Button
+              sx={{ position: 'absolute', right: '15px', bottom: '10px' }}
+              onClick={() => {
+                updSechData(null);
+              }}
+            >
+              дата не определена
+            </Button>
+          </Paper>
+        </ClickAwayListener>
       </Popper>
     </>
   );

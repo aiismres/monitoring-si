@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Ot, SechData } from '../app.types';
 import { useParams } from 'react-router-dom';
+import { sortSechByDate } from '../lib/sortSechByDate';
 
 export function useSechData() {
   const [sechArr, setSechArr] = useState<SechData[]>([]);
@@ -14,7 +15,9 @@ export function useSechData() {
       if (responseSech.ok) {
         const secheniya: SechData[] = await responseSech.json();
         console.log('secheniya', secheniya);
-        secheniya.sort((a, b) => {
+        secheniya.sort(
+          sortSechByDate
+          /*  (a, b) => {
           if (a.planPodachi && !b.planPodachi) {
             return (
               new Date(a.planPodachi).getTime() -
@@ -36,7 +39,9 @@ export function useSechData() {
               new Date(b.krSrokPodachi).getTime()
             );
           }
-        });
+        }
+        */
+        );
         if (company === 'gpe') {
           setSechArr(
             secheniya.filter((sech) => sech.sobstvAiis.includes('ГПЭ'))

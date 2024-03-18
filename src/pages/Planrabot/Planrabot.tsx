@@ -41,6 +41,7 @@ import { CellStatusUS } from '../../components/forPlanRabot/CellStatusUS';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { AlertSucErr } from '../../components/AlertSucErr';
 import { CellDateUS } from '../../components/forPlanRabot/CellDateUS';
+import FlipMove from 'react-flip-move';
 
 // dayjs.locale(dayjs_ru);
 interface Props {
@@ -214,7 +215,8 @@ export function Planrabot({ appState, setAppState }: Props) {
             <th>№ area</th>
           </tr>
         </thead>
-        <tbody>
+        {/* <tbody> */}
+        <FlipMove typeName={'tbody'}>
           {sechArr.map((sechData, sechIndex) => {
             const otAmount = sechData.metrology.length;
             return sechData.metrology.map((otId, otIndex) => {
@@ -541,7 +543,8 @@ export function Planrabot({ appState, setAppState }: Props) {
             // });
             // return <tr>{trCondtent}</tr>;
           })}
-        </tbody>
+        </FlipMove>
+        {/* </tbody> */}
       </table>
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
