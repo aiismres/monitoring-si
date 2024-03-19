@@ -30,29 +30,26 @@
   vertical-align: bottom;
 } */
 
-.naimSechShortTh {
+/* .naimSechShortTh {
   position: sticky;
-  /* top: 0; */
   left: 0;
-  /* width: 2000px; */
   background-color: #e3e3e3;
-}
+} */
 
-.naimSechShortDiv {
-  /* width: 200px; */
+/* .naimSechShortDiv {
   width: var(--first-col-width);
   color: black;
   z-index: 0;
-}
+} */
 
 .noWrap {
   white-space: nowrap;
 }
 
-.tr {
+/* .tr {
   border-bottom: 1px solid grey;
-}
+} */
 
-.bgcWhite {
+/* .bgcWhite {
   background-color: #fff;
-}
+} */

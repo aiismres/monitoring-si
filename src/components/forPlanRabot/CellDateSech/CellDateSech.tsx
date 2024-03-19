@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import styles from './celldateus.module.css';
+import styles from './celldatesech.module.css';
 import { IAppState, SechData } from '../../../app.types';
 import { Button, ClickAwayListener, Paper, Popper } from '@mui/material';
-import { PagePlanrabotState } from '../../../pages/Planrabot';
+import { PagePlanrabotState, SechKeys } from '../../../pages/Planrabot';
 import { DateCalendar } from '@mui/x-date-pickers';
 import zIndex from '@mui/material/styles/zIndex';
 import { updSech } from '../../../api/updSech';
@@ -13,6 +13,7 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 type Props = {
+  param: keyof SechData;
   sechData: SechData;
   otAmount: number;
   pageState: PagePlanrabotState;
@@ -22,7 +23,8 @@ type Props = {
 
 let tempDate: Dayjs | null = null;
 
-export function CellDateUS({
+export function CellDateSech({
+  param,
   sechData,
   otAmount,
   pageState,
@@ -31,8 +33,8 @@ export function CellDateUS({
 }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isCalOpen, setIsCalOpen] = useState(false);
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popper' : undefined;
+  // const open = Boolean(anchorEl);
+  const id = isCalOpen ? 'simple-popper' : undefined;
 
   function handleCellClick(event: React.MouseEvent<HTMLElement>) {
     if (!pageState.editMode) return;
@@ -50,14 +52,14 @@ export function CellDateUS({
     setAnchorEl(null);
     const res: Response | undefined = await updSech({
       ...sechData,
-      planPodachi: val?.format('YYYY-MM-DD') || '',
+      [param]: val?.format('YYYY-MM-DD') || '',
     });
     if (res?.ok) {
       setSechArr((st) =>
         st
           .map((sech) =>
             sech._id === sechData._id
-              ? { ...sech, planPodachi: val?.format('YYYY-MM-DD') || '' }
+              ? { ...sech, [param]: val?.format('YYYY-MM-DD') || '' }
               : sech
           )
           .sort(sortSechByDate)
@@ -75,11 +77,11 @@ export function CellDateUS({
     <>
       <td
         // className={styles.td}
-        className={cx({ td: true, selected: open })}
+        className={cx({ td: true, selected: isCalOpen })}
         rowSpan={otAmount}
         onClick={handleCellClick}
       >
-        {sechData.planPodachi}
+        {sechData[param]}
       </td>
       <Popper
         id={id}
@@ -116,7 +118,7 @@ export function CellDateUS({
             >
               очистить
             </Button>
-            <Button>cancel</Button>
+            <Button onClick={handleClickAway}>cancel</Button>
             <Button
               onClick={() => {
                 updSechData(tempDate);

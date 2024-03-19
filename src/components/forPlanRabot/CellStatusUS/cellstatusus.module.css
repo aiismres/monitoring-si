@@ -5,3 +5,7 @@
 .selected {
   outline: 1px solid orange;
 }
+
+/* .noWrap {
+  white-space: nowrap;
+} */

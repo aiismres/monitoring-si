@@ -303,3 +303,37 @@ export const timePeriods = [
 //     'gr',
 //   ],
 // };
+
+// codirovkaActual: 'актуальна';
+// dopusk: '';
+// gotovnostUs: '<br>';
+// kodGtp: '';
+// kodSech: '';
+// kolTi: '2';
+// krSrokPodachi: 'NaN-NaN-NaN';
+// metrology: ['624ef0e842161027e1cf8e86'];
+// metrologyKomm: 'необх изм ГТП для привед в соотв с ОТ<br>';
+// naimSechShort: 'ГТ Томск (Вертикос) - ФСК';
+// osobenAiis: '<br>';
+// otprav4v: '';
+// pi: '<br>';
+// planPodachi: '2022-08-31';
+// sdAs: '2025-11-08';
+// sdPas: '2023-07-18';
+// sobstvAiis: 'ГПЭ';
+// sogl4v: '';
+// sogl60Dku: '';
+// sogl60SmezhOtpr: '';
+// sogl60SmezhSogl: '';
+// soglGtp: '2023-06-01';
+// statusUS: 'Отриц. Исп-я';
+// sv1: '<br>';
+// sv2: '<br>';
+// sv3: '<br>';
+// sverkiKomm: '<br>';
+// textOt: '<br>';
+// tipIzmCodirovki: '<br>';
+// vidRabot: 'изменения';
+// zakluchenie: '<br>';
+// zaprosPerecod: '';
+// _id: '624ef0e842161027e1cf8e87';

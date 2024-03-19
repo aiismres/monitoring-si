@@ -1,3 +1,5 @@
+import { MenuStatusUSItem } from './components/forPlanRabot/CellStatusUS';
+
 export interface IStringNumber {
   [name: string]: number;
 }
@@ -405,11 +407,13 @@ export interface IColOrderObj {
 // export interface ColOrderPlanRabObj {
 //   [N: string]: ColPlanRab[];
 // }
-export type MenuItemT =
-  | 'Планируется'
-  | 'Подано в АТС'
-  | 'Испытания АТС'
-  | '---';
+// export type MenuItemT =
+//   | 'Планируется'
+//   | 'Подано в АТС'
+//   | 'Испытания АТС'
+//   | 'Отриц. ТЭ'
+//   | 'Отриц. Исп-я'
+//   | '---';
 
 export interface SechData {
   _id: string;
@@ -444,7 +448,7 @@ export interface SechData {
   sobstvAiis: string;
   metrology: string[];
   zaprosPerecod: string;
-  statusUS: MenuItemT;
+  statusUS: MenuStatusUSItem;
 }
 
 export interface Ot {

@@ -1,16 +1,16 @@
-:root {
+/* :root {
   --first-col-width: 200px;
-}
+} */
 
-.table tr:nth-child(2n) {
+/* .table tr:nth-child(2n) {
   background: rgba(16, 16, 16, 0.05);
-}
+} */
 
-.thead {
+/* .thead {
   z-index: 2;
-}
+} */
 
-
+/*
 .firstCellTh {
   position: fixed;
   top: 0;
@@ -18,17 +18,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: 200px; */
   width: var(--first-col-width);
   height: 41.5px;
   z-index: 3;
 }
+ */
 
-/* .firstCellDiv {
-  display: flex;
-  height: 100%;
-  vertical-align: bottom;
-} */
 
 .naimSechShortTh {
   position: sticky;

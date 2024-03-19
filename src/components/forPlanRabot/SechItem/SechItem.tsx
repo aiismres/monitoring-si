@@ -12,6 +12,7 @@ import {
   SechKeys,
   SelectCell,
 } from '../../../pages/Planrabot';
+import { CellDateSech } from '../CellDateSech';
 
 type Props = {
   // otIndex: number;
@@ -104,15 +105,23 @@ export const SechItem = forwardRef(function SechItem(
               />
             )}
             {otIndex === 0 && (
-              <CellSech
-                value={sechData.sdAs}
-                otAmount={otAmount}
-                sechIndex={sechIndex}
+              // <CellSech
+              //   value={sechData.sdAs}
+              //   otAmount={otAmount}
+              //   sechIndex={sechIndex}
+              //   param={sechKeys.sdAs}
+              //   anchorEl={anchorEl}
+              //   setSelectCell={setSelectCell}
+              //   setAnchorEl={setAnchorEl}
+              //   setIsCalOpen={setIsCalOpen}
+              // />
+              <CellDateSech
                 param={sechKeys.sdAs}
-                anchorEl={anchorEl}
-                setSelectCell={setSelectCell}
-                setAnchorEl={setAnchorEl}
-                setIsCalOpen={setIsCalOpen}
+                sechData={sechData}
+                otAmount={otAmount}
+                pageState={pageState}
+                setSechArr={setSechArr}
+                setAppState={setAppState}
               />
             )}
             {otIndex === 0 && (

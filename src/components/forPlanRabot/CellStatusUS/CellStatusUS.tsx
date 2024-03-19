@@ -11,7 +11,7 @@ import {
   Select,
 } from '@mui/material';
 import classNames from 'classnames/bind';
-import { IAppState, MenuItemT, SechData } from '../../../app.types';
+import { IAppState, SechData } from '../../../app.types';
 import { updSech } from '../../../api/updSech';
 import { PagePlanrabotState } from '../../../pages/Planrabot';
 const cx = classNames.bind(styles);
@@ -24,6 +24,18 @@ type Props = {
   setAppState: React.Dispatch<React.SetStateAction<IAppState>>;
   pageState: PagePlanrabotState;
 };
+
+const menuStatusUSArr = [
+  'Планируется',
+  'Подано в АТС',
+  'Испытания АТС',
+  'Отриц. ТЭ',
+  'Отриц. Исп-я',
+  '---',
+] as const;
+
+export type MenuStatusUSItem = (typeof menuStatusUSArr)[number];
+
 export function CellStatusUS({
   otAmount,
   sechData,
@@ -42,7 +54,7 @@ export function CellStatusUS({
     setAnchorEl(null);
   }
 
-  async function handleMenuItemClick(v: MenuItemT) {
+  async function handleMenuItemClick(v: MenuStatusUSItem) {
     console.log(v);
     const res = await updSech({ ...sechData, statusUS: v });
     if (res?.ok) {
@@ -72,11 +84,28 @@ export function CellStatusUS({
           {sechData.statusUS || 'Статус комплекта'}
         </td>
       </ClickAwayListener>
-      <Popper id={id} open={open} anchorEl={anchorEl} placement="right">
+      <Popper
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        placement="right"
+        sx={{ zIndex: 1600 }}
+      >
         <Paper elevation={3} sx={{ p: 0 }}>
           {/* The content of the Popper. */}
           <List>
-            <ListItemButton
+            {menuStatusUSArr.map((status) => (
+              <ListItemButton
+                // className={styles.noWrap}
+                // sx={{ whiteSpace: 'nowrap' }}
+                onClick={() => {
+                  handleMenuItemClick(status);
+                }}
+              >
+                {status}
+              </ListItemButton>
+            ))}
+            {/* <ListItemButton
               onClick={() => {
                 handleMenuItemClick('Планируется');
               }}
@@ -104,6 +133,20 @@ export function CellStatusUS({
             >
               ---
             </ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                handleMenuItemClick('---');
+              }}
+            >
+              ---
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                handleMenuItemClick('---');
+              }}
+            >
+              ---
+            </ListItemButton> */}
           </List>
         </Paper>
       </Popper>
