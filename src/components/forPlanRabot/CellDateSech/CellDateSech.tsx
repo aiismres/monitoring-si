@@ -50,9 +50,32 @@ export function CellDateSech({
   async function updSechData(val: Dayjs | null) {
     setIsCalOpen(false);
     setAnchorEl(null);
+    // Вычисление кр. срока подачи док-в на УС
+    let krSrokPodachi = '';
+    if (sechData.vidRabot === 'изменения') {
+      krSrokPodachi = dayjs(Date.parse(sechData.dopusk) + 3888000000).format(
+        'YYYY-MM-DD'
+      );
+    } else if (sechData.vidRabot == 'продление') {
+      if (sechData.sdAs) {
+        krSrokPodachi = dayjs(Date.parse(sechData.sdAs) - 3888000000).format(
+          'YYYY-MM-DD'
+        );
+      } else if (sechData.sdPas) {
+        krSrokPodachi = dayjs(Date.parse(sechData.sdPas) - 3888000000).format(
+          'YYYY-MM-DD'
+        );
+      }
+    } else if (sechData.vidRabot == 'новое') {
+      krSrokPodachi = '';
+    }
+    console.log({ krSrokPodachi });
+    // конец вычисление крайнего срока подачи док-в на УС
+
     const res: Response | undefined = await updSech({
       ...sechData,
       [param]: val?.format('YYYY-MM-DD') || '',
+      // krSrokPodachi,
     });
     if (res?.ok) {
       setSechArr((st) =>
@@ -94,7 +117,8 @@ export function CellDateSech({
           <Paper elevation={5} sx={{ p: 1, borderRadius: 2 }}>
             <DateCalendar
               views={['year', 'month', 'day']}
-              defaultValue={dayjs(sechData.planPodachi || new Date())}
+              //@ts-ignore
+              defaultValue={dayjs(sechData[param] || new Date())}
               // onYearChange={(newVal) => {
               //   tempDate = newVal;
               //   setIsCalOpen(true);

@@ -96,6 +96,7 @@ export function CellStatusUS({
           <List>
             {menuStatusUSArr.map((status) => (
               <ListItemButton
+                key={status}
                 // className={styles.noWrap}
                 // sx={{ whiteSpace: 'nowrap' }}
                 onClick={() => {
