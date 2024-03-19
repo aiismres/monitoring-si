@@ -17,6 +17,8 @@ type Props = {
   setAppState: React.Dispatch<React.SetStateAction<IAppState>>;
 };
 
+let tempDate: Dayjs | null = null;
+
 export function CellDateUS({
   sechData,
   otAmount,
@@ -82,46 +84,37 @@ export function CellDateUS({
           <Paper elevation={5} sx={{ p: 1, borderRadius: 2 }}>
             <DateCalendar
               views={['year', 'month', 'day']}
-              value={dayjs(sechData.planPodachi || new Date())}
-              onYearChange={() => {
-                setIsCalOpen(true);
-              }}
-              onMonthChange={() => {
-                setIsCalOpen(true);
-              }}
+              defaultValue={dayjs(sechData.planPodachi || new Date())}
+              // onYearChange={(newVal) => {
+              //   tempDate = newVal;
+              //   setIsCalOpen(true);
+              // }}
+              // onMonthChange={(newVal) => {
+              //   tempDate = newVal;
+              //   setIsCalOpen(true);
+              // }}
               onChange={async (newVal) => {
                 console.log(newVal);
-                updSechData(newVal);
-                // setIsCalOpen(false);
-                // setAnchorEl(null);
-                // const res: Response | undefined = await updSech({
-                //   ...sechData,
-                //   planPodachi: newVal.format('YYYY-MM-DD'),
-                // });
-                // if (res?.ok) {
-                //   setSechArr((st) =>
-                //     st.map((sech) =>
-                //       sech._id === sechData._id
-                //         ? { ...sech, planPodachi: newVal.format('YYYY-MM-DD') }
-                //         : sech
-                //     )
-                //   );
-                // } else {
-                //   setAppState((st) => ({
-                //     ...st,
-                //     isMsgOpen: true,
-                //     isSuccess: false,
-                //   }));
-                // }
+                tempDate = newVal;
+                // updSechData(newVal);
               }}
             />
             <Button
-              sx={{ position: 'absolute', right: '15px', bottom: '10px' }}
+              // sx={{ position: 'absolute', right: '15px', bottom: '10px' }}
               onClick={() => {
-                updSechData(null);
+                tempDate = null;
+                // updSechData(null);
               }}
             >
-              дата не определена
+              очистить
+            </Button>
+            <Button>cancel</Button>
+            <Button
+              onClick={() => {
+                updSechData(tempDate);
+              }}
+            >
+              ok
             </Button>
           </Paper>
         </ClickAwayListener>
