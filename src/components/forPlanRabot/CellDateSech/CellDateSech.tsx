@@ -75,7 +75,7 @@ export function CellDateSech({
     const res: Response | undefined = await updSech({
       ...sechData,
       [param]: val?.format('YYYY-MM-DD') || '',
-      // krSrokPodachi,
+      krSrokPodachi,
     });
     if (res?.ok) {
       setSechArr((st) =>
