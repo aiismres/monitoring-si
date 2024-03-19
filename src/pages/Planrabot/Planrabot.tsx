@@ -42,6 +42,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { AlertSucErr } from '../../components/AlertSucErr';
 import { CellDateUS } from '../../components/forPlanRabot/CellDateUS';
 import FlipMove from 'react-flip-move';
+import { SechItem } from '../../components/forPlanRabot/SechItem';
 
 // dayjs.locale(dayjs_ru);
 interface Props {
@@ -172,428 +173,345 @@ export function Planrabot({ appState, setAppState }: Props) {
     },
   ];
 
-  return (
-    <>
-      {/* <TextEditor /> */}
-      <table className={styles.table}>
-        <thead className={styles.thead}>
-          <tr>
-            <th className={styles.firstCellTh}>
-              <div className={styles.firstCellDiv}>Сечение</div>
-            </th>
-            <th>вид работ</th>
-            <th>Согл ГТП</th>
-            <th>Допуск</th>
-            <th>СД АС</th>
-            <th>Кр-й срок подачи док</th>
-            <th>Статус комплекта</th>
-            <th>План. дата подачи</th>
-            <th style={{ minWidth: '200px' }}>Комментарии</th>
-            <th>№ ГР</th>
-            <th>Наим. АИИС</th>
-            <th style={{ minWidth: '90px' }}>СД&nbsp;СОП</th>
-            <th>Изм. АИИС</th>
-            <th>Тип&nbsp;изм. АИИС</th>
-            <th>Необх. работы</th>
-            <th>Раб. запл.?</th>
-            <th>Договор</th>
-            <th>СМР</th>
-            <th>Выезд</th>
-            <th>ВНИИМС</th>
-            <th>РСТ</th>
-            <th>Приказ</th>
-            <th>Оформл. СОП</th>
-            <th>Комм. ОТ</th>
-            <th>Кодировка актуал-а?</th>
-            <th>Вид изм. код-и</th>
-            <th>Св-2</th>
-            <th>ПИ</th>
-            <th>Готовность УС</th>
-            <th>Заключ-е</th>
-            <th>Статус комплекта</th>
-            <th>дата</th>
-            <th>№ area</th>
-          </tr>
-        </thead>
-        {/* <tbody> */}
-        <FlipMove typeName={'tbody'}>
-          {sechArr.map((sechData, sechIndex) => {
-            const otAmount = sechData.metrology.length;
-            return sechData.metrology.map((otId, otIndex) => {
-              const ot = otArr.find((item) => item._id === otId);
-              // if (otIndex === 0) {
-              return (
-                <tr
-                  className={classNames({
-                    [styles.tr]: otIndex === sechData.metrology.length - 1,
-                  })}
-                >
-                  {otIndex === 0 && (
-                    <th rowSpan={otAmount} className={styles.naimSechShortTh}>
-                      <div className={styles.naimSechShortDiv}>
-                        {sechData.naimSechShort}
-                      </div>
-                    </th>
-                  )}
-                  {otIndex === 0 && (
-                    <td rowSpan={otAmount} className={styles.bgcWhite}>
-                      {sechData.vidRabot}
-                    </td>
-                  )}
-                  {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      className={classNames(styles.noWrap, styles.bgcWhite)}
-                      // onClick={(e) => {
-                      //   openCalendar(
-                      //     e,
-                      //     sechData,
-                      //     sechIndex,
-                      //     otIndex,
-                      //     'soglGtp'
-                      //   );
-                      // }}
-                    >
-                      {sechData.soglGtp}
-                    </td>
-                  )}
-                  {otIndex === 0 && (
-                    // <td
-                    //   rowSpan={otAmount}
-                    //   className={classNames(styles.noWrap, styles.bgcWhite)}
-                    //   // onClick={(e) => {
-                    //   //   openCalendar(e, sechData, sechIndex, otIndex, 'dopusk');
-                    //   // }}
-                    // >
-                    //   {sechData.dopusk}
-                    // </td>
-                    <CellSech
-                      value={sechData.dopusk}
-                      otAmount={otAmount}
-                      sechIndex={sechIndex}
-                      param={sechKeys.dopusk}
-                      anchorEl={anchorEl}
-                      setSelectCell={setSelectCell}
-                      setAnchorEl={setAnchorEl}
-                      setIsCalOpen={setIsCalOpen}
-                    />
-                  )}
-                  {otIndex === 0 && (
-                    // <td
-                    //   rowSpan={otAmount}
-                    //   className={classNames(styles.noWrap, styles.bgcWhite)}
-                    //   onClick={(e) => {
-                    //     openCalendar(e, sechData, sechIndex, otIndex, 'sdAs');
-                    //   }}
-                    // >
-                    //   {sechData.sdAs}
-                    // </td>
-                    <CellSech
-                      value={sechData.sdAs}
-                      otAmount={otAmount}
-                      sechIndex={sechIndex}
-                      param={sechKeys.sdAs}
-                      anchorEl={anchorEl}
-                      setSelectCell={setSelectCell}
-                      setAnchorEl={setAnchorEl}
-                      setIsCalOpen={setIsCalOpen}
-                    />
-                    // <CellPRDate
-                    //   value={sechData.sdAs}
-                    //   sechData={sechData}
-                    //   ot={ot}
-                    //   otAmount={otAmount}
-                    //   sechIndex={sechIndex}
-                    //   otIndex={otIndex}
-                    //   param={otKeys.sdAs}
-                    //   anchorEl={anchorEl}
-                    //   setAnchorEl={setAnchorEl}
-                    //   setIsCalOpen={setIsCalOpen}
-                    //   setSelectCell={setSelectCell}
-                    //   setSechArr={setSechArr}
-                    //   setOtArr={setOtArr}
-                    // />
-                  )}
-                  {otIndex === 0 && (
-                    // <td
-                    //   rowSpan={otAmount}
-                    //   className={classNames(styles.noWrap, styles.bgcWhite)}
-                    // >
-                    //   {sechData.krSrokPodachi}
-                    // </td>
-                    <CellSech
-                      value={sechData.krSrokPodachi}
-                      otAmount={otAmount}
-                      sechIndex={sechIndex}
-                      param={sechKeys.krSrokPodachi}
-                      anchorEl={anchorEl}
-                      setSelectCell={setSelectCell}
-                      setAnchorEl={setAnchorEl}
-                      setIsCalOpen={setIsCalOpen}
-                    />
-                  )}
-                  {otIndex === 0 && (
-                    // <td rowSpan={otAmount} className={styles.bgcWhite}>
-                    //   Статус комплекта
-                    // </td>
-                    <CellStatusUS
-                      otAmount={otAmount}
-                      sechData={sechData}
-                      setSechArr={setSechArr}
-                      setAppState={setAppState}
-                      pageState={pageState}
-                    />
-                  )}
-                  {otIndex === 0 && (
-                    // <CellSech
-                    //   value={sechData.planPodachi}
-                    //   otAmount={otAmount}
-                    //   sechIndex={sechIndex}
-                    //   param={sechKeys.planPodachi}
-                    //   anchorEl={anchorEl}
-                    //   setSelectCell={setSelectCell}
-                    //   setAnchorEl={setAnchorEl}
-                    //   setIsCalOpen={setIsCalOpen}
-                    // />
-                    <CellDateUS
-                      sechData={sechData}
-                      otAmount={otAmount}
-                      pageState={pageState}
-                      setSechArr={setSechArr}
-                      setAppState={setAppState}
-                    />
-                  )}
+  if (!sechArr[0] || !otArr[0]) {
+    console.log('Загрузка данных...', sechArr, otArr);
+    return <div>Загрузка данных...</div>;
+  } else
+    return (
+      <>
+        {/* <TextEditor /> */}
+        <table className={styles.table}>
+          <thead className={styles.thead}>
+            <tr>
+              <th className={styles.firstCellTh}>
+                <div className={styles.firstCellDiv}>Сечение</div>
+              </th>
+              <th>вид работ</th>
+              <th>Согл ГТП</th>
+              <th>Допуск</th>
+              <th>СД АС</th>
+              <th>Кр-й срок подачи док</th>
+              <th>Статус комплекта</th>
+              <th>План. дата подачи</th>
+              <th style={{ minWidth: '200px' }}>Комментарии</th>
+              <th>№ ГР</th>
+              <th>Наим. АИИС</th>
+              <th style={{ minWidth: '90px' }}>СД&nbsp;СОП</th>
+              <th>Изм. АИИС</th>
+              <th>Тип&nbsp;изм. АИИС</th>
+              <th>Необх. работы</th>
+              <th>Раб. запл.?</th>
+              <th>Договор</th>
+              <th>СМР</th>
+              <th>Выезд</th>
+              <th>ВНИИМС</th>
+              <th>РСТ</th>
+              <th>Приказ</th>
+              <th>Оформл. СОП</th>
+              <th>Комм. ОТ</th>
+              <th>Кодировка актуал-а?</th>
+              <th>Вид изм. код-и</th>
+              <th>Св-2</th>
+              <th>ПИ</th>
+              <th>Готовность УС</th>
+              <th>Заключ-е</th>
+              <th>Статус комплекта</th>
+              <th>дата</th>
+              <th>№ area</th>
+            </tr>
+          </thead>
+          {/* <tbody> */}
+          <FlipMove typeName={'tbody'}>
+            {sechArr.map(
+              (sechData, sechIndex) => (
+                // {
+                // const otAmount = sechData.metrology.length;
+                // return sechData.metrology.map((otId, otIndex) => {
+                //   const ot = otArr.find((item) => item._id === otId);
+                // return
+                <SechItem
+                  key={sechData._id}
+                  // otIndex={otIndex}
+                  // otAmount={otAmount}
+                  // ot={ot}
+                  sechData={sechData}
+                  sechIndex={sechIndex}
+                  sechKeys={sechKeys}
+                  anchorEl={anchorEl}
+                  setAnchorEl={setAnchorEl}
+                  setSelectCell={setSelectCell}
+                  setIsCalOpen={setIsCalOpen}
+                  pageState={pageState}
+                  setSechArr={setSechArr}
+                  setAppState={setAppState}
+                  otKeys={otKeys}
+                  // otId={otId}
+                  otArr={otArr}
+                />
+                // <tr
+                //   className={classNames({
+                //     [styles.tr]: otIndex === sechData.metrology.length - 1,
+                //   })}
+                // >
+                //   {otIndex === 0 && (
+                //     <th rowSpan={otAmount} className={styles.naimSechShortTh}>
+                //       <div className={styles.naimSechShortDiv}>
+                //         {sechData.naimSechShort}
+                //       </div>
+                //     </th>
+                //   )}
+                //   {otIndex === 0 && (
+                //     <td rowSpan={otAmount} className={styles.bgcWhite}>
+                //       {sechData.vidRabot}
+                //     </td>
+                //   )}
+                //   {otIndex === 0 && (
+                //     <td
+                //       rowSpan={otAmount}
+                //       className={classNames(styles.noWrap, styles.bgcWhite)}
+                //     >
+                //       {sechData.soglGtp}
+                //     </td>
+                //   )}
+                //   {otIndex === 0 && (
+                //     <CellSech
+                //       value={sechData.dopusk}
+                //       otAmount={otAmount}
+                //       sechIndex={sechIndex}
+                //       param={sechKeys.dopusk}
+                //       anchorEl={anchorEl}
+                //       setSelectCell={setSelectCell}
+                //       setAnchorEl={setAnchorEl}
+                //       setIsCalOpen={setIsCalOpen}
+                //     />
+                //   )}
+                //   {otIndex === 0 && (
+                //     <CellSech
+                //       value={sechData.sdAs}
+                //       otAmount={otAmount}
+                //       sechIndex={sechIndex}
+                //       param={sechKeys.sdAs}
+                //       anchorEl={anchorEl}
+                //       setSelectCell={setSelectCell}
+                //       setAnchorEl={setAnchorEl}
+                //       setIsCalOpen={setIsCalOpen}
+                //     />
+                //   )}
+                //   {otIndex === 0 && (
+                //     <CellSech
+                //       value={sechData.krSrokPodachi}
+                //       otAmount={otAmount}
+                //       sechIndex={sechIndex}
+                //       param={sechKeys.krSrokPodachi}
+                //       anchorEl={anchorEl}
+                //       setSelectCell={setSelectCell}
+                //       setAnchorEl={setAnchorEl}
+                //       setIsCalOpen={setIsCalOpen}
+                //     />
+                //   )}
+                //   {otIndex === 0 && (
+                //     <CellStatusUS
+                //       otAmount={otAmount}
+                //       sechData={sechData}
+                //       setSechArr={setSechArr}
+                //       setAppState={setAppState}
+                //       pageState={pageState}
+                //     />
+                //   )}
+                //   {otIndex === 0 && (
+                //     <CellDateUS
+                //       sechData={sechData}
+                //       otAmount={otAmount}
+                //       pageState={pageState}
+                //       setSechArr={setSechArr}
+                //       setAppState={setAppState}
+                //     />
+                //   )}
 
-                  {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      width={200}
-                      dangerouslySetInnerHTML={{
-                        __html: sechData.metrologyKomm,
-                      }}
-                      className={classNames(styles.bgcWhite)}
-                    ></td>
-                  )}
-                  <td className={styles.noWrap}>{ot?.gr}</td>
-                  <td>{ot?.naimAiis2}</td>
-                  {/* <td
-                    className={styles.noWrap}
-                    onClick={(e) => {
-                      const param = 'sdSop';
-                      if (isKeyOfSechData(param, sechData)) {
-                        openCalendar(e, sechData, sechIndex, otIndex, param);
-                      }
-                    }}
-                  >
-                    {ot?.sdSop}
-                  </td> */}
-                  <CellOt
-                    value={ot?.sdSop}
-                    param={otKeys.sdSop}
-                    otId={otId}
-                    anchorEl={anchorEl}
-                    setSelectCell={setSelectCell}
-                    setAnchorEl={setAnchorEl}
-                    setIsCalOpen={setIsCalOpen}
-                  />
-                  {/* <CellPRDate
-                    value={ot?.sdSop || ''}
-                    sechData={sechData}
-                    ot={ot}
-                    otAmount={1}
-                    sechIndex={sechIndex}
-                    otIndex={otIndex}
-                    param={sechKeys.sdSop}
-                    anchorEl={anchorEl}
-                    setAnchorEl={setAnchorEl}
-                    setIsCalOpen={setIsCalOpen}
-                    setSelectCell={setSelectCell}
-                    setSechArr={setSechArr}
-                    setOtArr={setOtArr}
-                  /> */}
-                  <td>{ot?.izmAiis}</td>
-                  <td>{ot?.tipIzmOt}</td>
-                  <td>{ot?.neobhRab}</td>
-                  <td>{ot?.rabZaplan}</td>
-                  <td className={styles.noWrap}>
-                    {ot?.dogFact ? ot?.dogFact : ot?.dogPlan}
-                  </td>
-                  <td className={styles.noWrap}>
-                    {ot?.smrFact ? ot?.smrFact : ot?.smrPlan}
-                  </td>
-                  <td className={styles.noWrap}>
-                    {ot?.vyezdFact ? ot?.vyezdFact : ot?.vyezdPlan}
-                  </td>
-                  <td className={styles.noWrap}>
-                    {ot?.vniimsFact ? ot?.vniimsFact : ot?.vniimsPlan}
-                  </td>
-                  <td className={styles.noWrap}>
-                    {ot?.rstFact ? ot?.rstFact : ot?.rstPlan}
-                  </td>
-                  <td className={styles.noWrap}>
-                    {ot?.prikazFact ? ot?.prikazFact : ot?.prikazPlan}
-                  </td>
-                  <td className={styles.noWrap}>
-                    {ot?.oforSopFact ? ot?.oforSopFact : ot?.oforSopPlan}
-                  </td>
-                  {/* <td>{ot?.kommOt}</td> */}
-                  <td
-                    dangerouslySetInnerHTML={{
-                      __html: ot?.kommOt || '',
-                    }}
-                  ></td>
-                  {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      className={classNames(styles.bgcWhite)}
-                    >
-                      {sechData.codirovkaActual}
-                    </td>
-                  )}
-                  {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      className={classNames(styles.noWrap, styles.bgcWhite)}
-                    >
-                      {sechData.tipIzmCodirovki}
-                    </td>
-                  )}
-                  {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      dangerouslySetInnerHTML={{
-                        __html: sechData.sv2 || '',
-                      }}
-                      className={classNames(styles.bgcWhite)}
-                    ></td>
-                  )}
-                  {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      dangerouslySetInnerHTML={{
-                        __html: sechData.pi || '',
-                      }}
-                      className={classNames(styles.bgcWhite)}
-                    ></td>
-                  )}
-                  {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      dangerouslySetInnerHTML={{
-                        __html: sechData.gotovnostUs || '',
-                      }}
-                      className={classNames(styles.bgcWhite)}
-                    ></td>
-                  )}
-                  {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      dangerouslySetInnerHTML={{
-                        __html: sechData.zakluchenie || '',
-                      }}
-                      className={classNames(styles.bgcWhite)}
-                    ></td>
-                  )}
-                  {otIndex === 0 && (
-                    <td
-                      rowSpan={otAmount}
-                      className={styles.bgcWhite}
-                      onClick={(e) => {}}
-                    >
-                      status
-                    </td>
-                  )}
-                  {otIndex === 0 && (
-                    <td rowSpan={otAmount} className={styles.bgcWhite}>
-                      date
-                    </td>
-                  )}
-                  {otIndex === 0 && (
-                    <td rowSpan={otAmount} className={styles.bgcWhite}>
-                      area
-                    </td>
-                  )}
-                </tr>
-              );
-              // } else {
-              //   return (
-              //     <tr>
-              //       <td>{ot?.gr}</td>
-              //       <td>{ot?.naimAiis2}</td>
-              //       <td>{ot?.sdSop}</td>
-              //     </tr>
-              //   );
+                //   {otIndex === 0 && (
+                //     <td
+                //       rowSpan={otAmount}
+                //       width={200}
+                //       dangerouslySetInnerHTML={{
+                //         __html: sechData.metrologyKomm,
+                //       }}
+                //       className={classNames(styles.bgcWhite)}
+                //     ></td>
+                //   )}
+                //   <td className={styles.noWrap}>{ot?.gr}</td>
+                //   <td>{ot?.naimAiis2}</td>
+
+                //   <CellOt
+                //     value={ot?.sdSop}
+                //     param={otKeys.sdSop}
+                //     otId={otId}
+                //     anchorEl={anchorEl}
+                //     setSelectCell={setSelectCell}
+                //     setAnchorEl={setAnchorEl}
+                //     setIsCalOpen={setIsCalOpen}
+                //   />
+
+                //   <td>{ot?.izmAiis}</td>
+                //   <td>{ot?.tipIzmOt}</td>
+                //   <td>{ot?.neobhRab}</td>
+                //   <td>{ot?.rabZaplan}</td>
+                //   <td className={styles.noWrap}>
+                //     {ot?.dogFact ? ot?.dogFact : ot?.dogPlan}
+                //   </td>
+                //   <td className={styles.noWrap}>
+                //     {ot?.smrFact ? ot?.smrFact : ot?.smrPlan}
+                //   </td>
+                //   <td className={styles.noWrap}>
+                //     {ot?.vyezdFact ? ot?.vyezdFact : ot?.vyezdPlan}
+                //   </td>
+                //   <td className={styles.noWrap}>
+                //     {ot?.vniimsFact ? ot?.vniimsFact : ot?.vniimsPlan}
+                //   </td>
+                //   <td className={styles.noWrap}>
+                //     {ot?.rstFact ? ot?.rstFact : ot?.rstPlan}
+                //   </td>
+                //   <td className={styles.noWrap}>
+                //     {ot?.prikazFact ? ot?.prikazFact : ot?.prikazPlan}
+                //   </td>
+                //   <td className={styles.noWrap}>
+                //     {ot?.oforSopFact ? ot?.oforSopFact : ot?.oforSopPlan}
+                //   </td>
+                //   <td
+                //     dangerouslySetInnerHTML={{
+                //       __html: ot?.kommOt || '',
+                //     }}
+                //   ></td>
+                //   {otIndex === 0 && (
+                //     <td
+                //       rowSpan={otAmount}
+                //       className={classNames(styles.bgcWhite)}
+                //     >
+                //       {sechData.codirovkaActual}
+                //     </td>
+                //   )}
+                //   {otIndex === 0 && (
+                //     <td
+                //       rowSpan={otAmount}
+                //       className={classNames(styles.noWrap, styles.bgcWhite)}
+                //     >
+                //       {sechData.tipIzmCodirovki}
+                //     </td>
+                //   )}
+                //   {otIndex === 0 && (
+                //     <td
+                //       rowSpan={otAmount}
+                //       dangerouslySetInnerHTML={{
+                //         __html: sechData.sv2 || '',
+                //       }}
+                //       className={classNames(styles.bgcWhite)}
+                //     ></td>
+                //   )}
+                //   {otIndex === 0 && (
+                //     <td
+                //       rowSpan={otAmount}
+                //       dangerouslySetInnerHTML={{
+                //         __html: sechData.pi || '',
+                //       }}
+                //       className={classNames(styles.bgcWhite)}
+                //     ></td>
+                //   )}
+                //   {otIndex === 0 && (
+                //     <td
+                //       rowSpan={otAmount}
+                //       dangerouslySetInnerHTML={{
+                //         __html: sechData.gotovnostUs || '',
+                //       }}
+                //       className={classNames(styles.bgcWhite)}
+                //     ></td>
+                //   )}
+                //   {otIndex === 0 && (
+                //     <td
+                //       rowSpan={otAmount}
+                //       dangerouslySetInnerHTML={{
+                //         __html: sechData.zakluchenie || '',
+                //       }}
+                //       className={classNames(styles.bgcWhite)}
+                //     ></td>
+                //   )}
+                //   {otIndex === 0 && (
+                //     <td
+                //       rowSpan={otAmount}
+                //       className={styles.bgcWhite}
+                //       onClick={(e) => {}}
+                //     >
+                //       status
+                //     </td>
+                //   )}
+                //   {otIndex === 0 && (
+                //     <td rowSpan={otAmount} className={styles.bgcWhite}>
+                //       date
+                //     </td>
+                //   )}
+                //   {otIndex === 0 && (
+                //     <td rowSpan={otAmount} className={styles.bgcWhite}>
+                //       area
+                //     </td>
+                //   )}
+                // </tr>
+              )
+              // });
               // }
-            });
-            // const otIndex = otArr.findIndex(
-            //   (item) => item._id === sechData.metrology[0]
-            // );
-            // const trCondtent = appState.colOrderPlanRab.map((param) => {
-            //   if (param === 'gr') {
-            //     return <td>{otArr[otIndex]?.gr}</td>;
-            //   } else if (param === 'metrologyKomm') {
-            //     return (
-            //       <td
-            //         dangerouslySetInnerHTML={{ __html: sechArr[i][param] }}
-            //       ></td>
-            //     );
-            //   } else {
-            //     return <td>{sechArr[i][param]}</td>;
-            //   }
-            // });
-            // return <tr>{trCondtent}</tr>;
-          })}
-        </FlipMove>
-        {/* </tbody> */}
-      </table>
-      <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
-        <Toolbar>
-          {!company && (
-            <FormControlLabel
-              control={<Switch color="default" onChange={aiisGpeFilter} />}
-              label="Все / ГПЭ"
-            />
-          )}
-          {company === 'gpe' && (
-            <Typography>План работ Газпром энерго</Typography>
-          )}
-          {appState.isLoggedin ? (
-            <AccountCircleIcon
-              fontSize="large"
-              sx={{ mr: 1 }}
-              // color="secondary"
-            />
-          ) : (
-            <Button
-              color="inherit"
-              // variant="outlined"
-              sx={{ mr: 2 }}
-              onClick={() => {
-                setAppState((st) => ({ ...st, isLoginDialogOpen: true }));
-              }}
-            >
-              login
-            </Button>
-          )}
-          {pageState.editMode && (
-            <ButtonGroup sx={{ margin: '0 auto' }}>
+            )}
+          </FlipMove>
+          {/* </tbody> */}
+        </table>
+        <AppBar
+          position="fixed"
+          color="primary"
+          sx={{ top: 'auto', bottom: 0 }}
+        >
+          <Toolbar>
+            {!company && (
+              <FormControlLabel
+                control={<Switch color="default" onChange={aiisGpeFilter} />}
+                label="Все / ГПЭ"
+              />
+            )}
+            {company === 'gpe' && (
+              <Typography>План работ Газпром энерго</Typography>
+            )}
+            {appState.isLoggedin ? (
+              <AccountCircleIcon
+                fontSize="large"
+                sx={{ mr: 1 }}
+                // color="secondary"
+              />
+            ) : (
               <Button
-                variant="contained"
+                color="inherit"
+                // variant="outlined"
+                sx={{ mr: 2 }}
                 onClick={() => {
-                  setPageState((st) => ({ ...st, editMode: false }));
+                  setAppState((st) => ({ ...st, isLoginDialogOpen: true }));
                 }}
               >
-                отмена
+                login
               </Button>
+            )}
+            {pageState.editMode && (
+              <ButtonGroup sx={{ margin: '0 auto' }}>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    setPageState((st) => ({ ...st, editMode: false }));
+                  }}
+                >
+                  отмена
+                </Button>
 
-              <Button
-                variant="contained"
-                color="secondary"
-                // disabled={!pageState.selectedOtId}
-              >
-                <EditIcon />
-              </Button>
-              {/* <Button
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  // disabled={!pageState.selectedOtId}
+                >
+                  <EditIcon />
+                </Button>
+                {/* <Button
                 variant="contained"
                 color="secondary"
                 disabled={otHistory.length < 1}
@@ -613,16 +531,16 @@ export function Planrabot({ appState, setAppState }: Props) {
               >
                 <SaveIcon />
               </Button> */}
-            </ButtonGroup>
-          )}
-          {/* <DatePicker
+              </ButtonGroup>
+            )}
+            {/* <DatePicker
           // defaultValue={dayjs('2022-04-17')}
           // sx={{ display: 'none' }}
           /> */}
-          {appState.isLoggedin && <SpeedDialNav actions={actions} />}
-        </Toolbar>
-      </AppBar>
-      {/* <Popper
+            {appState.isLoggedin && <SpeedDialNav actions={actions} />}
+          </Toolbar>
+        </AppBar>
+        {/* <Popper
         // Note: The following zIndex style is specifically for documentation purposes and may not be necessary in your application.
         sx={{ zIndex: 1200 }}
         open={isCalOpen}
@@ -677,19 +595,19 @@ export function Planrabot({ appState, setAppState }: Props) {
           </Fade>
         )}
       </Popper> */}
-      <CalendarPopSimple
-        selectCell={selectCell}
-        isCalOpen={isCalOpen}
-        anchorEl={anchorEl}
-        sechArr={sechArr}
-        otArr={otArr}
-        setAnchorEl={setAnchorEl}
-        setIsCalOpen={setIsCalOpen}
-        setSechArr={setSechArr}
-        setOtArr={setOtArr}
-      />
+        <CalendarPopSimple
+          selectCell={selectCell}
+          isCalOpen={isCalOpen}
+          anchorEl={anchorEl}
+          sechArr={sechArr}
+          otArr={otArr}
+          setAnchorEl={setAnchorEl}
+          setIsCalOpen={setIsCalOpen}
+          setSechArr={setSechArr}
+          setOtArr={setOtArr}
+        />
 
-      <AlertSucErr appState={appState} setAppState={setAppState} />
-    </>
-  );
+        <AlertSucErr appState={appState} setAppState={setAppState} />
+      </>
+    );
 }
