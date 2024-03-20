@@ -28,7 +28,6 @@ import {
 import { position } from 'jodit/types/core/helpers';
 import produce from 'immer';
 import { KeyTwoTone } from '@mui/icons-material';
-import { CellPRDate } from '../../components/CellPRDate';
 import { CalendarPopSimple } from '../../components/CalendarPopSimple';
 import { CellSech } from '../../components/CellSech';
 import { CellOt } from '../../components/CellOt';
@@ -61,7 +60,7 @@ export interface SelectCell {
   value: string;
 }
 
-export interface SechKeys {
+export interface SechKeysObj {
   [key: string]: keyof SechData;
 }
 
@@ -118,15 +117,15 @@ export function Planrabot({ appState, setAppState }: Props) {
     }
   }, []);
 
-  const sechKeys: SechKeys = {};
+  const sechKeysObj: SechKeysObj = {};
 
   for (const key in sechArr[0]) {
     if (isKeyOfSechData(key, sechArr[0])) {
-      sechKeys[key] = key;
+      sechKeysObj[key] = key;
     }
   }
 
-  // console.log('sechKeys', sechKeys);
+  // console.log('sechKeysObj', sechKeysObj);
 
   const otKeys: OtKeys = {};
 
@@ -136,7 +135,7 @@ export function Planrabot({ appState, setAppState }: Props) {
     }
   }
 
-  console.log('sechKeys', sechKeys);
+  console.log('sechKeysObj', sechKeysObj);
 
   function openCalendar(
     event: React.MouseEvent<HTMLElement>,
@@ -236,7 +235,7 @@ export function Planrabot({ appState, setAppState }: Props) {
                   // ot={ot}
                   sechData={sechData}
                   sechIndex={sechIndex}
-                  sechKeys={sechKeys}
+                  sechKeysObj={sechKeysObj}
                   anchorEl={anchorEl}
                   setAnchorEl={setAnchorEl}
                   setSelectCell={setSelectCell}
@@ -278,7 +277,7 @@ export function Planrabot({ appState, setAppState }: Props) {
                 //       value={sechData.dopusk}
                 //       otAmount={otAmount}
                 //       sechIndex={sechIndex}
-                //       param={sechKeys.dopusk}
+                //       param={sechKeysObj.dopusk}
                 //       anchorEl={anchorEl}
                 //       setSelectCell={setSelectCell}
                 //       setAnchorEl={setAnchorEl}
@@ -290,7 +289,7 @@ export function Planrabot({ appState, setAppState }: Props) {
                 //       value={sechData.sdAs}
                 //       otAmount={otAmount}
                 //       sechIndex={sechIndex}
-                //       param={sechKeys.sdAs}
+                //       param={sechKeysObj.sdAs}
                 //       anchorEl={anchorEl}
                 //       setSelectCell={setSelectCell}
                 //       setAnchorEl={setAnchorEl}
@@ -302,7 +301,7 @@ export function Planrabot({ appState, setAppState }: Props) {
                 //       value={sechData.krSrokPodachi}
                 //       otAmount={otAmount}
                 //       sechIndex={sechIndex}
-                //       param={sechKeys.krSrokPodachi}
+                //       param={sechKeysObj.krSrokPodachi}
                 //       anchorEl={anchorEl}
                 //       setSelectCell={setSelectCell}
                 //       setAnchorEl={setAnchorEl}

@@ -415,7 +415,7 @@ export interface IColOrderObj {
 //   | 'Отриц. Исп-я'
 //   | '---';
 
-export interface SechData {
+export type SechData = {
   _id: string;
   kodGtp: string;
   kodSech: string;
@@ -449,7 +449,9 @@ export interface SechData {
   metrology: string[];
   zaprosPerecod: string;
   statusUS: MenuStatusUSItem;
-}
+};
+
+export type SechKeys = keyof SechData;
 
 export interface Ot {
   _id: string;

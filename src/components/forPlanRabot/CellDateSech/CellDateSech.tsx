@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from './celldatesech.module.css';
-import { IAppState, SechData } from '../../../app.types';
+import { IAppState, SechData, SechKeys } from '../../../app.types';
 import { Button, ClickAwayListener, Paper, Popper } from '@mui/material';
-import { PagePlanrabotState, SechKeys } from '../../../pages/Planrabot';
+import { PagePlanrabotState } from '../../../pages/Planrabot';
 import { DateCalendar } from '@mui/x-date-pickers';
 import zIndex from '@mui/material/styles/zIndex';
 import { updSech } from '../../../api/updSech';
@@ -13,7 +13,9 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 type Props = {
-  param: keyof SechData;
+  // param: keyof SechData;
+  // param: SechKeysObj['sdAs'] | SechKeysObj['sdPas'] | SechKeysObj['dopusk'];
+  param: Extract<SechKeys, 'sdAs' | 'dopusk' | 'sdPas' | 'soglGtp'>;
   sechData: SechData;
   otAmount: number;
   pageState: PagePlanrabotState;
@@ -133,7 +135,6 @@ export function CellDateSech({
           <Paper elevation={5} sx={{ p: 1, borderRadius: 2 }}>
             <DateCalendar
               views={['year', 'month', 'day']}
-              // @ts-ignore
               defaultValue={dayjs(sechData[param] || new Date())}
               // onYearChange={(newVal) => {
               //   tempDate = newVal;

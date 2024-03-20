@@ -9,7 +9,7 @@ import { CellOt } from '../../CellOt';
 import {
   OtKeys,
   PagePlanrabotState,
-  SechKeys,
+  SechKeysObj,
   SelectCell,
 } from '../../../pages/Planrabot';
 import { CellDateSech } from '../CellDateSech';
@@ -20,7 +20,7 @@ type Props = {
   // ot: Ot | undefined;
   sechData: SechData;
   sechIndex: number;
-  sechKeys: SechKeys;
+  sechKeysObj: SechKeysObj;
   anchorEl: HTMLElement | null;
   setAnchorEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
   setSelectCell: React.Dispatch<React.SetStateAction<SelectCell>>;
@@ -40,7 +40,7 @@ export const SechItem = forwardRef(function SechItem(
     // ot,
     sechData,
     sechIndex,
-    sechKeys,
+    sechKeysObj,
     anchorEl,
     setAnchorEl,
     setSelectCell,
@@ -92,7 +92,7 @@ export const SechItem = forwardRef(function SechItem(
               //   {sechData.soglGtp}
               // </td>
               <CellDateSech
-                param={sechKeys.soglGtp}
+                param={'soglGtp'}
                 sechData={sechData}
                 otAmount={otAmount}
                 pageState={pageState}
@@ -105,14 +105,14 @@ export const SechItem = forwardRef(function SechItem(
               //   value={sechData.dopusk}
               //   otAmount={otAmount}
               //   sechIndex={sechIndex}
-              //   param={sechKeys.dopusk}
+              //   param={sechKeysObj.dopusk}
               //   anchorEl={anchorEl}
               //   setSelectCell={setSelectCell}
               //   setAnchorEl={setAnchorEl}
               //   setIsCalOpen={setIsCalOpen}
               // />
               <CellDateSech
-                param={sechKeys.dopusk}
+                param={'dopusk'}
                 sechData={sechData}
                 otAmount={otAmount}
                 pageState={pageState}
@@ -125,14 +125,14 @@ export const SechItem = forwardRef(function SechItem(
               //   value={sechData.sdAs}
               //   otAmount={otAmount}
               //   sechIndex={sechIndex}
-              //   param={sechKeys.sdAs}
+              //   param={sechKeysObj.sdAs}
               //   anchorEl={anchorEl}
               //   setSelectCell={setSelectCell}
               //   setAnchorEl={setAnchorEl}
               //   setIsCalOpen={setIsCalOpen}
               // />
               <CellDateSech
-                param={sechKeys.sdAs}
+                param={'sdAs'}
                 sechData={sechData}
                 otAmount={otAmount}
                 pageState={pageState}
@@ -145,7 +145,7 @@ export const SechItem = forwardRef(function SechItem(
                 value={sechData.krSrokPodachi}
                 otAmount={otAmount}
                 sechIndex={sechIndex}
-                param={sechKeys.krSrokPodachi}
+                param={sechKeysObj.krSrokPodachi}
                 anchorEl={anchorEl}
                 setSelectCell={setSelectCell}
                 setAnchorEl={setAnchorEl}
