@@ -47,26 +47,38 @@ export function CellDateSech({
     setIsCalOpen(false);
   }
 
-  async function updSechData(val: Dayjs | null) {
+  async function updSechData(newDate: Dayjs | null) {
     setIsCalOpen(false);
     setAnchorEl(null);
     // Вычисление кр. срока подачи док-в на УС
     let krSrokPodachi = '';
     if (sechData.vidRabot === 'изменения') {
-      krSrokPodachi = dayjs(Date.parse(sechData.dopusk) + 3888000000).format(
-        'YYYY-MM-DD'
-      );
-    } else if (sechData.vidRabot == 'продление') {
-      if (sechData.sdAs) {
-        krSrokPodachi = dayjs(Date.parse(sechData.sdAs) - 3888000000).format(
+      const dopuskDate =
+        param === 'dopusk'
+          ? newDate?.format('YYYY-MM-DD') || ''
+          : sechData.dopusk;
+      krSrokPodachi = dopuskDate
+        ? dayjs(Date.parse(dopuskDate) + 3888000000).format('YYYY-MM-DD')
+        : '';
+    } else if (sechData.vidRabot === 'продление') {
+      if (sechData.sdAs || param === 'sdAs') {
+        const sdAsDate =
+          param === 'sdAs'
+            ? newDate?.format('YYYY-MM-DD') || ''
+            : sechData.sdAs;
+        krSrokPodachi = dayjs(Date.parse(sdAsDate) - 3888000000).format(
           'YYYY-MM-DD'
         );
       } else if (sechData.sdPas) {
-        krSrokPodachi = dayjs(Date.parse(sechData.sdPas) - 3888000000).format(
+        const sdPasDate =
+          param === 'sdPas'
+            ? newDate?.format('YYYY-MM-DD') || ''
+            : sechData.sdPas;
+        krSrokPodachi = dayjs(Date.parse(sdPasDate) - 3888000000).format(
           'YYYY-MM-DD'
         );
       }
-    } else if (sechData.vidRabot == 'новое') {
+    } else if (sechData.vidRabot === 'новое') {
       krSrokPodachi = '';
     }
     console.log({ krSrokPodachi });
@@ -74,7 +86,7 @@ export function CellDateSech({
 
     const res: Response | undefined = await updSech({
       ...sechData,
-      [param]: val?.format('YYYY-MM-DD') || '',
+      [param]: newDate?.format('YYYY-MM-DD') || '',
       krSrokPodachi,
     });
     if (res?.ok) {
@@ -82,7 +94,11 @@ export function CellDateSech({
         st
           .map((sech) =>
             sech._id === sechData._id
-              ? { ...sech, [param]: val?.format('YYYY-MM-DD') || '' }
+              ? {
+                  ...sech,
+                  [param]: newDate?.format('YYYY-MM-DD') || '',
+                  krSrokPodachi,
+                }
               : sech
           )
           .sort(sortSechByDate)
@@ -110,14 +126,14 @@ export function CellDateSech({
         id={id}
         open={isCalOpen}
         anchorEl={anchorEl}
-        placement="right"
+        placement="left"
         sx={{ zIndex: 1600 }}
       >
         <ClickAwayListener onClickAway={handleClickAway}>
           <Paper elevation={5} sx={{ p: 1, borderRadius: 2 }}>
             <DateCalendar
               views={['year', 'month', 'day']}
-              //@ts-ignore
+              // @ts-ignore
               defaultValue={dayjs(sechData[param] || new Date())}
               // onYearChange={(newVal) => {
               //   tempDate = newVal;
@@ -136,8 +152,8 @@ export function CellDateSech({
             <Button
               // sx={{ position: 'absolute', right: '15px', bottom: '10px' }}
               onClick={() => {
-                tempDate = null;
-                // updSechData(null);
+                // tempDate = null;
+                updSechData(null);
               }}
             >
               очистить

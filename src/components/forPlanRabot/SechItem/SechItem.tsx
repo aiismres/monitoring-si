@@ -85,23 +85,39 @@ export const SechItem = forwardRef(function SechItem(
               </td>
             )}
             {otIndex === 0 && (
-              <td
-                rowSpan={otAmount}
-                className={classNames(styles.noWrap, styles.bgcWhite)}
-              >
-                {sechData.soglGtp}
-              </td>
+              // <td
+              //   rowSpan={otAmount}
+              //   className={classNames(styles.noWrap, styles.bgcWhite)}
+              // >
+              //   {sechData.soglGtp}
+              // </td>
+              <CellDateSech
+                param={sechKeys.soglGtp}
+                sechData={sechData}
+                otAmount={otAmount}
+                pageState={pageState}
+                setSechArr={setSechArr}
+                setAppState={setAppState}
+              />
             )}
             {otIndex === 0 && (
-              <CellSech
-                value={sechData.dopusk}
-                otAmount={otAmount}
-                sechIndex={sechIndex}
+              // <CellSech
+              //   value={sechData.dopusk}
+              //   otAmount={otAmount}
+              //   sechIndex={sechIndex}
+              //   param={sechKeys.dopusk}
+              //   anchorEl={anchorEl}
+              //   setSelectCell={setSelectCell}
+              //   setAnchorEl={setAnchorEl}
+              //   setIsCalOpen={setIsCalOpen}
+              // />
+              <CellDateSech
                 param={sechKeys.dopusk}
-                anchorEl={anchorEl}
-                setSelectCell={setSelectCell}
-                setAnchorEl={setAnchorEl}
-                setIsCalOpen={setIsCalOpen}
+                sechData={sechData}
+                otAmount={otAmount}
+                pageState={pageState}
+                setSechArr={setSechArr}
+                setAppState={setAppState}
               />
             )}
             {otIndex === 0 && (
