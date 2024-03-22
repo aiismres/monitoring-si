@@ -189,7 +189,7 @@ export function Planrabot({ appState, setAppState }: Props) {
               <th>Согл ГТП</th>
               <th>Допуск</th>
               <th>СД АС</th>
-              <th>Кр-й срок подачи док</th>
+              <th>Кр-й срок подачи&nbsp;док</th>
               <th>Статус комплекта</th>
               <th>План. дата подачи</th>
               <th style={{ minWidth: '200px' }}>Комментарии</th>
