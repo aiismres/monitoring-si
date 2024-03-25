@@ -17,6 +17,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import { LoginDialog } from './components/LoginDialog';
+import { Planrabot2 } from './pages/Planrabot2';
 
 // dayjs.locale(dayjs_ru);
 // dayjs.extend(updateLocale);
@@ -89,6 +90,12 @@ function App() {
             path="/planrabot/:company?"
             element={
               <Planrabot appState={appState} setAppState={setAppState} />
+            }
+          />
+          <Route
+            path="/planrabot2/:company?"
+            element={
+              <Planrabot2 appState={appState} setAppState={setAppState} />
             }
           />
           <Route path="/texteditor" element={<TextEditor />} />

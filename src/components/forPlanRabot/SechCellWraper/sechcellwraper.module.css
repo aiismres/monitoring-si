@@ -1,0 +1,22 @@
+.tr {
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+
+.naimSechShortTh {
+  position: sticky;
+  /* top: 0; */
+  left: 0;
+  /* width: 2000px; */
+  color: #000;
+  background-color: #e3e3e3;
+}
+
+.metrTd {
+  padding: 0;
+}
+
+.metrTable {
+  margin: 0;
+  border: none;
+}

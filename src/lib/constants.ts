@@ -3,6 +3,9 @@ import {
   IColOrderObj,
   IStringNumber,
   IStringString,
+  Ot,
+  SechData,
+  SechKeys,
 } from '../app.types';
 
 export const sameCharEn = [
@@ -290,50 +293,158 @@ export const timePeriods = [
   '23:30 - 24:00',
 ];
 
-// export const colOrderPlanRabObj: ColOrderPlanRabObj = {
-//   opt1: [
-//     'naimSechShort',
-//     'vidRabot',
-//     'soglGtp',
-//     'dopusk',
-//     'sdAs',
-//     'krSrokPodachi',
-//     'planPodachi',
-//     'metrologyKomm',
-//     'gr',
-//   ],
-// };
+// const colOrderPROpt1: SechKeys[] = [
+//   '_id',
+//   'naimSechShort',
+//   'vidRabot',
+//   'soglGtp',
+//   'dopusk',
+//   'sdAs',
+//   'krSrokPodachi',
+//   'planPodachi',
+//   'metrologyKomm',
+// ];
 
-// codirovkaActual: 'актуальна';
-// dopusk: '';
-// gotovnostUs: '<br>';
-// kodGtp: '';
-// kodSech: '';
-// kolTi: '2';
-// krSrokPodachi: 'NaN-NaN-NaN';
-// metrology: ['624ef0e842161027e1cf8e86'];
-// metrologyKomm: 'необх изм ГТП для привед в соотв с ОТ<br>';
-// naimSechShort: 'ГТ Томск (Вертикос) - ФСК';
-// osobenAiis: '<br>';
-// otprav4v: '';
-// pi: '<br>';
-// planPodachi: '2022-08-31';
-// sdAs: '2025-11-08';
-// sdPas: '2023-07-18';
-// sobstvAiis: 'ГПЭ';
-// sogl4v: '';
-// sogl60Dku: '';
-// sogl60SmezhOtpr: '';
-// sogl60SmezhSogl: '';
-// soglGtp: '2023-06-01';
-// statusUS: 'Отриц. Исп-я';
-// sv1: '<br>';
-// sv2: '<br>';
-// sv3: '<br>';
-// sverkiKomm: '<br>';
-// textOt: '<br>';
-// tipIzmCodirovki: '<br>';
-// vidRabot: 'изменения';
-// zakluchenie: '<br>';
-// zaprosPerecod: '';
-// _id: '624ef0e842161027e1cf8e87';
+export type SechColOrderObj = {
+  full: Array<keyof SechData>;
+  short: Array<keyof SechData>;
+};
+
+export const sechColOrderObj: SechColOrderObj = {
+  short: [
+    // 'naimSechShort',
+    // 'vidRabot',
+    // 'soglGtp',
+    // 'dopusk',
+    'sdAs',
+    'krSrokPodachi',
+    'statusUS',
+    'planPodachi',
+    // 'metrologyKomm',
+    'codirovkaActual',
+    'metrology',
+  ],
+  full: [
+    'naimSechShort',
+    'vidRabot',
+    'soglGtp',
+    'dopusk',
+    'sdAs',
+    'krSrokPodachi',
+    'statusUS',
+    'planPodachi',
+    'metrologyKomm',
+    'codirovkaActual',
+    'metrology',
+    'codirovkaActual',
+  ],
+};
+
+type SechColFullName = Record<keyof SechData, string>;
+
+export const sechColFullName: SechColFullName = {
+  // export const sechColFullName = {
+  _id: 'id',
+  kodGtp: '',
+  kodSech: '',
+  naimSechShort: 'Сечение',
+  vidRabot: 'вид работ',
+  soglGtp: 'Согл ГТП',
+  dopusk: 'Допуск',
+  sdAs: 'СД АС',
+  sdPas: 'СД ПАС',
+  krSrokPodachi: 'Кр-й срок подачи док',
+  planPodachi: 'Дата комплекта',
+  metrologyKomm: 'Комментарии',
+  codirovkaActual: 'Кодировка корр.?',
+  metrology: '',
+  tipIzmCodirovki: 'тип изм код',
+  sogl60Dku: '',
+  sogl60SmezhOtpr: '',
+  sogl60SmezhSogl: '',
+  otprav4v: '',
+  sogl4v: '',
+  sverkiKomm: 'св-ки комм.',
+  sv1: 'св-1',
+  sv2: 'св-2',
+  sv3: 'св-3',
+  pi: 'ПИ',
+  textOt: 'Текс ОТ',
+  gotovnostUs: 'Готовность УС',
+  zakluchenie: 'Заключ-е',
+  osobenAiis: 'особ АИИС',
+  kolTi: 'кол-во ТИ',
+  sobstvAiis: 'собств АИИС',
+  zaprosPerecod: 'запрос перекод',
+  statusUS: 'Статус копмплекта',
+};
+
+export type MetrCol =
+  | keyof Ot
+  | 'dog'
+  | 'smr'
+  | 'vyezd'
+  | 'vniims'
+  | 'rst'
+  | 'prikaz'
+  | 'oforSop';
+
+export type MetrColOrderObj = {
+  short: Array<keyof Ot>;
+  // full: MetrCol[];
+};
+
+export const metrColOrderObj: MetrColOrderObj = {
+  short: ['gr', 'sdSop', 'naimAiis2'],
+  // full: [
+  //   'gr',
+  //   'sdSop',
+  //   'naimAiis1',
+  //   'naimAiis2',
+  //   'izmAiis',
+  //   'tipIzmOt',
+  //   'neobhRab',
+  //   'rabZaplan',
+  //   'dog',
+  //   'smr',
+  //   'vyezd',
+  //   'vniims',
+  //   'rst',
+  //   'prikaz',
+  //   'oforSop',
+  //   'oforSopFact',
+  //   'kommOt',
+  // ],
+};
+
+type OtColName = Record<keyof Ot, string>;
+
+export const metrColName: OtColName = {
+  _id: 'id',
+  gr: '№ ГР',
+  sdSop: 'СД СОП',
+  naimAiis1: 'Наим АИИС 1',
+  naimAiis2: 'Наим АИИС 2',
+  izmAiis: 'изм. АИИС',
+  tipIzmOt: 'тип изм',
+  neobhRab: 'Раб необх',
+  rabZaplan: 'Раб заплан',
+  dogPlan: 'Д. план',
+  dogFact: 'Д. факт',
+  smrPlan: 'СМР план',
+  smrFact: 'СМР факт',
+  vyezdPlan: 'Выезд',
+  vyezdFact: '',
+  vniimsPlan: '',
+  vniimsFact: '',
+  rstPlan: '',
+  rstFact: '',
+  prikazPlan: '',
+  prikazFact: '',
+  oforSopPlan: '',
+  oforSopFact: '',
+  kommOt: '',
+  // rst: '',
+  // prikaz: '',
+  // oforSop: '',
+};

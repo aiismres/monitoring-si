@@ -1,0 +1,8 @@
+.td {
+  white-space: nowrap;
+  background-color: #fff;
+}
+
+.selected {
+  outline: 1px solid orange;
+}

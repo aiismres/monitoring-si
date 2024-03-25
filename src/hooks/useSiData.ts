@@ -32,7 +32,7 @@ export const useSiData = () => {
     isLoading,
   }: { data: IResReadSiData1; error: boolean | undefined; isLoading: boolean } =
     useSWR('/api/readsidata', fetcher, {
-      // revalidateOnFocus: false,
+      revalidateOnFocus: true,
       // revalidateOnMount: false,
       // revalidateOnReconnect: false,
       // refreshWhenOffline: false,

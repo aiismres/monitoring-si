@@ -404,9 +404,6 @@ export interface IColOrderObj {
 //   | 'gr'
 //   | 'zaprosPerecod';
 
-// export interface ColOrderPlanRabObj {
-//   [N: string]: ColPlanRab[];
-// }
 // export type MenuItemT =
 //   | 'Планируется'
 //   | 'Подано в АТС'
