@@ -12,10 +12,12 @@
 
 .naimSechHead {
   width: 200px;
+  min-width: 200px;
 }
 
 .krSrokPodachi {
   width: 85px;
+  min-width: 85px;
 }
 
 .planPodachi {
@@ -36,8 +38,10 @@
 
 .naimAiis2 {
   width: 125px;
+  min-width: 125px;
 }
 
 .codirovkaActual {
   width: 120px;
+  min-width: 120px;
 }

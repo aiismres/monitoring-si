@@ -7,6 +7,7 @@ import { CellStatusUS2 } from '../CellStatusUS2';
 import { CellDateSech } from '../CellDateSech';
 import { CellDateSech2 } from '../CellDateSech2';
 import { Pages } from '@mui/icons-material';
+// import { useAppStore2 } from '../../../store';
 
 type Props = {
   pageState: PagePlanrabotState2;
@@ -21,6 +22,8 @@ export function SechCellWraper({
   sechParam,
   otArr,
 }: Props) {
+  // const incOtIndex = useAppStore2((state) => state.incOtIndex);
+
   if (['vidRabot', 'krSrokPodachi', 'codirovkaActual'].includes(sechParam)) {
     return <td>{sechData[sechParam]}</td>;
   } else if (sechParam === 'statusUS') {
@@ -38,13 +41,16 @@ export function SechCellWraper({
       <td className={styles.metrTd}>
         <table className={styles.metrTable}>
           <tbody>
-            {sechData.metrology.map((otId, i) => (
-              <OtItem2
-                key={otId}
-                otData={otArr.find((ot) => ot._id === otId)}
-                pageState={pageState}
-              />
-            ))}
+            {sechData.metrology.map((otId, i) => {
+              // incOtIndex();
+              return (
+                <OtItem2
+                  key={otId}
+                  otData={otArr.find((ot) => ot._id === otId)}
+                  pageState={pageState}
+                />
+              );
+            })}
           </tbody>
         </table>
       </td>

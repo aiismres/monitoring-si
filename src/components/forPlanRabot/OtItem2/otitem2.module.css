@@ -1,9 +1,9 @@
 .gr {
-  width: 70px;
+  min-width: 70px;
 }
 
 .sdSop {
-  width: 85px;
+  min-width: 85px;
 }
 
 .naimAiis2 {
@@ -11,6 +11,10 @@
 }
 
 .bgcGrey {
-  /* background-color: lightgrey; */
+  background-color: grey;
+}
+
+.bbGrey {
   border-bottom: 1px solid lightgrey;
+
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from './planrabot2.module.css';
 import { IAppState, Ot, SechData } from '../../app.types';
 import { table } from 'console';
@@ -73,6 +73,8 @@ export function Planrabot2({ appState, setAppState }: Props) {
     selectedSechData: undefined,
     // isOtEven: false,
   });
+
+  // const otIndex = useRef(0);
 
   const {
     data: sechData,
