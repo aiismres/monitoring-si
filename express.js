@@ -117,6 +117,10 @@ app.get('/planrabot/:company?', auth(), (req, res) => {
   res.sendFile(path.resolve('./build/index.html'));
 });
 
+app.get('/planrabot2/:company?', auth(), (req, res) => {
+  res.sendFile(path.resolve('./build/index.html'));
+});
+
 app.post('/api/savesidata', auth(), async (req, res) => {
   console.log('/api/savesidata');
   if (['qqq', 'fae', 'sns'].includes(req.user)) {

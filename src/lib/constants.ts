@@ -313,7 +313,7 @@ export type SechColOrderObj = {
 export const sechColOrderObj: SechColOrderObj = {
   short: [
     // 'naimSechShort',
-    // 'vidRabot',
+    'vidRabot',
     // 'soglGtp',
     // 'dopusk',
     'sdAs',
@@ -321,8 +321,8 @@ export const sechColOrderObj: SechColOrderObj = {
     'statusUS',
     'planPodachi',
     // 'metrologyKomm',
-    'codirovkaActual',
     'metrology',
+    'codirovkaActual',
   ],
   full: [
     'naimSechShort',
@@ -353,7 +353,7 @@ export const sechColFullName: SechColFullName = {
   dopusk: 'Допуск',
   sdAs: 'СД АС',
   sdPas: 'СД ПАС',
-  krSrokPodachi: 'Кр-й срок подачи док',
+  krSrokPodachi: 'Кр-й срок подачи',
   planPodachi: 'Дата комплекта',
   metrologyKomm: 'Комментарии',
   codirovkaActual: 'Кодировка корр.?',

@@ -21,7 +21,7 @@ export function SechCellWraper({
   sechParam,
   otArr,
 }: Props) {
-  if (['krSrokPodachi', 'codirovkaActual'].includes(sechParam)) {
+  if (['vidRabot', 'krSrokPodachi', 'codirovkaActual'].includes(sechParam)) {
     return <td>{sechData[sechParam]}</td>;
   } else if (sechParam === 'statusUS') {
     return <CellStatusUS2 sechData={sechData} pageState={pageState} />;
@@ -38,7 +38,7 @@ export function SechCellWraper({
       <td className={styles.metrTd}>
         <table className={styles.metrTable}>
           <tbody>
-            {sechData.metrology.map((otId) => (
+            {sechData.metrology.map((otId, i) => (
               <OtItem2
                 key={otId}
                 otData={otArr.find((ot) => ot._id === otId)}

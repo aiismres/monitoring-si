@@ -20,3 +20,7 @@
   margin: 0;
   border: none;
 }
+
+.selected {
+  outline: 1px solid red;
+}

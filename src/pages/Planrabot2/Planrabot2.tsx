@@ -26,9 +26,11 @@ import { SpeedDialNav } from '../../components/SpeedDialNav';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import { ReactComponent as IconEdit } from '../../Icons/IconEdit.svg';
+import { ReactComponent as IconMetrology } from '../../Icons/IconMetrology.svg';
 import { dataBind } from 'jodit/types/core/helpers';
 import { sortSechByDate } from '../../lib/sortSechByDate';
 import FlipMove from 'react-flip-move';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   appState: IAppState;
@@ -39,6 +41,8 @@ export type PagePlanrabotState2 = {
   editMode: boolean;
   sechColOrder: Array<keyof SechData>;
   metrColOrder: Array<keyof Ot>;
+  selectedSechData: SechData | undefined;
+  // isOtEven: boolean;
 };
 
 const fetcher = (url: string) =>
@@ -66,6 +70,8 @@ export function Planrabot2({ appState, setAppState }: Props) {
     editMode: false,
     sechColOrder: sechColOrderObj.short,
     metrColOrder: metrColOrderObj.short,
+    selectedSechData: undefined,
+    // isOtEven: false,
   });
 
   const {
@@ -95,6 +101,13 @@ export function Planrabot2({ appState, setAppState }: Props) {
         setPageState((st) => ({ ...st, editMode: true }));
       },
     },
+    {
+      icon: <IconMetrology />,
+      name: '',
+      do: () => {
+        window.open(`/metrology`, '_blank');
+      },
+    },
   ];
 
   if (sechError || metrError) return <div>Error</div>;
@@ -102,13 +115,17 @@ export function Planrabot2({ appState, setAppState }: Props) {
 
   return (
     <>
-      <table>
+      <table className={styles.tablePlanrabot}>
         <thead>
           <tr>
-            <th>Наим сеч</th>
+            <th className={styles.naimSechHead}>Наим сеч</th>
             {pageState.sechColOrder.map((sechParam) => {
               if (sechParam !== 'metrology') {
-                return <th key={sechParam}>{sechColFullName[sechParam]}</th>;
+                return (
+                  <th className={styles[sechParam]} key={sechParam}>
+                    {sechColFullName[sechParam]}
+                  </th>
+                );
               } else {
                 return (
                   <th key={sechParam} className={styles.thMetr}>
@@ -116,7 +133,9 @@ export function Planrabot2({ appState, setAppState }: Props) {
                       <thead>
                         <tr>
                           {pageState.metrColOrder.map((otParam) => (
-                            <th key={otParam}>{metrColName[otParam]}</th>
+                            <th className={styles[otParam]} key={otParam}>
+                              {metrColName[otParam]}
+                            </th>
                           ))}
                         </tr>
                       </thead>
@@ -129,7 +148,7 @@ export function Planrabot2({ appState, setAppState }: Props) {
         </thead>
         <FlipMove typeName="tbody">
           {/* <tbody> */}
-          {sechData.map((sechItem) => (
+          {sechData.map((sechItem, i) => (
             // <tr>
             //   {pageState.sechColOrder.map((sechParam) => (
             //     <td>{sechData[sechParam]}</td>
@@ -138,6 +157,7 @@ export function Planrabot2({ appState, setAppState }: Props) {
             <SechItem2
               key={sechItem._id}
               pageState={pageState}
+              setPageState={setPageState}
               sechData={sechItem}
               otArr={otArr}
             />
@@ -174,25 +194,33 @@ export function Planrabot2({ appState, setAppState }: Props) {
               login
             </Button>
           )}
+          {appState.isLoggedin && (
+            <Button
+              variant="contained"
+              onClick={() => {
+                window.open(
+                  `/monitoringsi?sechID=${pageState.selectedSechData?._id}&naimsechshort=${pageState.selectedSechData?.naimSechShort}`,
+                  '_blank'
+                );
+              }}
+            >
+              СИ
+            </Button>
+          )}
           {pageState.editMode && (
-            <ButtonGroup sx={{ margin: '0 auto' }}>
-              <Button
-                variant="contained"
-                onClick={() => {
-                  setPageState((st) => ({ ...st, editMode: false }));
-                }}
-              >
-                отмена
-              </Button>
+            // <ButtonGroup
+            // sx={{ margin: '0 auto' }}
+            // >
+            <Button
+              variant="contained"
+              onClick={() => {
+                setPageState((st) => ({ ...st, editMode: false }));
+              }}
+            >
+              отмена
+            </Button>
 
-              <Button
-                variant="contained"
-                color="secondary"
-                // disabled={!pageState.selectedOtId}
-              >
-                <EditIcon />
-              </Button>
-            </ButtonGroup>
+            // </ButtonGroup>
           )}
 
           {appState.isLoggedin && <SpeedDialNav actions={actions} />}

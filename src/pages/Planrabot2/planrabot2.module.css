@@ -1,7 +1,43 @@
+.tablePlanrabot {
+  border-right: 1px solid grey;
+}
+
 .tableMetr {
   margin: 0;
 }
 
 .thMetr {
   padding: 0;
+}
+
+.naimSechHead {
+  width: 200px;
+}
+
+.krSrokPodachi {
+  width: 85px;
+}
+
+.planPodachi {
+  width: 85px;
+}
+
+.statusUS {
+  width: 100px;
+}
+
+.gr {
+  width: 70px;
+}
+
+.sdSop {
+  width: 85px;
+}
+
+.naimAiis2 {
+  width: 125px;
+}
+
+.codirovkaActual {
+  width: 120px;
 }
