@@ -320,12 +320,12 @@ export const sechColOrderObj: SechColOrderObj = {
     'krSrokPodachi',
     'statusUS',
     'planPodachi',
-    // 'metrologyKomm',
     'metrology',
     'codirovkaActual',
+    // 'metrologyKomm',
   ],
   full: [
-    'naimSechShort',
+    // 'naimSechShort',
     'vidRabot',
     'soglGtp',
     'dopusk',
@@ -333,10 +333,9 @@ export const sechColOrderObj: SechColOrderObj = {
     'krSrokPodachi',
     'statusUS',
     'planPodachi',
-    'metrologyKomm',
-    'codirovkaActual',
     'metrology',
     'codirovkaActual',
+    'metrologyKomm',
   ],
 };
 
@@ -391,30 +390,30 @@ export type MetrCol =
 
 export type MetrColOrderObj = {
   short: Array<keyof Ot>;
-  // full: MetrCol[];
+  full: Array<keyof Ot>;
 };
 
 export const metrColOrderObj: MetrColOrderObj = {
   short: ['gr', 'sdSop', 'naimAiis2'],
-  // full: [
-  //   'gr',
-  //   'sdSop',
-  //   'naimAiis1',
-  //   'naimAiis2',
-  //   'izmAiis',
-  //   'tipIzmOt',
-  //   'neobhRab',
-  //   'rabZaplan',
-  //   'dog',
-  //   'smr',
-  //   'vyezd',
-  //   'vniims',
-  //   'rst',
-  //   'prikaz',
-  //   'oforSop',
-  //   'oforSopFact',
-  //   'kommOt',
-  // ],
+  full: [
+    'gr',
+    'sdSop',
+    // 'naimAiis1',
+    'naimAiis2',
+    //   'izmAiis',
+    //   'tipIzmOt',
+    //   'neobhRab',
+    //   'rabZaplan',
+    //   'dog',
+    //   'smr',
+    //   'vyezd',
+    //   'vniims',
+    //   'rst',
+    //   'prikaz',
+    //   'oforSop',
+    //   'oforSopFact',
+    //   'kommOt',
+  ],
 };
 
 type OtColName = Record<keyof Ot, string>;

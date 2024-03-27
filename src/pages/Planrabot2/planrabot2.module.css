@@ -11,8 +11,16 @@
 }
 
 .naimSechHead {
+  position: fixed;
+  /* top: 0;
+  left: 0; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 200px;
   min-width: 200px;
+  height: 42px;
+  z-index: 1600;
 }
 
 .krSrokPodachi {

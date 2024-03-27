@@ -95,6 +95,24 @@ export function Planrabot2({ appState, setAppState }: Props) {
 
   sechData?.sort(sortSechByDate);
 
+  function switchColOrder(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      setPageState((st) => ({
+        ...st,
+        sechColOrder: sechColOrderObj.full,
+        metrColOrder: metrColOrderObj.full,
+      }));
+      console.log('checked');
+    } else {
+      setPageState((st) => ({
+        ...st,
+        sechColOrder: sechColOrderObj.short,
+        metrColOrder: metrColOrderObj.short,
+      }));
+      console.log('UnChecked');
+    }
+  }
+
   const actions = [
     {
       icon: <IconEdit />,
@@ -196,6 +214,11 @@ export function Planrabot2({ appState, setAppState }: Props) {
               login
             </Button>
           )}
+
+          <FormControlLabel
+            control={<Switch color="default" onChange={switchColOrder} />}
+            label=" Short / All"
+          />
           {appState.isLoggedin && (
             <Button
               variant="contained"

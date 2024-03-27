@@ -55,6 +55,8 @@ export function SechCellWraper({
         </table>
       </td>
     );
+  } else if (sechParam === 'metrologyKomm') {
+    return <td dangerouslySetInnerHTML={{ __html: sechData[sechParam] }}></td>;
   } else {
     return <td></td>;
   }
