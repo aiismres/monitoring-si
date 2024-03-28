@@ -394,16 +394,16 @@ export type MetrColOrderObj = {
 };
 
 export const metrColOrderObj: MetrColOrderObj = {
-  short: ['gr', 'sdSop', 'naimAiis2'],
+  short: ['gr', 'naimAiis2', 'sdSop'],
   full: [
     'gr',
-    'sdSop',
     // 'naimAiis1',
     'naimAiis2',
-    //   'izmAiis',
+    'sdSop',
+    'izmAiis',
     //   'tipIzmOt',
-    //   'neobhRab',
-    //   'rabZaplan',
+    'neobhRab',
+    'rabZaplan',
     //   'dog',
     //   'smr',
     //   'vyezd',
