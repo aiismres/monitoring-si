@@ -1,0 +1,72 @@
+.borderRed {
+  outline: 1px solid red;
+}
+
+.error {
+  color: red;
+}
+
+.warning {
+  color: orange;
+}
+
+.success {
+  color: green;
+}
+
+/* @keyframes appearance {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+} */
+.item {
+  opacity: 0;
+  transition: opacity 700ms ease-out;
+}
+
+.noWrap {
+  /* min-width: 90px; */
+  white-space: nowrap
+}
+
+.dateWidth {
+  width: var(--date-col-width);
+  min-width: var(--date-col-width);
+  /* min-width: 85px; */
+}
+
+.gr {
+  min-width: 70px;
+}
+
+.naimAiis2 {
+  width: 125px;
+  min-width: 125px;
+}
+
+.izmAiis {
+  width: 35px;
+  min-width: 35px;
+}
+
+.neobhRab {
+  width: 125px;
+  min-width: 125px;
+}
+
+.rabZaplan {
+  width: 55px;
+  min-width: 55px;
+}
+
+.error {
+  color: red
+}
+
+.bgcGrey {
+  background-color: rgb(227, 227, 227);
+}

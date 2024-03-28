@@ -25,30 +25,56 @@
 
 .soglGtp,
 .dopusk,
-.krSrokPodachi {
-  width: 85px;
-  min-width: 85px;
+.krSrokPodachi,
+.dog,
+.vyezd,
+.vniims,
+.rst,
+.prikaz,
+.oforSop {
+  width: var(--date-col-width);
+  min-width: var(--date-col-width);
+}
+
+
+.statusUS {
+  width: 100px;
+  min-width: 100px;
 }
 
 .planPodachi {
   width: 85px;
-}
-
-.statusUS {
-  width: 100px;
+  min-width: 85px;
 }
 
 .gr {
   width: 70px;
+  min-width: 70px;
 }
 
 .sdSop {
   width: 85px;
+  min-width: 85px;
 }
 
 .naimAiis2 {
   width: 125px;
   min-width: 125px;
+}
+
+.izmAiis {
+  width: 35px;
+  min-width: 35px;
+}
+
+.neobhRab {
+  width: 125px;
+  min-width: 125px;
+}
+
+.rabZaplan {
+  width: 55px;
+  min-width: 55px;
 }
 
 .codirovkaActual {

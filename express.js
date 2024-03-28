@@ -161,38 +161,30 @@ app.get('/login', (req, res) => {
   res.sendfile('login.html');
 });
 
-app.post(
-  '/api/login',
-  bodyParser.urlencoded({ extended: false }),
-  async (req, res) => {
-    console.log('req.body', req.body);
-    const { username, password } = req.body;
-    let passwordhash = crypto
-      .createHash('sha256')
-      .update(password)
-      .digest('hex');
-    // console.log({ passwordhash });
-    let users = await usersDb.find().toArray();
-    console.log(users, username);
-    let user = users.find((item) => item.username == username);
-    console.log(user);
-    // let user = usersDb.users.find((item) => item.username == username);
-    if (!user) {
-      res.send('нет такого пользователя');
-    }
-    // let hash = toHash(password);
-    // if (hash != user.password) {
-    if (passwordhash != user.password) {
-      res.send('пароль неверный');
-    }
-    let sessionID = nanoid();
-    sessionIDObj[sessionID] = username;
-    console.log('sessionIDs', sessionIDObj);
-    // user.sessionID = sessionID;
-    // usersDb.sessions.push(sessionID);
-    res.cookie('sessionID', sessionID).redirect('/readsech');
+app.post('/api/login', bodyParser.urlencoded({ extended: false }), async (req, res) => {
+  console.log('req.body', req.body);
+  const { username, password } = req.body;
+  let passwordhash = crypto.createHash('sha256').update(password).digest('hex');
+  // console.log({ passwordhash });
+  let users = await usersDb.find().toArray();
+  console.log(users, username);
+  let user = users.find((item) => item.username == username);
+  console.log(user);
+  // let user = usersDb.users.find((item) => item.username == username);
+  if (!user) {
+    res.send('нет такого пользователя');
   }
-);
+
+  if (passwordhash != user?.password) {
+    res.send('пароль неверный');
+  }
+  let sessionID = nanoid();
+  sessionIDObj[sessionID] = username;
+  console.log('sessionIDs', sessionIDObj);
+  // user.sessionID = sessionID;
+  // usersDb.sessions.push(sessionID);
+  res.cookie('sessionID', sessionID).redirect('/readsech');
+});
 
 app.get('/metrology', (req, res) => {
   res.sendFile(path.resolve('./build/index.html'));

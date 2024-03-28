@@ -9,6 +9,7 @@ import {
   metrColOrderObj,
   metrColName,
   MetrCol,
+  MetrFullColParam,
 } from '../../lib/constants';
 import { useSechData } from '../../hooks/useSechData';
 import useSWR from 'swr';
@@ -40,7 +41,7 @@ interface Props {
 export type PagePlanrabotState2 = {
   editMode: boolean;
   sechColOrder: Array<keyof SechData>;
-  metrColOrder: Array<keyof Ot>;
+  metrColOrder: MetrFullColParam[];
   selectedSechData: SechData | undefined;
   // isOtEven: boolean;
 };
@@ -217,11 +218,12 @@ export function Planrabot2({ appState, setAppState }: Props) {
 
           <FormControlLabel
             control={<Switch color="default" onChange={switchColOrder} />}
-            label=" Short / All"
+            label=" Sech Short / All"
           />
           {appState.isLoggedin && (
             <Button
               variant="contained"
+              disabled={!pageState.selectedSechData?._id}
               onClick={() => {
                 window.open(
                   `/monitoringsi?sechID=${pageState.selectedSechData?._id}&naimsechshort=${pageState.selectedSechData?.naimSechShort}`,

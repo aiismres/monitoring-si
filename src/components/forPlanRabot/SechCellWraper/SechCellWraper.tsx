@@ -2,12 +2,13 @@ import React from 'react';
 import styles from './sechcellwraper.module.css';
 import { PagePlanrabotState2 } from '../../../pages/Planrabot2';
 import { Ot, SechData } from '../../../app.types';
-import { OtItem2 } from '../OtItem2';
+
 import { CellStatusUS2 } from '../CellStatusUS2';
 import { CellDateSech } from '../CellDateSech';
 import { CellDateSech2 } from '../CellDateSech2';
 import { Pages } from '@mui/icons-material';
-import { useAppStore2 } from '../../../store';
+import { OtItem3 } from '../OtItem3';
+// import { useAppStore2 } from '../../../store';
 
 type Props = {
   pageState: PagePlanrabotState2;
@@ -22,7 +23,7 @@ export function SechCellWraper({
   sechParam,
   otArr,
 }: Props) {
-  const incOtIndex = useAppStore2((state) => state.incOtIndex);
+  // const incOtIndex = useAppStore2((state) => state.incOtIndex);
 
   if (
     [
@@ -50,11 +51,15 @@ export function SechCellWraper({
         <table className={styles.metrTable}>
           <tbody>
             {sechData.metrology.map((otId, i) => {
-              incOtIndex();
               return (
-                <OtItem2
+                // <OtItem2
+                //   key={otId}
+                //   otData={otArr.find((ot) => ot._id === otId)}
+                //   pageState={pageState}
+                // />
+                <OtItem3
                   key={otId}
-                  otData={otArr.find((ot) => ot._id === otId)}
+                  ot={otArr.find((ot) => ot._id === otId)}
                   pageState={pageState}
                 />
               );

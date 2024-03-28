@@ -388,13 +388,21 @@ export type MetrCol =
   | 'prikaz'
   | 'oforSop';
 
+export type MetrFullColParam = keyof Ot;
+// | 'dog';
+//  | 'vyezd';
+// | 'vniims';
+//  | 'rst';
+// | 'prikaz';
+// | 'oforSop';
+
 export type MetrColOrderObj = {
   short: Array<keyof Ot>;
-  full: Array<keyof Ot>;
+  full: MetrFullColParam[];
 };
 
 export const metrColOrderObj: MetrColOrderObj = {
-  short: ['gr', 'naimAiis2', 'sdSop'],
+  short: ['gr', 'naimAiis2', 'sdSop', 'neobhRab', 'rabZaplan', 'oforSopFact'],
   full: [
     'gr',
     // 'naimAiis1',
@@ -404,19 +412,19 @@ export const metrColOrderObj: MetrColOrderObj = {
     //   'tipIzmOt',
     'neobhRab',
     'rabZaplan',
-    //   'dog',
+    'dogFact',
     //   'smr',
-    //   'vyezd',
-    //   'vniims',
-    //   'rst',
-    //   'prikaz',
-    //   'oforSop',
+    'vyezdFact',
+    'vniimsFact',
+    'rstFact',
+    'prikazFact',
+    'oforSopFact',
     //   'oforSopFact',
     //   'kommOt',
   ],
 };
 
-type OtColName = Record<keyof Ot, string>;
+type OtColName = Record<MetrFullColParam, string>;
 
 export const metrColName: OtColName = {
   _id: 'id',
@@ -424,26 +432,29 @@ export const metrColName: OtColName = {
   sdSop: 'СД СОП',
   naimAiis1: 'Наим АИИС 1',
   naimAiis2: 'Наим АИИС 2',
-  izmAiis: 'изм. АИИС',
+  izmAiis: 'изм.',
   tipIzmOt: 'тип изм',
   neobhRab: 'Раб необх',
   rabZaplan: 'Раб заплан',
+  // dog: 'Договор',
   dogPlan: 'Д. план',
-  dogFact: 'Д. факт',
+  dogFact: 'Договор',
   smrPlan: 'СМР план',
   smrFact: 'СМР факт',
-  vyezdPlan: 'Выезд',
-  vyezdFact: '',
-  vniimsPlan: '',
-  vniimsFact: '',
-  rstPlan: '',
-  rstFact: '',
-  prikazPlan: '',
-  prikazFact: '',
-  oforSopPlan: '',
-  oforSopFact: '',
-  kommOt: '',
+  // vyezd: 'Выезд',
+  vyezdPlan: '',
+  vyezdFact: 'Выезд',
+  // vniims: '',
+  // vniimsPlan: '',
+  vniimsFact: 'Вниимс',
   // rst: '',
+  // rstPlan: '',
+  rstFact: 'РСТ',
   // prikaz: '',
-  // oforSop: '',
+  // prikazPlan: '',
+  prikazFact: 'Приказ',
+  // oforSop: 'Офор СОП',
+  // oforSopPlan: '',
+  oforSopFact: 'Офор СОП',
+  kommOt: '',
 };

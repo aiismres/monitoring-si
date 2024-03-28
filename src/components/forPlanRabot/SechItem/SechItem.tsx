@@ -208,16 +208,16 @@ export const SechItem = forwardRef(function SechItem(
               {ot?.vyezdFact ? ot?.vyezdFact : ot?.vyezdPlan}
             </td>
             <td className={styles.noWrap}>
-              {ot?.vniimsFact ? ot?.vniimsFact : ot?.vniimsPlan}
+              {/* {ot?.vniimsFact ? ot?.vniimsFact : ot?.vniimsPlan} */}
             </td>
             <td className={styles.noWrap}>
-              {ot?.rstFact ? ot?.rstFact : ot?.rstPlan}
+              {/* {ot?.rstFact ? ot?.rstFact : ot?.rstPlan} */}
             </td>
             <td className={styles.noWrap}>
-              {ot?.prikazFact ? ot?.prikazFact : ot?.prikazPlan}
+              {/* {ot?.prikazFact ? ot?.prikazFact : ot?.prikazPlan} */}
             </td>
             <td className={styles.noWrap}>
-              {ot?.oforSopFact ? ot?.oforSopFact : ot?.oforSopPlan}
+              {/* {ot?.oforSopFact ? ot?.oforSopFact : ot?.oforSopPlan} */}
             </td>
             <td
               dangerouslySetInnerHTML={{

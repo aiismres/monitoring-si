@@ -466,13 +466,13 @@ export interface Ot {
   smrFact: string;
   vyezdPlan: string;
   vyezdFact: string;
-  vniimsPlan: string;
+  // vniimsPlan: string;
   vniimsFact: string;
-  rstPlan: string;
+  // rstPlan: string;
   rstFact: string;
-  prikazPlan: string;
+  // prikazPlan: string;
   prikazFact: string;
-  oforSopPlan: string;
+  // oforSopPlan: string;
   oforSopFact: string;
   kommOt: string;
 }

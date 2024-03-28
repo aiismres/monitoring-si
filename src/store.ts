@@ -43,14 +43,14 @@ export const useAppStore = create<IAppStore>()(
   )
 );
 
-interface IAppStore2 {
-  otIndex: number;
-  incOtIndex: () => void;
-}
+// interface IAppStore2 {
+//   otIndex: number;
+//   incOtIndex: () => void;
+// }
 
-export const useAppStore2 = create<IAppStore2>()(
-  devtools((set) => ({
-    otIndex: 0,
-    incOtIndex: () => set((state) => ({ otIndex: state.otIndex + 1 })),
-  }))
-);
+// export const useAppStore2 = create<IAppStore2>()(
+//   devtools((set) => ({
+//     otIndex: 0,
+//     incOtIndex: () => set((state) => ({ otIndex: state.otIndex + 1 })),
+//   }))
+// );

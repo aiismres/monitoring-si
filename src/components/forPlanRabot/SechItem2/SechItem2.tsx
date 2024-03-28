@@ -3,7 +3,7 @@ import styles from './sechitem2.module.css';
 import { PagePlanrabotState2 } from '../../../pages/Planrabot2';
 import { Ot, SechData } from '../../../app.types';
 import useSWR from 'swr';
-import { OtItem2 } from '../OtItem2';
+// import { OtItem2 } from '../OtItem2';
 import { SechCellWraper } from '../SechCellWraper';
 import classNames from 'classnames/bind';
 
