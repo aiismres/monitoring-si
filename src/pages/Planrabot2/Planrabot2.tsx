@@ -96,21 +96,39 @@ export function Planrabot2({ appState, setAppState }: Props) {
 
   sechData?.sort(sortSechByDate);
 
-  function switchColOrder(e: React.ChangeEvent<HTMLInputElement>) {
+  function switchSechColOrder(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
       setPageState((st) => ({
         ...st,
         sechColOrder: sechColOrderObj.full,
-        metrColOrder: metrColOrderObj.full,
+        // metrColOrder: metrColOrderObj.full,
       }));
       console.log('checked');
     } else {
       setPageState((st) => ({
         ...st,
         sechColOrder: sechColOrderObj.short,
-        metrColOrder: metrColOrderObj.short,
+        // metrColOrder: metrColOrderObj.short,
       }));
       console.log('UnChecked');
+    }
+  }
+
+  function switchMetrColOrder(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      setPageState((st) => ({
+        ...st,
+        // sechColOrder: sechColOrderObj.full,
+        metrColOrder: metrColOrderObj.full,
+      }));
+      // console.log('checked');
+    } else {
+      setPageState((st) => ({
+        ...st,
+        // sechColOrder: sechColOrderObj.short,
+        metrColOrder: metrColOrderObj.short,
+      }));
+      // console.log('UnChecked');
     }
   }
 
@@ -217,8 +235,12 @@ export function Planrabot2({ appState, setAppState }: Props) {
           )}
 
           <FormControlLabel
-            control={<Switch color="default" onChange={switchColOrder} />}
+            control={<Switch color="default" onChange={switchSechColOrder} />}
             label=" Sech Short / All"
+          />
+          <FormControlLabel
+            control={<Switch color="default" onChange={switchMetrColOrder} />}
+            label="Metr Short / All"
           />
           {appState.isLoggedin && (
             <Button

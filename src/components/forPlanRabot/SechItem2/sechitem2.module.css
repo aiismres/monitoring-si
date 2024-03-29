@@ -3,8 +3,37 @@
   border-bottom: 1px solid grey;
 }
 
-.tr:focus {
+/* .tr:focus {
   outline: 1px solid red;
+} */
+
+.tr>td {
+  position: relative;
+  /* z-index: -1; */
+}
+
+.tr:focus>td::after,
+.tr:focus>th::after,
+.tr.selected>td::after {
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 105%;
+  border-top: 3px solid orange;
+  border-bottom: 3px solid orange;
+  /* z-index: 1; */
+}
+
+.tr:focus>th::after {
+  border-left: 3px solid orange;
+}
+
+.tr:focus>td:last-child::after {
+  border-right: 3px solid orange;
+  width: auto;
 }
 
 .naimSechShortTh {
@@ -15,6 +44,7 @@
   min-width: 200px;
   color: #000;
   background-color: #e3e3e3;
+  z-index: 1000;
 }
 
 .metrTd {
@@ -26,6 +56,6 @@
   border: none;
 }
 
-.selected {
+/* .selected {
   outline: 1px solid red;
-}
+} */

@@ -26,12 +26,12 @@
 .soglGtp,
 .dopusk,
 .krSrokPodachi,
-.dog,
-.vyezd,
-.vniims,
-.rst,
-.prikaz,
-.oforSop {
+.dogFact,
+.vyezdFact,
+.vniimsFact,
+.rstFact,
+.prikazFact,
+.oforSopFact {
   width: var(--date-col-width);
   min-width: var(--date-col-width);
 }

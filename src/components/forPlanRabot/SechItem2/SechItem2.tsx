@@ -25,11 +25,11 @@ export const SechItem2 = forwardRef(function SechItem2(
       tabIndex={0}
       ref={ref}
       key={sechData._id}
-      className={styles.tr}
-      // className={cx({
-      //   tr: true,
-      //   selected: pageState.selectedSechData?._id === sechData._id,
-      // })}
+      // className={styles.tr}
+      className={cx({
+        tr: true,
+        selected: pageState.selectedSechData?._id === sechData._id,
+      })}
       onClick={() => {
         setPageState((st) => ({ ...st, selectedSechData: sechData }));
       }}

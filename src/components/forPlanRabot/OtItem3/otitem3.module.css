@@ -70,3 +70,9 @@
 .bgcGrey {
   background-color: rgb(227, 227, 227);
 }
+
+/* .tr:hover td::after {
+  content: '';
+  border-top: none;
+  border-bottom: none;
+} */

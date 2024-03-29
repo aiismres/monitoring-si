@@ -104,7 +104,7 @@ export function OtItem3(
       : styles.rabZaplan;
 
   return (
-    <tr key={ot._id} className={cx({ bgcGrey: otIndex % 2 === 0 })}>
+    <tr key={ot._id} className={cx('tr', { bgcGrey: otIndex % 2 === 0 })}>
       <td className={styles.gr}>{ot.gr}</td>
       {/* <td>{ot.naimAiis1}</td> */}
       <td className={styles.naimAiis2}>{ot.naimAiis2}</td>
