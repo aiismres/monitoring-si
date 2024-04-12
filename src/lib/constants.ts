@@ -322,7 +322,7 @@ export const sechColOrderObj: SechColOrderObj = {
     'planPodachi',
     'metrology',
     'codirovkaActual',
-    // 'metrologyKomm',
+    'metrologyKomm',
   ],
   full: [
     // 'naimSechShort',

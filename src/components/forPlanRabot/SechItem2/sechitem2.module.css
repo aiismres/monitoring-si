@@ -31,9 +31,14 @@
   border-left: 3px solid orange;
 }
 
-.tr:focus>td:last-child::after {
-  border-right: 3px solid orange;
+.tr>td:last-child::after {
   width: auto;
+  border-right: 3px solid orange;
+}
+
+.tr:focus>td:last-child::after {
+  width: auto;
+  border-right: 3px solid orange;
 }
 
 .naimSechShortTh {
