@@ -1,0 +1,38 @@
+table,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.trow-head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #387e97;
+  color: #dedede;
+}
+tr:hover {
+  background-color: #d6eeee;
+}
+
+.flip-list-move {
+  transition: transform 0.8s ease;
+}
+.textRed {
+  color: #8b0000;
+}
+.textGreen {
+  color: #006400;
+}
+.textOrange {
+  color: #f89e02;
+}
+iframe {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  width: 800px;
+  height: 1000px;
+  z-index: -1;
+}

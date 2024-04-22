@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>добавление сечения</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="/planrabot/css/addSech.css">
+</head>
+<body>
+<form NAME="Sel2" id="form2">
+<table id="table1">
+  <tr>
+      <th>Наим. сеч-я сокр.</th>
+      <th>вид работ</th>
+      <th> Согл. ГТП </th>
+      <th> Допуск </th>
+      <th>СДАС</th>
+      <th>CД ПАС</th>
+      <th>Кр. срок подачи</th>
+      <th>план. дата подачи</th>
+      <th>Метрология комм.</th>
+      <th>Кодировка актуал.</th>
+      <th>Тип изм-й кодировки</th>
+      <th>Запрос на перекод</th>
+      <th>согл-е 60 ДКУ</th>
+      <th>согл-е 60 смеж (отпр/согл)</th>
+      <th>4В (отпр/согл)</th>
+      <th>Сверки комм.</th>
+      <th>св-1</th>
+      <th>св-2</th>
+      <th>св-3</th>
+      <th>ПИ</th>
+      <th>текст ОТ</th>
+      <th>Готовность УС</th>
+      <th>Заключение</th>
+      <th>Особенность АИИС</th>
+      <th>кол-во ИК</th>
+      <th>Сосбств. аиис</th>
+      <th>код гтп</th>
+      <th>код сечения</th>
+    </tr>
+    <tr>
+      <td><input name="naimSechShort" ></td>
+      <td><select  name="vidRabot">
+        <option value="продление">продление</option>
+        <option value="изменения">изменения</option>
+        <option value="новое">новое</option></td>
+      <td><input name="soglGtp" type='date'></td>
+      <td><input name="dopusk" type='date'></td>
+      <td><input name="sdAs" type='date'></td>
+      <td><input name="sdPas" type='date'></td>
+      <td><input name="krSrokPodachi" type='date' ></td>
+      <td><input name="planPodachi" type='date' ></td>
+      <td contenteditable="true"></td>
+      <td><select  name="codirovkaActual">
+        <option value="актуальна">актуальна</option>
+        <option value="Не актуальна">Не актуальна</option>
+        <option value="не проверялась">не проверялась</option> </td>
+      <td contenteditable="true"></td>
+      <td><input name="zaprosPerecod" type='date' ></td>
+      <td><input name="60SoglDku" type='date' ></td>
+      <td><input name="60SoglSmezhOtpr" type='date'>
+          <input name="60SoglSmezhSogl" type='date'></td>
+      <td><input name="4vOtprav" type='date'>
+          <input name="4vSogl" type='date'></td>
+      <td contenteditable="true"></td>
+      <td contenteditable="true"></td>
+      <td contenteditable="true"></td>
+      <td contenteditable="true"></td>
+      <td contenteditable="true"></td>
+      <td contenteditable="true"></td>
+      <td contenteditable="true"></td>
+      <td contenteditable="true"></td>
+      <td contenteditable="true"></td>
+      <td><input name="kolTi"></td>
+      <td><input name="sobstvAiis"></td>
+      <td><input name="kodGtp"  size=10></td>
+      <td><input name="kodSech" size=10></td>
+    </tr>
+</table>
+
+    <br><br>
+
+<table id="table2">
+  <tr>
+
+    <th>ГР</th>
+    <th>Наим. АИИС общ.</th>
+    <th>Наим. АИИС точн.</th>
+    <th>СД СОП</th>
+    <th>Изм-я аиис</th>
+    <th>Тип изменений</th>
+    <th>Необх Работ</th>
+    <th>работы запланированы</th>
+    <th>Договор план / факт</th>
+    <th>смр план / факт</th>
+    <th>выезд план / факт</th>
+    <th>вниимс план / факт</th>
+    <th>РСТ план / факт</th>
+    <th>приказ план / факт</th>
+    <th>оформл СОП план / факт</th>
+    <th>комментарии</th>
+  </tr>
+  <tr>
+    <td><input name="gr" ></td>
+    <td><input name="naimAiis1" ></td>
+    <td><input name="naimAiis2" ></td>
+    <td><input name="sdsop" type='date'></td>
+    <td><select  name="izmAiis">
+      <option value="нет">нет</option>
+      <option value="да">да</option></td>
+    <td contenteditable="true"> </td>
+    <td><select name="neobhRab">
+      <option value="не проверялась">не проверялась</option>
+      <option value="не требуется">не требуется</option>
+      <option value="поверка">поверка</option>
+      <option value="переаттестация">переаттестация</option></td>
+    <td><select  name="rabZaplan">
+      <option value="нет">нет</option>
+      <option value="да">да</option>
+      <option value="--">--</option></td>
+    <td><input name="dogPlan" type='date'>
+        <input name="dogFact" type='date'></td>
+    <td><input name="smrPlan" type='date'>
+        <input name="smrFact" type='date'></td>
+    <td><input name="vyezdPlan" type='date'>
+        <input name="vyezdFact" type='date'></td>
+    <td><input name="vniimsPlan" type='date'>
+        <input name="vniimsFact" type='date'></td>
+    <td><input name="rstPlan" type='date'>
+        <input name="rstFact" type='date'></td>
+    <td><input name="prikazPlan" type='date'>
+        <input name="prikazFact" type='date'></td>
+    <td><input name="oforSopPlan" type='date'>
+        <input name="oforSopFact" type='date'></td>
+    <td contenteditable="true"> </td>
+  </tr>
+</table>
+
+<input type="button" value="добавить ОТ" onClick="addOT();">
+<input type="button" value="удалить ОТ" onClick="delOT();">
+
+
+<br><br>
+<INPUT TYPE="button" VALUE="Внести изменения" onClick="addSech();">
+
+</form>
+<br>
+
+<input type="button" value="выделить красным" onClick="makeRed();">
+<input type="button" value="выделить черным" onClick="makeBlack();">
+<br>
+<input type="button" value="прочитать данные td" onClick="readTable1();">
+
+<!--
+<form NAME="Sel1" id="form1">
+
+    <table>
+        <tr><td><B>код ГТП:<B></td>
+            <td><input NAME="Family" SIZE=20
+                  onBlur="this.value"></td></tr>
+        <tr><td><B>код Сечения:<B></td>
+            <td><input NAME="Name" SIZE=20
+                  onBlur="this.value"></td></tr>
+        <tr><td><B>Возраст:<B></td>
+            <td><input NAME="Age" SIZE=3 VALUE="18"
+                  onBlur="this.value=CheckAge(this.value)"
+                  onFocus="this.select()"></td></tr>
+        <tr><td><B>дата:<B></TD>
+            <td><input type="date" NAME="Phone" ></td></tr>
+    </table>
+
+
+</form> -->
+
+
+<link rel="import" href="/textEdit.html">
+<!-- <script type="text/javascript" src = "script.js"></script> -->
+<script type="text/javascript" src = "/planrabot/js/addSech.js"></script>
+
+</body>
+
+</html>

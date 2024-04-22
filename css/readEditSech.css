@@ -1,0 +1,210 @@
+body {
+  margin: 0;
+  margin-bottom: 25px;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #387e97;
+  color: #dedede;
+}
+/*
+tr:hover {
+  background-color: #d6eeee;
+}
+*/
+input,
+textarea {
+  outline: none;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.textRed {
+  color: #8b0000;
+}
+.textGreen {
+  color: #006400;
+}
+.textOrange {
+  color: #f89e02;
+}
+
+.active {
+  background-color: #84bfd4;
+}
+.noactive {
+  background-color: #ffffff;
+  /* padding: 5px 5px; */
+}
+
+.firstcolum-div {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 5px;
+}
+
+.futer {
+  /*position: sticky;*/
+  position: fixed;
+  bottom: 0;
+  left: 40%;
+  /* left: 600px; */
+  padding-left: 10px;
+  z-index: 2;
+  color: #dedede;
+  width: 500px;
+  border-radius: 6px;
+  background-color: #387e97;
+  -webkit-box-shadow: 7px 8px 44px 9px rgba(34, 60, 80, 0.53);
+  -moz-box-shadow: 7px 8px 44px 9px rgba(34, 60, 80, 0.53);
+  box-shadow: 7px 8px 44px 9px rgba(34, 60, 80, 0.53);
+}
+.hint {
+  display: none;
+  /*position: absolute;
+  top: 200px;
+  left: 10px;*/
+  z-index: 4;
+  overflow: auto;
+  /*border: 2px solid #045acf;*/
+  border-radius: 6px;
+  background-color: rgb(216, 245, 240);
+  width: 3300px;
+  height: 700px;
+  -webkit-box-shadow: 7px 8px 44px 9px rgba(34, 60, 80, 0.53);
+  -moz-box-shadow: 7px 8px 44px 9px rgba(34, 60, 80, 0.53);
+  box-shadow: 7px 8px 44px 9px rgba(34, 60, 80, 0.53);
+}
+tbody tr td:nth-child(1) {
+  position: sticky;
+  left: 0;
+  /*background-color: #ffffff;*/
+  border: 1px solid black;
+}
+thead tr th:nth-child(1) {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+
+  background-color: #387e97;
+  border: 1px solid black;
+}
+.shadow {
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+.button1 {
+  background-color: #1ca7b1;
+  color: white;
+  /*border: 2px solid #4caf50; /* Green */
+  border-radius: 6px;
+  padding: 2px 5px;
+  margin-right: 15px;
+  font-size: 14px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.button1:hover {
+  background-color: white; /* Green */
+  color: black;
+  cursor: pointer;
+}
+.metrologyKomm {
+  width: 350px;
+}
+
+/* Контейнер <div> - необходим для размещения выпадающего содержимого */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Выпадающее содержимое (скрыто по умолчанию) */
+.dropdown-content {
+  /* display: none; */
+  transform: scaleY(0);
+  transform-origin: bottom;
+  position: absolute;
+  bottom: 23px;
+  background-color: #f1f1f1;
+  min-width: 140px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+/* Ссылки внутри выпадающего списка */
+.dropdown-content input {
+  color: black;
+  padding: 12px 16px;
+  width: 160px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Изменение цвета выпадающих ссылок при наведении курсора */
+.dropdown-content input:hover {
+  background-color: #ddd;
+}
+
+/* Показать выпадающее меню при наведении курсора */
+.dropdown:hover .dropdown-content {
+  /* display: block; */
+  transform: scaleY(1);
+  transition: 0.2s linear;
+}
+
+/* Изменение цвета фона кнопки раскрывающегося списка при отображении содержимого раскрывающегося списка */
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+.button2 {
+  outline: 1px solid rgba(0, 0, 0, 0.19);
+  width: 20px;
+  height: 20px;
+  margin-right: 15px;
+  margin-bottom: 5px;
+  border-radius: 100%;
+}
+
+.button2:hover {
+  outline: 1px solid #fff;
+  cursor: pointer;
+  transition: outline 0.4s linear;
+}
+
+.button-black {
+  background-color: #000;
+}
+
+.button-red {
+  background-color: red;
+}
+
+.button-orange {
+  background-color: orange;
+}
+
+.button-green {
+  background-color: green;
+}
+
+.button-grey {
+  background-color: grey;
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="/planrabot/js/lodash.js"></script>
+
+    <link rel="stylesheet" href="/planrabot/css/metrology.css" />
+  </head>
+  <body>
+    <!--script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script-->
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <p>Метрология</p>
+
+
+
+
+
+    <div id="array-rendering">
+      <button v-on:click="sortNaimAiis1">sortNaimAiis1</button>
+      <button v-on:click="sortSdSop">sortSdSop</button>
+      <!-- template v-for="item in items" :key="item.msg" -->
+      <br></br>
+      <table>
+          <tr class="trow-head">
+            <td>№ ГР</td>
+            <th>Наим-1</th>
+            <th>Наим-2</th>
+            <th>СД СОП</th>
+            <th>Изм АИИС</th>
+            <th>Тип изм</th>
+            <th>необх раб</th>
+            <th>раб заплан</th>
+            <th>выезд</th>
+            <th>вниимс</th>
+            <th>рст</th>
+            <th>оформ соп</th>
+          </tr>
+
+          <!-- <transition-group name="flip-list"> -->
+            <template v-for="item in ot" :key="item._id">
+              <tr>
+                <td>
+                  <span v-bind:class="{ active: isActive }">{{ item.gr }}</span>
+                </td>
+                <td class="hasError">{{ item.naimAiis1 }}</td>
+                <td class="hasError">{{ item.naimAiis2 }}</td>
+
+                <td>{{ item.sdSop }}</td>
+                <td>{{ item.izmAiis }}</td>
+                <td>{{ item.tipIzmOt }}</td>
+                <td>{{ item.neobhRab }}</td>
+                <td v-bind:class="{ textRed: item.rabZaplan == 'нет' }">{{ item.rabZaplan }}</td>
+                <td v-if="item.vyezdFact" class="textGreen">
+                  {{ item.vyezdFact }}
+                </td>
+                <td v-else class="textRed">{{ item.vyezdPlan }}</td>
+                <td v-if="item.vniimsFact" class="textGreen">
+                  {{ item.vniimsFact }}
+                </td>
+                <td v-else class="textRed">{{ item.vniimsPlan }}</td>
+                <td v-if="item.rstFact" class="textGreen">{{ item.rstFact }}</td>
+                <td v-else class="textRed">{{ item.rstPlan }}</td>
+                <td v-if="item.prikazFact" class="textGreen">{{ item.prikazFact }}</td>
+                <td v-else class="textRed">{{ item.prikazPlan }}</td>
+                <td v-if="item.oforSopFact" class="textGreen">{{ item.oforSopFact }}</td>
+                <td v-else class="textRed">{{ item.oforSopPlan }}</td>
+                <td>{{ item._id }}</td>
+              </tr>
+            </template>
+          <!-- </transition-group> -->
+        </table>
+
+    </div>
+
+   <!-- <iframe src="https://docs.google.com/document/d/e/2PACX-1vRMpkVEL3io-9P2sGNxh_fdlBrSODsEiqTzGIcsmht2ztwZ_nyrUoCSVhBA1OXoDMQzpRQPLdEr__le/pub?embedded=true"></iframe>
+    -->
+
+    <script type="text/javascript" src="/planrabot/js/metrology.js"></script>
+  </body>
+</html>
