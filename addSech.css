@@ -1,0 +1,41 @@
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #387e97;
+  color: #dedede;
+}
+
+tr:hover {
+  background-color: #d6eeee;
+}
+input,
+textarea {
+  outline: none;
+  border: none;
+}
+.textRed {
+  color: #8b0000;
+}
+.textGreen {
+  color: #006400;
+}
+.textOrange {
+  color: #f89e02;
+}
+/*
+#table1 tr td:nth-child(1),
+#table1 th:nth-child(1),
+td:nth-child(3),
+#table1 th:nth-child(3) {
+  display: none;
+}
+*/
