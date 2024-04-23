@@ -95,7 +95,7 @@ app.get('/addsech', auth(), (req, res) => {
 });
 
 app.get('/readsech', auth(), (req, res) => {
-  if (req.user === 'qqq') {
+  if (['qqq', 'fae'].includes(req.user)) {
     res.sendfile('readEditSech.html');
   } else {
     res.sendfile('readSech.html');
@@ -260,7 +260,7 @@ app.post('/api/delsech', async (req, res) => {
 
 app.post('/api/editsech', auth(), async (req, res) => {
   console.log('/api/editsech req.body', req.body._id);
-  if (['qqq'].includes(req.user)) {
+  if (['qqq', 'fae'].includes(req.user)) {
     let id = req.body._id;
     let o_id = new ObjectId(id);
     //req.body._id = o_id;
