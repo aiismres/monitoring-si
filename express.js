@@ -30,11 +30,11 @@ let httpsServer;
 if (process.env.NODE_ENV === 'production') {
   console.log('process.env.NODE_ENV === production');
   const privateKey = fs.readFileSync(
-    '/etc/letsencrypt/live/80-78-248-80.cloudvps.regruhosting.ru/privkey.pem',
+    '/etc/letsencrypt/live/79-174-91-27.cloudvps.regruhosting.ru/privkey.pem',
     'utf8'
   );
   const certificate = fs.readFileSync(
-    '/etc/letsencrypt/live/80-78-248-80.cloudvps.regruhosting.ru/fullchain.pem',
+    '/etc/letsencrypt/live/79-174-91-27.cloudvps.regruhosting.ru/fullchain.pem',
     'utf8'
   );
   httpsServer = https.createServer({ key: privateKey, cert: certificate }, app);
@@ -161,30 +161,37 @@ app.get('/login', (req, res) => {
   res.sendfile('login.html');
 });
 
-app.post('/api/login', bodyParser.urlencoded({ extended: false }), async (req, res) => {
-  console.log('req.body', req.body);
-  const { username, password } = req.body;
-  let passwordhash = crypto.createHash('sha256').update(password).digest('hex');
-  // console.log({ passwordhash });
-  let users = await usersDb.find().toArray();
-  console.log(users, username);
-  let user = users.find((item) => item.username == username);
-  console.log(user);
-  // let user = usersDb.users.find((item) => item.username == username);
-  if (!user) {
-    res.send('нет такого пользователя');
-  }
+app.post(
+  '/api/login',
+  bodyParser.urlencoded({ extended: false }),
+  async (req, res) => {
+    console.log('req.body', req.body);
+    const { username, password } = req.body;
+    let passwordhash = crypto
+      .createHash('sha256')
+      .update(password)
+      .digest('hex');
+    // console.log({ passwordhash });
+    let users = await usersDb.find().toArray();
+    console.log(users, username);
+    let user = users.find((item) => item.username == username);
+    console.log(user);
+    // let user = usersDb.users.find((item) => item.username == username);
+    if (!user) {
+      res.send('нет такого пользователя');
+    }
 
-  if (passwordhash != user?.password) {
-    res.send('пароль неверный');
+    if (passwordhash != user?.password) {
+      res.send('пароль неверный');
+    }
+    let sessionID = nanoid();
+    sessionIDObj[sessionID] = username;
+    console.log('sessionIDs', sessionIDObj);
+    // user.sessionID = sessionID;
+    // usersDb.sessions.push(sessionID);
+    res.cookie('sessionID', sessionID).redirect('/readsech');
   }
-  let sessionID = nanoid();
-  sessionIDObj[sessionID] = username;
-  console.log('sessionIDs', sessionIDObj);
-  // user.sessionID = sessionID;
-  // usersDb.sessions.push(sessionID);
-  res.cookie('sessionID', sessionID).redirect('/readsech');
-});
+);
 
 app.get('/metrology', (req, res) => {
   res.sendFile(path.resolve('./build/index.html'));
