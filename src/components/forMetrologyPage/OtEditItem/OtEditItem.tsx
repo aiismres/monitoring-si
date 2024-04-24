@@ -411,9 +411,9 @@ Props) {
           }
         /> */}
         <DatePicker
-          label="факт"
+          label="rst факт"
           views={['year', 'month', 'day']}
-          value={dayjs(selectedOt?.vniimsFact)}
+          value={dayjs(rstDate)}
           onChange={(newValue) =>
             // setOt((st) => ({
             //   ...st,
@@ -421,7 +421,7 @@ Props) {
             // }))
             setPageState(
               produce((draft) => {
-                draft.selectedOt!.vniimsFact =
+                draft.selectedOt!.rstFact =
                   newValue?.format('YYYY-MM-DD') || '';
               })
             )
