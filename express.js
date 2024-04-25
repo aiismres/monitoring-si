@@ -95,7 +95,7 @@ app.get('/addsech', auth(), (req, res) => {
 });
 
 app.get('/readsech', auth(), (req, res) => {
-  if (['qqq', 'fae'].includes(req.user)) {
+  if (['qqq', 'fae', 'tsu', 'sas'].includes(req.user)) {
     res.sendfile('readEditSech.html');
   } else {
     res.sendfile('readSech.html');
@@ -123,7 +123,7 @@ app.get('/planrabot2/:company?', auth(), (req, res) => {
 
 app.post('/api/savesidata', auth(), async (req, res) => {
   console.log('/api/savesidata');
-  if (['qqq', 'fae', 'sns'].includes(req.user)) {
+  if (['qqq', 'fae', 'sns', 'tsu', 'sas', 'gpe'].includes(req.user)) {
     console.log('req.user', req.user);
     console.log('данные СИ', req.body.siState, 'id Сечения', req.body.sechID);
     let o_id = new ObjectId(req.body.sechID);
@@ -260,7 +260,7 @@ app.post('/api/delsech', async (req, res) => {
 
 app.post('/api/editsech', auth(), async (req, res) => {
   console.log('/api/editsech req.body', req.body._id);
-  if (['qqq', 'fae'].includes(req.user)) {
+  if (['qqq', 'fae', 'tsu', 'sas'].includes(req.user)) {
     let id = req.body._id;
     let o_id = new ObjectId(id);
     //req.body._id = o_id;
