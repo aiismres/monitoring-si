@@ -96,11 +96,15 @@ async function read() {
     let td6 = document.createElement('td');
     td6.classList.add('sdAs');
     td6.innerHTML =
-      sech.sdAs + '<br>' + '<span style="color: #808080;">' + sech.sdPas + '</span>';
+      sech.sdAs +
+      '<br>' +
+      '<span style="color: #808080;">' +
+      sech.sdPas +
+      '</span>';
     tr.appendChild(td6);
 
     /*/ вычисление крайнего срока подачи док-в на УС
-		
+
 		if (sech.dopusk) {sech.krSrokPodachi = formatDate(Date.parse(sech.dopusk) + 3888000000)}
 			else if (sech.sdAs) {sech.krSrokPodachi = formatDate(Date.parse(sech.sdAs) -  3888000000)}
 			else {sech.krSrokPodachi = formatDate(Date.parse(sech.sdPas) -  3888000000)};
@@ -109,9 +113,11 @@ async function read() {
     let td7 = document.createElement('td');
     td7.classList.add('krSrokPodachi');
     if (Date.parse(sech.krSrokPodachi) < new Date()) {
-      td7.innerHTML = '<span style="color: #CC0605;">' + sech.krSrokPodachi + '</span>';
+      td7.innerHTML =
+        '<span style="color: #CC0605;">' + sech.krSrokPodachi + '</span>';
     } else if (Date.parse(sech.krSrokPodachi) - 7776000000 < new Date()) {
-      td7.innerHTML = '<span style="color: #C04000;">' + sech.krSrokPodachi + '</span>';
+      td7.innerHTML =
+        '<span style="color: #C04000;">' + sech.krSrokPodachi + '</span>';
     } else {
       td7.innerHTML = sech.krSrokPodachi;
     }
@@ -489,22 +495,28 @@ async function read() {
     td20.classList.add('codirovkaActual');
 
     if (sech.codirovkaActual == 'не проверялась') {
-      td20.innerHTML = '<span class="textOrange">' + sech.codirovkaActual + '</span>';
+      td20.innerHTML =
+        '<span class="textOrange">' + sech.codirovkaActual + '</span>';
     } else if (sech.codirovkaActual == 'актуальна') {
-      td20.innerHTML = '<span class="textGreen">' + sech.codirovkaActual + '</span>';
+      td20.innerHTML =
+        '<span class="textGreen">' + sech.codirovkaActual + '</span>';
     } else if (sech.codirovkaActual == 'Не актуальна') {
-      td20.innerHTML = '<span class="textRed">' + sech.codirovkaActual + '</span>';
+      td20.innerHTML =
+        '<span class="textRed">' + sech.codirovkaActual + '</span>';
       if (sech.sogl4v) {
         td20.innerHTML = td20.innerHTML + '<br>' + '4В согл-н: ' + sech.sogl4v;
       } else if (sech.otprav4v) {
-        td20.innerHTML = td20.innerHTML + '<br>' + '4В отправл: ' + sech.otprav4v;
+        td20.innerHTML =
+          td20.innerHTML + '<br>' + '4В отправл: ' + sech.otprav4v;
       } else if (sech.sogl60SmezhSogl) {
-        td20.innerHTML = td20.innerHTML + '<br>' + 'Смеж согл-л: ' + sech.sogl60SmezhSogl;
+        td20.innerHTML =
+          td20.innerHTML + '<br>' + 'Смеж согл-л: ' + sech.sogl60SmezhSogl;
       } else if (sech.sogl60SmezhOtpr) {
         td20.innerHTML =
           td20.innerHTML + '<br>' + 'Смеж-у направл: ' + sech.sogl60SmezhOtpr;
       } else if (sech.sogl60Dku) {
-        td20.innerHTML = td20.innerHTML + '<br>' + 'ДКУ согл-л: ' + sech.sogl60Dku;
+        td20.innerHTML =
+          td20.innerHTML + '<br>' + 'ДКУ согл-л: ' + sech.sogl60Dku;
       } else if (sech.zaprosPerecod) {
         td20.innerHTML =
           td20.innerHTML + '<br>' + 'Запросил перекод: ' + sech.zaprosPerecod;
@@ -638,7 +650,9 @@ document.querySelector('table').onclick = (event) => {
   document
     .getElementById('table1')
     .rows[i].cells[0].firstChild.classList.remove('noactive');
-  document.getElementById('table1').rows[i].cells[0].firstChild.classList.add('active');
+  document
+    .getElementById('table1')
+    .rows[i].cells[0].firstChild.classList.add('active');
   document.getElementById('futer1').innerHTML =
     document.getElementById('table1').rows[i].cells[0].firstChild.innerHTML;
 };
@@ -767,6 +781,8 @@ document.querySelector('table').ondblclick = (event) => {
   }
 };
 
+let statusUS;
+
 function openEditSech() {
   hint.style.display = 'inline-block';
   hint.style.position = 'absolute';
@@ -784,6 +800,8 @@ function openEditSech() {
   document.getElementById('futer1').innerHTML = document.getElementById('table1').rows[i].cells[0].innerHTML;
   */
   let sechEdit = secheniya.find((item) => item._id == sechId1);
+  console.log(sechEdit);
+  statusUS = sechEdit.statusUS;
   let table2 = document.getElementById('table2');
 
   table2.querySelector('[name="naimSechShort"]').value = sechEdit.naimSechShort;
@@ -794,12 +812,16 @@ function openEditSech() {
   table2.querySelector('[name="sdPas"]').value = sechEdit.sdPas;
   table2.querySelector('[name="krSrokPodachi"]').value = sechEdit.krSrokPodachi;
   table2.querySelector('[name="planPodachi"]').value = sechEdit.planPodachi;
-  table2.querySelector('[name="metrologyKomm"]').innerHTML = sechEdit.metrologyKomm;
-  table2.querySelector('[name="codirovkaActual"]').value = sechEdit.codirovkaActual;
-  table2.querySelector('[name="tipIzmCodirovki"]').innerHTML = sechEdit.tipIzmCodirovki;
+  table2.querySelector('[name="metrologyKomm"]').innerHTML =
+    sechEdit.metrologyKomm;
+  table2.querySelector('[name="codirovkaActual"]').value =
+    sechEdit.codirovkaActual;
+  table2.querySelector('[name="tipIzmCodirovki"]').innerHTML =
+    sechEdit.tipIzmCodirovki;
   table2.querySelector('[name="zaprosPerecod"]').value = sechEdit.zaprosPerecod;
   table2.querySelector('[name="60SoglDku"]').value = sechEdit.sogl60Dku;
-  table2.querySelector('[name="60SoglSmezhOtpr"]').value = sechEdit.Sogl60SmezhOtpr;
+  table2.querySelector('[name="60SoglSmezhOtpr"]').value =
+    sechEdit.Sogl60SmezhOtpr;
   table2.querySelector('[name="4vOtprav"]').value = sechEdit.otprav4v;
   table2.querySelector('[name="sverkiKomm"]').innerHTML = sechEdit.sverkiKomm;
   table2.querySelector('[name="sv1"]').innerHTML = sechEdit.sv1;
@@ -956,7 +978,8 @@ document.addEventListener('keydown', async function (event) {
     let cellObj = {};
     cellObj._id = document.getElementById('table1').rows[i].cells[36].innerHTML;
     cellObj.field = cell.className;
-    cellObj.fieldValue = document.getElementById('table1').rows[i].cells[j].innerHTML;
+    cellObj.fieldValue =
+      document.getElementById('table1').rows[i].cells[j].innerHTML;
     let x6 = await fetch(`/api/editcell`, {
       method: 'post',
       headers: {
@@ -1008,10 +1031,12 @@ async function editSech() {
     krSrokPodachi: krSrokPodachi,
     planPodachi: x1.find((item) => item.name == 'planPodachi').value,
     //metrologyKomm: table2.rows[1].cells[8].innerHTML,
-    metrologyKomm: table2.rows[1].querySelector('[name="metrologyKomm"]').innerHTML,
+    metrologyKomm: table2.rows[1].querySelector('[name="metrologyKomm"]')
+      .innerHTML,
     codirovkaActual: x1.find((item) => item.name == 'codirovkaActual').value,
     //tipIzmCodirovki: table2.rows[1].cells[10].innerHTML,
-    tipIzmCodirovki: table2.rows[1].querySelector('[name="tipIzmCodirovki"]').innerHTML,
+    tipIzmCodirovki: table2.rows[1].querySelector('[name="tipIzmCodirovki"]')
+      .innerHTML,
     zaprosPerecod: x1.find((item) => item.name == 'zaprosPerecod').value,
     sogl60Dku: x1.find((item) => item.name == '60SoglDku').value,
     sogl60SmezhOtpr: x1.find((item) => item.name == '60SoglSmezhOtpr').value,
@@ -1033,6 +1058,7 @@ async function editSech() {
     sobstvAiis: x1.find((item) => item.name == 'sobstvAiis').value,
     kodGtp: x1.find((item) => item.name == 'kodGtp').value,
     kodSech: x1.find((item) => item.name == 'kodSech').value,
+    statusUS,
   };
   //console.log('Измененное сечение', sechenie);
 
@@ -1084,7 +1110,9 @@ async function editSech() {
       //ot2.prikazPlan = x1.filter(item => item.name == "prikazPlan")[i2].value;
       ot2.prikazFact = x1.filter((item) => item.name == 'prikazFact')[i2].value;
       //ot2.oforSopPlan = x1.filter(item => item.name == "oforSopPlan")[i2].value;
-      ot2.oforSopFact = x1.filter((item) => item.name == 'oforSopFact')[i2].value;
+      ot2.oforSopFact = x1.filter((item) => item.name == 'oforSopFact')[
+        i2
+      ].value;
       ot2.kommOt = t3.rows[i2 + 1].cells[15].innerHTML;
       //console.log('изм ОТ1', ot2._id);
       let x4 = await fetch(`/api/editot`, {
