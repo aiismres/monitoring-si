@@ -800,8 +800,8 @@ function openEditSech() {
   document.getElementById('futer1').innerHTML = document.getElementById('table1').rows[i].cells[0].innerHTML;
   */
   let sechEdit = secheniya.find((item) => item._id == sechId1);
-  // console.log(sechEdit);
-  // statusUS = sechEdit.statusUS;
+  console.log(sechEdit);
+  statusUS = sechEdit.statusUS;
   let table2 = document.getElementById('table2');
 
   table2.querySelector('[name="naimSechShort"]').value = sechEdit.naimSechShort;
@@ -1058,7 +1058,7 @@ async function editSech() {
     sobstvAiis: x1.find((item) => item.name == 'sobstvAiis').value,
     kodGtp: x1.find((item) => item.name == 'kodGtp').value,
     kodSech: x1.find((item) => item.name == 'kodSech').value,
-    // statusUS,
+    statusUS,
   };
   //console.log('Измененное сечение', sechenie);
 
