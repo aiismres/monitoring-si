@@ -178,11 +178,13 @@ app.post(
     console.log(user);
     // let user = usersDb.users.find((item) => item.username == username);
     if (!user) {
-      res.send('нет такого пользователя');
+      res.status(401).send('нет такого пользователя');
+      return;
     }
 
     if (passwordhash != user?.password) {
       res.send('пароль неверный');
+      return;
     }
     let sessionID = nanoid();
     sessionIDObj[sessionID] = username;
